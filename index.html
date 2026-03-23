@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Test Sistemas Distribuidos</title>
+<style>
+body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
+h2 { margin-top: 30px; }
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+button { padding: 10px; font-size: 16px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Test Sistemas Distribuidos</h1>
+
+<form id="quiz"></form>
+
+<button onclick="corregir()">Corregir</button>
+
+<h2 id="resultado"></h2>
+
+<script>
+const preguntas = [
+{q:"Las URL/URIs proporcionan:",a:["Acceso","Ubicación","Concurrencia","Ninguna"],c:1},
+{q:"Transparencia de acceso oculta:",a:["Representación datos","Fallos","Localización","Concurrencia"],c:0},
+{q:"Google AppEngine es:",a:["PPV","IaaS","SaaS","PaaS"],c:3},
+{q:"Topología más escalable:",a:["Bus","Árbol","Hipercubo","Crossbar"],c:2},
+{q:"Diámetro toroide:",a:["N/2","N","2(√N-1)","log2(N)"],c:2},
+{q:"SIMD:",a:["Nvidia Tesla","Cray Y-MP","MMX","Todos"],c:3},
+{q:"Eficiencia:",a:["0.5 → doble tiempo","No >1","Más procesadores mejor","Todas"],c:1},
+{q:"Gustafson:",a:["9.17","20.5","90.1","100"],c:2},
+{q:"Menos comunicación:",a:["Filas","Columnas","Bloques","Cíclica"],c:2},
+{q:"Master/Worker pool:",a:["Menos congestión","Mejor balanceo","Mejor sync","Menos comunicaciones"],c:1},
+
+{q:"Árbol ancho bisección:",a:["1","√N","N/2","log2N"],c:0},
+{q:"Topología indirecta:",a:["Hipercubo","Omega","Crossbar","Toroide"],c:1},
+{q:"Transparencia ubicación:",a:["Localización","Concurrencia","Datos","Fallos"],c:0},
+{q:"No interesa ocultar:",a:["Redes","Replicación","Ubicación usuarios","Ninguna"],c:1},
+{q:"Mirrors:",a:["Replicación","Ubicación","Acceso","Ninguna"],c:0},
+{q:"No repudio:",a:["HTTPS","Antivirus","Firma digital","Certificados"],c:2},
+{q:"No ejecución remota:",a:["RPC","Objetos","Mensajes","a y b"],c:3},
+{q:"Cloud carga variable:",a:["Elasticidad","Pago","Confiabilidad","Escalabilidad"],c:0},
+{q:"Chord/Pastry:",a:["Binaria","Quicksort","Hash","a y c"],c:2},
+
+{q:"No ventaja SD:",a:["Abierto","Seguro","Escalable","Coste"],c:1},
+{q:"Sistema abierto:",a:["Portabilidad","Interfaces","Independencia","Todas"],c:3},
+{q:"No middleware:",a:["CORBA","TCP/IP","RMI","SOAP"],c:1},
+{q:"Mirrors:",a:["Acceso","Ubicación","Replicación","Ninguna"],c:2},
+{q:"Acceso oculta:",a:["Localización","Concurrencia","Datos","Fallos"],c:2},
+{q:"No ocultar:",a:["Usuarios","Redes","Replicación","Ninguna"],c:2},
+{q:"Navegadores:",a:["Recuperación","Enmascaramiento","Tolerancia","Redundancia"],c:1},
+{q:"Confidencialidad:",a:["HTTPS","Certificados","Antivirus","Firma"],c:0},
+{q:"Grid:",a:["Desconocimiento","Sin confianza","Pago","a y b"],c:3},
+{q:"Amazon EC2:",a:["IaaS","PaaS","SaaS","PPV"],c:0},
+
+// 👇 BLOQUE QUE ME CONFIRMASTE (CORREGIDO CON LA IMAGEN)
+{q:"Heterogeneidad:",a:["Hardware","SO","Lenguaje","Todas"],c:3},
+{q:"RMI:",a:["Solo cliente","rmic obligatorio","No objetos","Ninguna"],c:3},
+{q:"Sistema abierto:",a:["Código","Siempre accesible","Interoperable","Seguro"],c:2},
+{q:"Migración vs recolocación:",a:["Replicación","Tipo recursos","Volumen","Uso de recursos"],c:3},
+{q:"Escalabilidad geográfica:",a:["CDN","Servidor horizontal","Más ancho banda","RAID"],c:0},
+{q:"Cloud Office365:",a:["IaaS","SaaS","PaaS","Ninguna"],c:1},
+
+{q:"MOM:",a:["Comunicación directa","E/S","Multicast","RPC"],c:1},
+{q:"P2P no estructurado:",a:["DHT","No determinista","Anillo","A y C"],c:1},
+{q:"MIMD:",a:["IBM Blue Gene","Nvidia Tesla","Earth Simulator","MMX"],c:0},
+{q:"NUMA vs UMA:",a:["Coherencia","Memoria local","Distancia","Sin espacio global"],c:2}
+];
+
+const form = document.getElementById("quiz");
+
+preguntas.forEach((p, i) => {
+    let html = `<h3>${i+1}. ${p.q}</h3>`;
+    p.a.forEach((opt, j) => {
+        html += `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+    });
+    form.innerHTML += html;
+});
+
+function corregir() {
+    let correctas = 0;
+
+    preguntas.forEach((p, i) => {
+        let sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if (sel) {
+            if (parseInt(sel.value) === p.c) {
+                correctas++;
+                sel.parentElement.classList.add("correct");
+            } else {
+                sel.parentElement.classList.add("incorrect");
+            }
+        }
+    });
+
+    document.getElementById("resultado").innerText =
+        `Resultado: ${correctas} / ${preguntas.length}`;
+}
+</script>
+
+</body>
+</html>
