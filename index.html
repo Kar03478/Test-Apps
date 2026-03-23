@@ -505,135 +505,257 @@
 // BANCO COMPLETO DE PREGUNTAS
 // ────────────────────────────────────────────────
 const ALL_QUESTIONS = [
-  // BLOQUE 1
+  // ── BLOQUE 1 ──────────────────────────────────────────────────────────────
+  // Las URL/URIs ocultan la ubicación del recurso (transparencia de ubicación)
   {q:"¿Las URL/URIs que tipo de transparencia proporcionan?",
    a:["Transparencia de acceso","Transparencia de ubicación","Transparencia de concurrencia","Ninguna de las anteriores"],c:1},
+
+  // Transparencia de acceso → oculta representación a bajo nivel de los datos
   {q:"La transparencia de acceso debe ocultar:",
    a:["La representación a bajo nivel de los datos","Los fallos producidos en el sistema distribuido","La localización de los recursos","El acceso concurrente a los recursos"],c:0},
+
+  // Google AppEngine = PaaS
   {q:"El modelo de Cloud utilizado por Google AppEngine es:",
    a:["PPV - Pay Per View","IaaS - Infrastructure as a service","SaaS - Software as a Service","PaaS - Platform as a service"],c:3},
+
+  // Mejor escalabilidad → Hipercubo (más conexiones, diámetro logarítmico)
   {q:"¿Cuál de las siguientes topologías proporciona una mejor escalabilidad?",
    a:["Bus","Árbol binario","Hipercubo","Crossbar"],c:2},
+
+  // Diámetro toroide N procesadores = 2(√N − 1)
   {q:"¿Cuál es el diámetro de una topología Toroide con N procesadores?",
    a:["N/2","N","2(N¹/²-1)","Log₂(N)"],c:2},
+
+  // SIMD: Nvidia Tesla (SIMD GPU), MMX (SIMD extensión), Cray Y-MP (vectorial/SIMD) → Todos
   {q:"¿Cuál de los siguientes sistemas se puede clasificar como SIMD?",
    a:["Nvidia Tesla","Cray Y-MP","MMX","Todos los anteriores"],c:3},
+
+  // Eficiencia: la única cierta es b) No es posible >1 (en el modelo clásico Amdahl)
   {q:"Respecto a la eficiencia, ¿cuál de las siguientes afirmaciones es cierta?",
-   a:["Si obtenemos eficiencia 0.5 con cuatro procesadores, la app secuencial tarda el doble","No es posible obtener una eficiencia superior a 1","Con 8 procesadores se puede obtener mejor eficiencia que con 2","Todas las anteriores"],c:1},
-  {q:"De acuerdo con la Ley de Gustafson, ¿qué speedup obtendría una app paralela con 10% de código secuencial en 100 procesadores?",
+   a:["Si obtenemos eficiencia 0.5 con cuatro procesadores, la aplicación secuencial tarda el doble que la paralela","No es posible obtener una eficiencia superior a 1","Con 8 procesadores se puede obtener mejor eficiencia que con 2","Todas las anteriores"],c:1},
+
+  // Gustafson: S(P) = P − α·(P−1) = 100 − 0.1·99 = 90.1
+  {q:"De acuerdo con la Ley de Gustafson, ¿qué speedup obtendría una aplicación paralela con un 10% de código secuencial ejecutándose en una máquina con 100 procesadores?",
    a:["9,17","20,5","90,1","100"],c:2},
+
+  // Menor ratio comunicación/cómputo → Por bloques (cada bloque comparte menos frontera)
   {q:"¿Cuál de los siguientes métodos de agregación de tareas es susceptible de generar un menor ratio de comunicaciones/cómputo?",
    a:["Por filas","Por columnas","Por bloques","Cíclica"],c:2},
+
+  // Pool de trabajos → mejor balanceo de la carga
   {q:"Respecto al patrón Master/Worker, ¿qué ventaja aporta la variante basada en un Pool de trabajos?",
    a:["Reduce la congestión del Master","Permite un mejor balanceo de la carga","Permite una mejor sincronización","Permite reducir el número de comunicaciones"],c:1},
 
-  // BLOQUE 2
+  // ── BLOQUE 2 ──────────────────────────────────────────────────────────────
+  // SGE: -pe 8 reserva 8 procesadores explícitamente → más recursos
   {q:"¿Cuál de los siguientes trabajos SGE necesita más recursos (procesadores)?",
    a:["qsub –pe 8 ./mi_trabajo.sh","qsub –q all.q -l mem=3G -l h_rt=01:30:00 ./mi_trabajo.sh","qsub –q high.q –m abe -l h_rt=00:30:00 ./mi_trabajo.sh","qsub –t1:10 ./mi_trabajo.sh"],c:0},
+
+  // Ancho de bisección árbol binario = 1 (se corta un único enlace en la raíz)
   {q:"¿Cuál es el ancho de bisección de un árbol con N procesadores?",
    a:["1","N¹/²","N/2","Log₂(N)"],c:0},
+
+  // Topología indirecta: Omega (red de interconexión sin nodos conectados a todos los switches)
   {q:"¿Cuál de las siguientes topologías de interconexión es indirecta?",
    a:["Hipercubo","Omega","Crossbar","Toroide"],c:1},
+
+  // Transparencia de ubicación → oculta la localización de los recursos
   {q:"La transparencia de ubicación debe ocultar:",
    a:["La localización de los recursos","El acceso concurrente a los recursos","La representación a bajo nivel de los datos","Los fallos producidos en el sistema distribuido"],c:0},
+
+  // A veces NO interesa ocultar: la replicación (el usuario puede querer elegir réplica más cercana)
   {q:"¿Qué característica a veces no interesa ocultar mediante la transparencia?",
    a:["Las redes de comunicación","La replicación de nodos","La ubicación de los usuarios","Ninguna de las anteriores"],c:1},
+
+  // Mirrors/Proxies → transparencia de replicación
   {q:"¿Las Mirrors/Proxies que tipo de transparencia soportan?",
    a:["Transparencia de replicación","Transparencia de ubicación","Transparencia de acceso","Ninguna de las anteriores"],c:0},
+
+  // No repudio → Firma digital
   {q:"¿Cuál de los siguientes mecanismos utiliza Internet para garantizar el no repudio?",
    a:["Encriptación de la información (protocolo https)","Antivirus","Firma digital","Certificados digitales"],c:2},
-  {q:"¿Cuál de los siguientes paradigmas no permite la ejecución remota de código?",
-   a:["RPC","Espacio de objetos","Sistemas de Mensajes","a y b"],c:3},
-  {q:"Un servicio con carga muy desbalanceada a lo largo del día y sin previsión de crecimiento futuro. ¿Qué propiedad Cloud puede aprovechar?",
+
+  // No permite ejecución remota de código → Sistemas de Mensajes (MOM solo pasa mensajes)
+  // RPC y Espacio de objetos SÍ ejecutan código remoto
+  {q:"¿Cuál de los siguientes paradigmas NO permite la ejecución remota de código?",
+   a:["RPC","Espacio de objetos","Sistemas de Mensajes","a y b"],c:2},
+
+  // Carga desbalanceada → Elasticidad (escala dinámicamente según demanda)
+  {q:"Un servicio con carga de peticiones muy desbalanceada a lo largo del día y sin previsión de crecimiento futuro. ¿Qué propiedad Cloud puede aprovechar?",
    a:["Elasticidad","Pago-por-consumo","Confiabilidad","Escalabilidad"],c:0},
+
+  // Chord y Pastry implementan DHT (Tabla de Hash Distribuida)
   {q:"¿Los sistemas Chord y Pastry qué algoritmo/método implementan de forma distribuida (P2P)?",
    a:["Búsqueda binaria","Ordenación quicksort","Tabla de Hash","a y c"],c:2},
 
-  // BLOQUE 3
+  // ── BLOQUE 3 ──────────────────────────────────────────────────────────────
+  // No ventaja SD → Seguro y confiable (la seguridad es un reto, no una ventaja inherente)
   {q:"¿Cuál de las siguientes características NO es una ventaja de un sistema distribuido?",
    a:["Abierto y heterogéneo","Seguro y confiable","Escalable","Buena relación coste/prestaciones"],c:1},
+
+  // Sistema abierto → todas: portabilidad, interfaces bien definidas, independencia heterogeneidad
   {q:"Para que un sistema distribuido sea abierto debe:",
    a:["Soportar la portabilidad de las aplicaciones","Tener interfaces bien definidas","Ser independiente de la heterogeneidad del entorno","Todas las anteriores"],c:3},
+
+  // No usa middleware → TCP/IP (es protocolo de red, no middleware)
   {q:"¿Cuál de los siguientes sistemas/protocolos no utiliza un middleware?",
    a:["CORBA","TCP-IP","RMI","SOAP"],c:1},
-  {q:"¿Las Mirrors/Proxies que tipo de transparencia soportan? (variante)",
+
+  // Mirrors/Proxies → transparencia de replicación (variante con opciones distintas)
+  {q:"¿Las Mirrors/Proxies que tipo de transparencia soportan? [variante]",
    a:["Transparencia de acceso","Transparencia de ubicación","Transparencia de replicación","Ninguna de las anteriores"],c:2},
-  {q:"La transparencia de acceso debe ocultar: (variante)",
+
+  // Transparencia de acceso oculta representación a bajo nivel de datos (variante)
+  {q:"La transparencia de acceso debe ocultar: [variante]",
    a:["La localización de los recursos","El acceso concurrente a los recursos","La representación a bajo nivel de los datos","Los fallos producidos en el sistema distribuido"],c:2},
-  {q:"¿Qué característica a veces no interesa ocultar mediante la transparencia? (variante)",
+
+  // No interesa ocultar: replicación (variante con opciones reordenadas)
+  {q:"¿Qué característica a veces no interesa ocultar mediante la transparencia? [variante]",
    a:["La ubicación de los usuarios","Las redes de comunicación","La replicación de nodos","Ninguna de las anteriores"],c:2},
+
+  // Navegadores → enmascaramiento (muestran página de error, no propagan el fallo real)
   {q:"¿Los navegadores web qué técnica de tratamiento de fallos implementan?",
    a:["Recuperación","Enmascaramiento","Tolerancia a fallos","Redundancia"],c:1},
+
+  // Confidencialidad → Encriptación / HTTPS
   {q:"¿Cuál de los siguientes mecanismos utiliza Internet para garantizar la confidencialidad?",
    a:["Encriptación de la información (protocolo https)","Certificados digitales","Antivirus","Firma digital"],c:0},
+
+  // Grid: ausencia de conocimiento total + no existencia de relaciones de confianza → a y b
   {q:"Los sistemas Grid permiten la compartición de recursos bajo la premisa de:",
    a:["Ausencia de un conocimiento total sobre el sistema","No existencia de relaciones de confianza","Pago por consumo","a y b"],c:3},
+
+  // Amazon EC2 = IaaS
   {q:"El modelo de Cloud utilizado por Amazon EC-2 (Elastic Compute Cloud) es:",
    a:["IaaS - Infrastructure as a service","PaaS - Platform as a service","SaaS - Software as a Service","PPV - Pay Per View"],c:0},
-  {q:"¿Cuál de los siguientes paradigmas no permite la ejecución remota de código? (variante)",
-   a:["RPC","Espacio de objetos","Sistemas de Mensajes","b y c"],c:3},
+
+  // No ejecución remota variante: "b y c" → Espacio de objetos SÍ ejecuta remoto, Mensajes NO
+  // La respuesta correcta es c) Sistemas de Mensajes únicamente
+  // Pero el enunciado original tenía opciones "a) RPC b) Espacio de objetos c) Sistemas Mensajes d) b y c"
+  // → correcta: c) Sistemas de Mensajes
+  {q:"¿Cuál de los siguientes paradigmas NO permite la ejecución remota de código? [variante]",
+   a:["RPC","Espacio de objetos","Sistemas de Mensajes","b y c"],c:2},
+
+  // MIMD (un procesador, múltiples flujos): Cray Y-MP es multiprocesador MIMD
   {q:"¿Cuál de los siguientes sistemas se puede clasificar como MIMD?",
    a:["Nvidia Tesla","Cray Y-MP","Intel Core 2 Duo T9900","MMX"],c:1},
+
+  // Clusters modernos top → SIMD y MIMD (nodos con CPUs MIMD + GPUs SIMD)
   {q:"¿Los clusters más potentes de hoy en día qué tipo de sistemas de cómputo utilizan?",
    a:["MISD","SIMD","MISD y MIMD","SIMD y MIMD"],c:3},
+
+  // Grado máximo toroide = 4 (cada nodo conectado a 4 vecinos: arriba, abajo, izq, der)
   {q:"¿Cuál es el grado máximo de entrada y salida de una topología toroide con M nodos?",
    a:["2","4","log₂(M)","M/2"],c:1},
+
+  // Diámetro árbol binario con M nodos = O(log₂(M))
   {q:"¿Cuál es el diámetro para una topología en árbol (binario) con M nodos y N niveles?",
    a:["3","O(log₂(M))","O(2ᴺ)","O(M·N)"],c:1},
+
+  // Diferencia directa/indirecta: topología directa → ratio switches/nodos = 1 (y c)
   {q:"¿Cuál es la principal diferencia entre una topología directa y una topología indirecta?",
    a:["Que el ratio switches/nodos es 1","Que el ratio switches/nodos es > 1","Que todo switch/conmutador está conectado a un nodo","a y c"],c:3},
+
+  // No ejecutar en front-end del cluster → ejecutar binarios directamente (./mi_trabajo)
   {q:"¿Qué NO se debe hacer desde el front-end de un cluster HPC (ej: moore.udl.net)?",
    a:["qsub ./mi_trabajo_paralelo.sh","./mi_trabajo_paralelo.sh","qmon &","qstat –j jobid"],c:1},
-  {q:"¿Cuál de los siguientes trabajos SGE necesita más recursos? (variante)",
+
+  // SGE más recursos variante: -pe 8 (8 procesadores)
+  {q:"¿Cuál de los siguientes trabajos SGE necesita más recursos? [variante]",
    a:["qsub –pe 8 ./mi_trabajo.sh","qsub –t1:10:2 ./mi_trabajo.sh","qsub –q high.q –m abe -l h_rt=00:30:00 ./mi_trabajo.sh","qsub –q all.q -l mem=3G -l h_rt=01:30:00 ./mi_trabajo.sh"],c:0},
+
+  // RoboCode mensajes: NO soporta multicast (solo broadcast a equipo o unicast)
   {q:"¿Qué afirmación es falsa respecto al paso de mensajes en RoboCode?",
    a:["Permite la subscripción a un tipo de mensajes específico","Los mensajes se reciben a través de eventos","Soporta comunicación multicast","Se puede pasar cualquier tipo de información en el mensaje"],c:2},
+
+  // Chord → Distribuida estructurada (DHT organiza los nodos en anillo estructurado)
   {q:"¿Qué tipo de arquitectura tiene Chord?",
    a:["Centralizada","Distribuida centralizada","Distribuida estructurada","Distribuida no-estructurada"],c:2},
 
-  // BLOQUE 4
+  // ── BLOQUE 4 ──────────────────────────────────────────────────────────────
+  // URLs → transparencia de ubicación (ocultan dónde está el recurso)
   {q:"¿Las URLs que tipo de transparencia proporciona?",
    a:["Transparencia de ubicación","Transparencia de acceso","Transparencia de replicación","Transparencia de concurrencia"],c:0},
+
+  // Firma digital → no repudio (autentica al emisor, no puede negar el envío)
   {q:"Las firmas digitales se utilizan para garantizar:",
    a:["La confidencialidad","La integridad","La disponibilidad","El no repudio"],c:3},
+
+  // CRC → detección de errores (no los corrige)
   {q:"¿El CRC qué técnica de tratamiento de fallos está implementando?",
    a:["Detección","Enmascaramiento","Tolerancia a fallos","Redundancia"],c:0},
+
+  // Principal obstáculo escalabilidad de tamaño → componentes centralizados
   {q:"¿Cuál es el principal obstáculo para la escalabilidad de tamaño?",
    a:["La latencia de las redes","Los componentes centralizados","El ancho de banda limitado de los switches/routers","La replicación de nodos"],c:1},
-  {q:"Un sistema Chord con un antecesor y 8 sucesores. ¿Cómo máximo cuántos peers se visitarán antes de encontrar un recurso?",
+
+  // Chord 8 sucesores → log₂(8) = 3 peers máximo antes de encontrar recurso
+  {q:"Un sistema Chord con un antecesor y 8 sucesores. ¿Cómo máximo cuántos peers se tendrán que visitar antes de encontrar un recurso?",
    a:["3","5","8","9"],c:0},
+
+  // Paso de mensajes → similar a E/S (send/receive como escribir/leer fichero)
   {q:"Respecto al paradigma de paso de mensajes podemos decir:",
    a:["Soporta comunicaciones asíncronas de forma transparente","Permite realizar la comunicación entre procesos de forma similar a la E/S","Proporciona una abstracción de la comunicación mediante multicast","Permite programar una app distribuida de forma similar a las convencionales"],c:1},
+
+  // Sobremesa actuales → MIMD (múltiples núcleos con flujos independientes)
   {q:"Los ordenadores de sobremesa actuales, ¿de qué tipo son?",
    a:["SIMD","MISD","MIMD","A y C"],c:2},
+
+  // Mejor escalabilidad entre sistemas → Clusters (MPP es escalable pero más rígido)
   {q:"De los siguientes tipos de sistemas de cómputo, ¿cuál ofrece la mejor escalabilidad?",
    a:["Computadores MPP","Clusters","Sistemas UMA","Sistema NUMA"],c:1},
+
+  // Alta Productividad (HTC) → maximizar trabajos completados por unidad de tiempo (throughput)
   {q:"¿Cuál es el objetivo principal de la Computación de Alta Productividad?",
    a:["Mejorar el tiempo de ejecución de la aplicación","Mejorar el tiempo de respuesta de la aplicación","Mejorar el número de trabajos completados por unidad de tiempo","Ninguna de las anteriores"],c:2},
+
+  // SGE más procesadores: -pe 8 reserva 8 procesadores explícitamente
   {q:"¿Cuál de los siguientes trabajos SGE necesita más procesadores para su ejecución?",
    a:["qsub –t1:10:2 ./mi_trabajo.sh","qsub –pe 8 ./mi_trabajo.sh","qsub –q all.q -l mem=3G -l h_rt=01:30:00 ./mi_trabajo.sh","qsub –t1:5 -pe smp 3 ./mi_trabajo.sh"],c:1},
 
-  // BLOQUE 5
+  // ── BLOQUE 5 ──────────────────────────────────────────────────────────────
+  // Heterogeneidad → independiente de hardware, SO y lenguaje → Todas
   {q:"Para soportar la heterogeneidad, el sistema distribuido debe ser independiente de:",
    a:["Hardware","Sistema Operativo","Lenguaje de programación","Todas las anteriores"],c:3},
+
+  // RMI: ninguna de las anteriores es totalmente cierta
+  // (el callback permite que el servidor llame al cliente, rmic no es obligatorio con Java5+,
+  //  y sí permite objetos serializables como parámetros)
   {q:"Respecto a RMI, ¿cuál de las siguientes afirmaciones es cierta?",
-   a:["Solo el cliente puede invocar métodos remotos","Es obligatorio crear los proxies con rmic","No permite objetos como parámetros o retorno","Ninguna de las anteriores"],c:3},
+   a:["Solo el cliente puede invocar métodos remotos","Es obligatorio crear los proxies del cliente y servidor con la herramienta rmic","No permite la utilización de objetos como parámetros o valores de retorno","Ninguna de las anteriores"],c:3},
+
+  // Sistema abierto → puede interactuar con servicios de otros sistemas (interoperabilidad)
   {q:"¿Qué implica que un sistema distribuido sea abierto?",
    a:["Que su código esté disponible para el público","Que pueda ser accesible en todo momento","Que pueda interactuar con servicios de otros sistemas","Que sea seguro"],c:2},
+
+  // Recolocación vs Migración → si los recursos están siendo utilizados o no en el momento
   {q:"¿Cuál es la principal diferencia entre transparencia de recolocación y transparencia de migración?",
    a:["Que exista replicación entre los recursos","El tipo de recursos involucrados","El volumen de recursos involucrados","Que los recursos estén siendo utilizados o no"],c:3},
+
+  // Escalabilidad geográfica → CDN (distribuye contenido cerca del usuario)
   {q:"¿Cuál de las siguientes técnicas permite mejorar la escalabilidad geográfica?",
    a:["Utilizar un CDN","Utilizar un servidor distribuido horizontalmente","Ampliar el ancho de banda de red del SD","Utilizar un sistema RAID"],c:0},
+
+  // Office 365 = SaaS
   {q:"El modelo de Cloud utilizado por Office 365 es:",
    a:["IaaS - Infrastructure as a service","SaaS - Software as a Service","PaaS - Platform as a service","Ninguna de las anteriores"],c:1},
+
+  // MOM → similar a E/S (los mensajes se depositan en una cola como en un fichero)
   {q:"Respecto al paradigma de sistema de mensajes (MOM) podemos decir:",
-   a:["Se usan los mensajes para comunicar directamente dos procesos","Permite la comunicación entre procesos de forma similar a E/S","Proporciona una abstracción de la comunicación mediante multicast","RPC es un ejemplo de este paradigma"],c:1},
+   a:["Se utilizan los mensajes para comunicar directamente dos procesos","Permite realizar la comunicación entre los procesos de forma similar a realizar E/S","Proporciona una abstracción de la comunicación mediante multicast","RPC es un ejemplo de este paradigma"],c:1},
+
+  // P2P no estructurado → no determinista en la búsqueda (flooding, no DHT)
   {q:"¿Un sistema P2P NO estructurado se caracteriza por?",
    a:["Implementar una DHT para localizar los recursos","No ser determinista en la búsqueda de recursos","Organizar a los peer en forma de anillo","A y C"],c:1},
-  {q:"¿Cuál de los siguientes sistemas se puede clasificar como MIMD? (variante)",
+
+  // MIMD variante: IBM Blue Gene (multiprocesador masivo MIMD)
+  // Nvidia Tesla = SIMD, Earth Simulator = vectorial, MMX = SIMD
+  {q:"¿Cuál de los siguientes sistemas se puede clasificar como MIMD? [variante]",
    a:["IBM Blue Gene","Nvidia Tesla","Earth Simulator","MMX"],c:0},
+
+  // NUMA vs UMA → la diferencia es la distancia a las distintas memorias
   {q:"¿Cuál es la principal diferencia entre una arquitectura NUMA y una arquitectura UMA?",
-   a:["Que se mantiene la coherencia de la cache mediante hardware","Que cada procesador tiene su propia memoria local no accesible para el resto","La distancia a la que se encuentran las distintas memorias","La no existencia de un espacio global de direcciones"],c:2},
+   a:["Que se mantiene la coherencia de la caché mediante hardware","Que cada procesador tiene su propia memoria local no accesible para el resto","La distancia a la que se encuentran las distintas memorias","La no existencia de un espacio global de direcciones"],c:2},
 ];
 
 // ── STATE ──
