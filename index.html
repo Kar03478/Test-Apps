@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Test · Sistemas Distribuidos</title>
+<title>Test · Bases de Datos NoSQL</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0a0a0f;
-    --surface: #13131a;
-    --surface2: #1c1c28;
-    --border: #2a2a3d;
-    --accent: #6c63ff;
+    --bg: #0a0f0e;
+    --surface: #111a18;
+    --surface2: #182220;
+    --border: #1f3330;
+    --accent: #00c896;
     --accent2: #ff6584;
     --green: #00e5a0;
     --red: #ff4d6d;
     --yellow: #ffd166;
-    --text: #e8e8f0;
-    --text-dim: #7a7a9a;
+    --text: #e0f0ec;
+    --text-dim: #6a8f88;
     --mono: 'Space Mono', monospace;
     --sans: 'Syne', sans-serif;
   }
@@ -34,419 +34,288 @@
     align-items: center;
     padding: 16px 12px 40px;
     background-image:
-      radial-gradient(ellipse at 20% 10%, rgba(108,99,255,0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(255,101,132,0.08) 0%, transparent 50%);
+      radial-gradient(ellipse at 15% 10%, rgba(0,200,150,0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, rgba(255,101,132,0.07) 0%, transparent 50%);
   }
 
   /* ── HEADER ── */
   .header {
-    width: 100%;
-    max-width: 700px;
+    width: 100%; max-width: 700px;
     padding: 20px 0 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
   }
   .header-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--accent);
-    text-transform: uppercase;
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 3px; color: var(--accent); text-transform: uppercase;
   }
-  .header h1 {
-    font-size: clamp(20px, 5vw, 28px);
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    text-align: center;
-  }
+  .header h1 { font-size: clamp(18px,5vw,26px); font-weight: 800; letter-spacing: -0.5px; text-align: center; }
 
   /* ── SCREENS ── */
   .screen { width: 100%; max-width: 700px; display: none; }
   .screen.active { display: flex; flex-direction: column; gap: 16px; }
 
-  /* ── START SCREEN ── */
+  /* ── START ── */
   .start-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    text-align: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px 24px;
+    display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center;
     margin-top: 24px;
   }
   .start-icon { font-size: 56px; line-height: 1; }
   .start-card h2 { font-size: 22px; font-weight: 700; }
-  .start-card p { color: var(--text-dim); font-size: 14px; line-height: 1.6; max-width: 340px; }
-  .stat-row {
-    display: flex;
-    gap: 12px;
-    width: 100%;
-    justify-content: center;
-  }
+  .start-card p { color: var(--text-dim); font-size: 14px; line-height: 1.6; max-width: 360px; }
+  .stat-row { display: flex; gap: 12px; width: 100%; justify-content: center; }
   .stat-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    flex: 1;
-    max-width: 140px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    flex: 1; max-width: 140px;
   }
-  .stat-box .num {
-    font-family: var(--mono);
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--accent);
-  }
+  .stat-box .num { font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--accent); }
   .stat-box .lbl { font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px; }
+
+  /* ── MODE SELECTOR ── */
+  .mode-row { display: flex; gap: 10px; width: 100%; }
+  .mode-btn {
+    flex: 1; padding: 12px 10px; border-radius: 12px;
+    border: 2px solid var(--border); background: var(--surface2);
+    color: var(--text-dim); font-family: var(--sans); font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s; text-align: center; line-height: 1.4;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mode-btn:active { transform: scale(0.97); }
+  .mode-btn.selected { border-color: var(--accent); color: var(--text); background: rgba(0,200,150,0.1); }
+  .mode-icon { font-size: 22px; display: block; margin-bottom: 4px; }
 
   /* ── BUTTONS ── */
   .btn {
-    padding: 14px 28px;
-    border-radius: 12px;
-    border: none;
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    letter-spacing: 0.3px;
+    padding: 14px 28px; border-radius: 12px; border: none;
+    font-family: var(--sans); font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s; letter-spacing: 0.3px;
     -webkit-tap-highlight-color: transparent;
   }
   .btn-primary {
-    background: var(--accent);
-    color: white;
-    width: 100%;
-    max-width: 300px;
-    box-shadow: 0 0 30px rgba(108,99,255,0.35);
+    background: var(--accent); color: #0a0f0e;
+    width: 100%; max-width: 300px;
+    box-shadow: 0 0 30px rgba(0,200,150,0.35);
   }
-  .btn-primary:active { transform: scale(0.97); box-shadow: 0 0 15px rgba(108,99,255,0.2); }
+  .btn-primary:active { transform: scale(0.97); }
   .btn-secondary {
-    background: var(--surface2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    width: 100%;
+    background: var(--surface2); color: var(--text);
+    border: 1px solid var(--border); width: 100%;
   }
   .btn-secondary:active { transform: scale(0.97); }
 
   /* ── PROGRESS ── */
-  .progress-section {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .progress-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .progress-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-  }
+  .progress-section { display: flex; flex-direction: column; gap: 8px; }
+  .progress-info { display: flex; justify-content: space-between; align-items: center; }
+  .progress-label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
   .score-badge {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--green);
-    background: rgba(0,229,160,0.1);
-    border: 1px solid rgba(0,229,160,0.25);
-    padding: 3px 10px;
-    border-radius: 20px;
+    font-family: var(--mono); font-size: 12px; color: var(--green);
+    background: rgba(0,229,160,0.1); border: 1px solid rgba(0,229,160,0.25);
+    padding: 3px 10px; border-radius: 20px;
   }
-  .progress-bar {
-    height: 6px;
-    background: var(--surface2);
-    border-radius: 10px;
-    overflow: hidden;
-  }
+  .progress-bar { height: 6px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
   .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 10px;
-    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    height: 100%; background: linear-gradient(90deg, var(--accent), #00ffe1);
+    border-radius: 10px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
   }
-  .dots-row {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
+  .dots-row { display: flex; gap: 4px; flex-wrap: wrap; }
   .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border); transition: all 0.3s ease;
   }
   .dot.done-correct { background: var(--green); border-color: var(--green); }
-  .dot.done-wrong { background: var(--red); border-color: var(--red); }
-  .dot.current { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px var(--accent); }
+  .dot.done-wrong   { background: var(--red);   border-color: var(--red); }
+  .dot.done-skip    { background: var(--yellow); border-color: var(--yellow); }
+  .dot.current      { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px var(--accent); }
 
   /* ── QUESTION CARD ── */
   .question-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 24px 20px;
+    display: flex; flex-direction: column; gap: 18px;
   }
-  .q-number {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--accent);
-    letter-spacing: 2px;
-    text-transform: uppercase;
+  .q-number { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
+  .q-text { font-size: clamp(14px,3.5vw,17px); font-weight: 600; line-height: 1.6; color: var(--text); }
+  .q-blank {
+    display: inline-block; min-width: 80px; border-bottom: 3px solid var(--accent);
+    color: var(--accent); padding: 0 4px; font-family: var(--mono);
   }
-  .q-text {
-    font-size: clamp(14px, 3.5vw, 17px);
-    font-weight: 600;
-    line-height: 1.5;
-    color: var(--text);
-  }
-
-  /* ── OPTIONS ── */
-  .options { display: flex; flex-direction: column; gap: 10px; }
-  .option {
-    background: var(--surface2);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    cursor: pointer;
-    font-size: clamp(13px, 3.2vw, 15px);
-    font-family: var(--sans);
-    color: var(--text);
-    text-align: left;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    transition: all 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
-    line-height: 1.4;
-    user-select: none;
-  }
-  .option:active { transform: scale(0.985); }
-  .option-letter {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-dim);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 2px 7px;
-    flex-shrink: 0;
-    margin-top: 1px;
-    transition: all 0.15s;
-  }
-  .option.selected {
-    border-color: var(--accent);
-    background: rgba(108,99,255,0.12);
-  }
-  .option.selected .option-letter {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-  }
-  .option.correct {
-    border-color: var(--green) !important;
-    background: rgba(0,229,160,0.1) !important;
-  }
-  .option.correct .option-letter {
-    background: var(--green) !important;
-    border-color: var(--green) !important;
-    color: #0a0a0f !important;
-  }
-  .option.wrong {
-    border-color: var(--red) !important;
-    background: rgba(255,77,109,0.1) !important;
-  }
-  .option.wrong .option-letter {
-    background: var(--red) !important;
-    border-color: var(--red) !important;
-    color: white !important;
-  }
-  .option.disabled { cursor: default; pointer-events: none; }
-
-  /* ── FEEDBACK ── */
-  .feedback {
+  .hint-box {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; font-size: 12px; color: var(--text-dim); line-height: 1.5;
     display: none;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    align-items: center;
-    gap: 8px;
   }
-  .feedback.show { display: flex; }
-  .feedback.ok { background: rgba(0,229,160,0.1); color: var(--green); border: 1px solid rgba(0,229,160,0.25); }
-  .feedback.nope { background: rgba(255,77,109,0.1); color: var(--red); border: 1px solid rgba(255,77,109,0.25); }
+  .hint-box.show { display: block; }
+  .hint-toggle {
+    background: none; border: 1px solid var(--border);
+    color: var(--text-dim); font-family: var(--mono); font-size: 11px;
+    padding: 6px 12px; border-radius: 8px; cursor: pointer;
+    letter-spacing: 1px; transition: all 0.15s; align-self: flex-start;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hint-toggle:active { transform: scale(0.97); }
+
+  /* ── FLASHCARD MODE ── */
+  .flashcard {
+    perspective: 1000px; width: 100%; min-height: 200px; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .flashcard-inner {
+    position: relative; width: 100%; min-height: 200px;
+    transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 20px;
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute; width: 100%; min-height: 200px;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 20px; padding: 28px 24px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; gap: 14px;
+  }
+  .flashcard-front {
+    background: var(--surface); border: 1px solid var(--border);
+  }
+  .flashcard-back {
+    background: linear-gradient(135deg, rgba(0,200,150,0.15), rgba(0,100,80,0.1));
+    border: 1px solid rgba(0,200,150,0.4);
+    transform: rotateY(180deg);
+  }
+  .card-hint { font-size: 11px; color: var(--text-dim); font-family: var(--mono); letter-spacing: 1px; }
+  .card-tap-hint { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
+  .answer-reveal {
+    font-family: var(--mono); font-size: clamp(18px,5vw,28px);
+    font-weight: 700; color: var(--green); letter-spacing: 1px;
+    word-break: break-word;
+  }
+  .answer-context { font-size: 13px; color: var(--text-dim); line-height: 1.5; max-width: 400px; }
+
+  /* ── SELF ASSESS ── */
+  .assess-row { display: flex; gap: 10px; }
+  .assess-btn {
+    flex: 1; padding: 13px 10px; border-radius: 12px; border: none;
+    font-family: var(--sans); font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent;
+  }
+  .assess-correct { background: rgba(0,229,160,0.15); color: var(--green); border: 2px solid var(--green); }
+  .assess-wrong   { background: rgba(255,77,109,0.15); color: var(--red);   border: 2px solid var(--red); }
+  .assess-skip    { background: var(--surface2); color: var(--text-dim);  border: 2px solid var(--border); }
+  .assess-btn:active { transform: scale(0.96); }
+
+  /* ── WRITE MODE INPUT ── */
+  .write-area { display: flex; flex-direction: column; gap: 10px; }
+  .answer-input {
+    background: var(--surface2); border: 2px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+    font-family: var(--mono); font-size: 15px; color: var(--text);
+    outline: none; transition: border-color 0.15s; width: 100%;
+  }
+  .answer-input:focus { border-color: var(--accent); }
+  .answer-input.correct-input { border-color: var(--green); background: rgba(0,229,160,0.08); color: var(--green); }
+  .answer-input.wrong-input   { border-color: var(--red);   background: rgba(255,77,109,0.08); }
+  .write-feedback {
+    font-size: 13px; padding: 10px 14px; border-radius: 10px;
+    display: none; font-weight: 600; line-height: 1.4;
+  }
+  .write-feedback.show { display: block; }
+  .write-feedback.ok   { background: rgba(0,229,160,0.1); color: var(--green); border: 1px solid rgba(0,229,160,0.25); }
+  .write-feedback.nope { background: rgba(255,77,109,0.1); color: var(--red);   border: 1px solid rgba(255,77,109,0.25); }
 
   /* ── NAV ── */
   .nav-btn {
-    padding: 15px;
-    border-radius: 14px;
-    border: none;
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    background: var(--accent);
-    color: white;
-    width: 100%;
-    box-shadow: 0 0 24px rgba(108,99,255,0.3);
-    transition: all 0.15s;
-    -webkit-tap-highlight-color: transparent;
-    letter-spacing: 0.2px;
+    padding: 15px; border-radius: 14px; border: none;
+    font-family: var(--sans); font-size: 15px; font-weight: 700;
+    cursor: pointer; background: var(--accent); color: #0a0f0e;
+    width: 100%; box-shadow: 0 0 24px rgba(0,200,150,0.3);
+    transition: all 0.15s; -webkit-tap-highlight-color: transparent;
   }
-  .nav-btn:disabled {
-    background: var(--surface2);
-    color: var(--text-dim);
-    box-shadow: none;
-    cursor: default;
-  }
+  .nav-btn:disabled { background: var(--surface2); color: var(--text-dim); box-shadow: none; cursor: default; }
   .nav-btn:not(:disabled):active { transform: scale(0.97); }
 
   /* ── RESULTS ── */
   .results-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    text-align: center;
-    margin-top: 16px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px 24px;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    text-align: center; margin-top: 16px;
   }
   .result-emoji { font-size: 64px; line-height: 1; }
-  .result-score {
-    font-family: var(--mono);
-    font-size: clamp(48px, 14vw, 72px);
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .result-fraction {
-    font-family: var(--mono);
-    font-size: 16px;
-    color: var(--text-dim);
-    margin-top: -8px;
-  }
-  .result-message {
-    font-size: clamp(16px, 4vw, 20px);
-    font-weight: 700;
-    max-width: 300px;
-  }
-  .result-pct {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-  .breakdown {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
+  .result-score { font-family: var(--mono); font-size: clamp(48px,14vw,72px); font-weight: 700; color: var(--accent); line-height: 1; }
+  .result-fraction { font-family: var(--mono); font-size: 16px; color: var(--text-dim); margin-top: -8px; }
+  .result-message  { font-size: clamp(15px,4vw,19px); font-weight: 700; max-width: 300px; }
+  .result-pct { font-family: var(--mono); font-size: 13px; color: var(--text-dim); }
+  .breakdown { width: 100%; display: flex; gap: 10px; justify-content: center; }
   .bk-box {
-    flex: 1;
-    max-width: 130px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    flex: 1; max-width: 110px; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
   }
-  .bk-num { font-family: var(--mono); font-size: 22px; font-weight: 700; }
-  .bk-lbl { font-size: 11px; color: var(--text-dim); }
+  .bk-num { font-family: var(--mono); font-size: 20px; font-weight: 700; }
+  .bk-lbl { font-size: 10px; color: var(--text-dim); text-align: center; }
   .bk-box.correct-box .bk-num { color: var(--green); }
-  .bk-box.wrong-box .bk-num { color: var(--red); }
+  .bk-box.wrong-box   .bk-num { color: var(--red); }
+  .bk-box.skip-box    .bk-num { color: var(--yellow); }
   .results-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 
-  /* ── REVIEW LIST ── */
+  /* ── REVIEW ── */
   .review-section { display: flex; flex-direction: column; gap: 10px; }
   .review-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-family: var(--mono);
-    padding: 4px 0;
-    border-bottom: 1px solid var(--border);
-    margin-top: 8px;
+    font-size: 12px; font-weight: 700; color: var(--text-dim); letter-spacing: 1px;
+    text-transform: uppercase; font-family: var(--mono);
+    padding: 4px 0; border-bottom: 1px solid var(--border); margin-top: 8px;
   }
   .review-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 8px;
   }
   .review-item.r-correct { border-color: rgba(0,229,160,0.3); }
-  .review-item.r-wrong { border-color: rgba(255,77,109,0.3); }
+  .review-item.r-wrong   { border-color: rgba(255,77,109,0.3); }
+  .review-item.r-skip    { border-color: rgba(255,209,102,0.3); }
   .review-q { font-size: 13px; font-weight: 600; line-height: 1.4; }
   .review-ans {
-    font-size: 12px;
-    font-family: var(--mono);
-    padding: 6px 10px;
-    border-radius: 7px;
+    font-size: 12px; font-family: var(--mono);
+    padding: 6px 10px; border-radius: 7px;
   }
-  .review-ans.r-correct-ans { background: rgba(0,229,160,0.1); color: var(--green); }
-  .review-ans.r-wrong-ans { background: rgba(255,77,109,0.1); color: var(--red); }
-  .review-ans.r-right-ans { background: rgba(0,229,160,0.08); color: var(--green); font-size: 11px; }
+  .review-ans.correct-ans { background: rgba(0,229,160,0.1); color: var(--green); }
+  .review-ans.wrong-ans   { background: rgba(255,77,109,0.1); color: var(--red); }
 
   @media (max-width: 380px) {
     .stat-row { gap: 8px; }
     .stat-box { padding: 10px 12px; }
     .stat-box .num { font-size: 20px; }
+    .mode-row { flex-direction: column; }
   }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-label">UdL · Ingeniería Informática</div>
-  <h1>Sistemas Distribuidos</h1>
+  <div class="header-label">Bases de Datos · NoSQL</div>
+  <h1>Studley — Tarjetas de Estudio</h1>
 </div>
 
 <!-- ── START ── -->
 <div class="screen active" id="screen-start">
   <div class="start-card">
-    <div class="start-icon">🧠</div>
-    <h2>Test de Práctica</h2>
-    <p>Cada ronda te pregunta <strong>15 preguntas aleatorias</strong> del banco completo de examen. ¡Entrena hasta dominarlo todo!</p>
+    <div class="start-icon">🗄️</div>
+    <h2>Test NoSQL</h2>
+    <p>Elige cómo quieres estudiar. Cada ronda mezcla <strong>15 tarjetas aleatorias</strong> del banco completo.</p>
     <div class="stat-row">
-      <div class="stat-box">
-        <span class="num" id="total-q-count">—</span>
-        <span class="lbl">Preguntas</span>
-      </div>
-      <div class="stat-box">
-        <span class="num">15</span>
-        <span class="lbl">Por ronda</span>
-      </div>
-      <div class="stat-box">
-        <span class="num" id="best-score-display">—</span>
-        <span class="lbl">Mejor</span>
-      </div>
+      <div class="stat-box"><span class="num">105</span><span class="lbl">Tarjetas</span></div>
+      <div class="stat-box"><span class="num">15</span><span class="lbl">Por ronda</span></div>
+      <div class="stat-box"><span class="num" id="best-display">—</span><span class="lbl">Mejor</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--text-dim);font-weight:600;">Elige modo:</p>
+    <div class="mode-row">
+      <button class="mode-btn selected" id="mode-flash" onclick="setMode('flash')">
+        <span class="mode-icon">🃏</span>Flashcard<br><span style="font-size:10px;font-weight:400;">Gira y autoevalúate</span>
+      </button>
+      <button class="mode-btn" id="mode-write" onclick="setMode('write')">
+        <span class="mode-icon">✍️</span>Escribir<br><span style="font-size:10px;font-weight:400;">Escribe la respuesta</span>
+      </button>
     </div>
     <button class="btn btn-primary" onclick="startQuiz()">¡Empezar ronda!</button>
   </div>
@@ -454,24 +323,57 @@
 
 <!-- ── QUIZ ── -->
 <div class="screen" id="screen-quiz">
-
   <div class="progress-section">
     <div class="progress-info">
-      <span class="progress-label" id="prog-label">PREGUNTA 1 / 15</span>
+      <span class="progress-label" id="prog-label">TARJETA 1 / 15</span>
       <span class="score-badge" id="score-badge">✓ 0</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
     <div class="dots-row" id="dots-row"></div>
   </div>
 
-  <div class="question-card">
-    <div class="q-number" id="q-number">PREGUNTA 01</div>
-    <div class="q-text" id="q-text"></div>
-    <div class="options" id="options"></div>
-    <div class="feedback" id="feedback"></div>
+  <!-- FLASHCARD MODE -->
+  <div id="flash-container">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div class="q-number" id="fc-number">TARJETA 01</div>
+          <div class="q-text" id="fc-text"></div>
+          <div class="hint-box" id="fc-hint"></div>
+          <span class="card-tap-hint">Toca para ver la respuesta 👆</span>
+        </div>
+        <div class="flashcard-back">
+          <div class="card-hint">RESPUESTA</div>
+          <div class="answer-reveal" id="fc-answer"></div>
+          <div class="answer-context" id="fc-hint-back"></div>
+        </div>
+      </div>
+    </div>
+    <div class="assess-row" id="assess-row" style="display:none;">
+      <button class="assess-btn assess-wrong"   onclick="assess(false)">✗ No sabía</button>
+      <button class="assess-btn assess-skip"    onclick="assess(null)">→ Saltar</button>
+      <button class="assess-btn assess-correct" onclick="assess(true)">✓ Lo sabía</button>
+    </div>
   </div>
 
-  <button class="nav-btn" id="nav-btn" disabled onclick="handleNav()">Selecciona una respuesta</button>
+  <!-- WRITE MODE -->
+  <div id="write-container" style="display:none;">
+    <div class="question-card">
+      <div class="q-number" id="wr-number">TARJETA 01</div>
+      <div class="q-text" id="wr-text"></div>
+      <div class="write-area">
+        <input class="answer-input" id="answer-input" type="text"
+               placeholder="Escribe la respuesta aquí…"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               onkeydown="handleKey(event)">
+        <div class="write-feedback" id="write-feedback"></div>
+      </div>
+      <button class="hint-toggle" onclick="toggleHint()" id="hint-btn">💡 Ver pista</button>
+      <div class="hint-box" id="wr-hint"></div>
+    </div>
+  </div>
+
+  <button class="nav-btn" id="nav-btn" disabled onclick="handleNav()">Confirmar respuesta</button>
 </div>
 
 <!-- ── RESULTS ── -->
@@ -483,8 +385,9 @@
     <div class="result-message" id="result-message"></div>
     <div class="result-pct" id="result-pct"></div>
     <div class="breakdown">
-      <div class="bk-box correct-box"><span class="bk-num" id="bk-correct">0</span><span class="bk-lbl">✓ Correctas</span></div>
-      <div class="bk-box wrong-box"><span class="bk-num" id="bk-wrong">0</span><span class="bk-lbl">✗ Falladas</span></div>
+      <div class="bk-box correct-box"><span class="bk-num" id="bk-correct">0</span><span class="bk-lbl">✓ Sabías</span></div>
+      <div class="bk-box skip-box">   <span class="bk-num" id="bk-skip">0</span>   <span class="bk-lbl">→ Saltadas</span></div>
+      <div class="bk-box wrong-box">  <span class="bk-num" id="bk-wrong">0</span>  <span class="bk-lbl">✗ Falladas</span></div>
     </div>
     <div class="results-actions">
       <button class="btn btn-primary" onclick="startQuiz()">Nueva ronda</button>
@@ -501,280 +404,125 @@
 </div>
 
 <script>
-// ────────────────────────────────────────────────
-// BANCO COMPLETO DE PREGUNTAS
-// ────────────────────────────────────────────────
-const ALL_QUESTIONS = [
-  // ── BLOQUE 1 ──────────────────────────────────────────────────────────────
-  // Las URL/URIs ocultan la ubicación del recurso (transparencia de ubicación)
-  {q:"¿Las URL/URIs que tipo de transparencia proporcionan?",
-   a:["Transparencia de acceso","Transparencia de ubicación","Transparencia de concurrencia","Ninguna de las anteriores"],c:1},
-
-  // Transparencia de acceso → oculta representación a bajo nivel de los datos
-  {q:"La transparencia de acceso debe ocultar:",
-   a:["La representación a bajo nivel de los datos","Los fallos producidos en el sistema distribuido","La localización de los recursos","El acceso concurrente a los recursos"],c:0},
-
-  // Google AppEngine = PaaS
-  {q:"El modelo de Cloud utilizado por Google AppEngine es:",
-   a:["PPV - Pay Per View","IaaS - Infrastructure as a service","SaaS - Software as a Service","PaaS - Platform as a service"],c:3},
-
-  // Mejor escalabilidad → Hipercubo (más conexiones, diámetro logarítmico)
-  {q:"¿Cuál de las siguientes topologías proporciona una mejor escalabilidad?",
-   a:["Bus","Árbol binario","Hipercubo","Crossbar"],c:2},
-
-  // Diámetro toroide N procesadores = 2(√N − 1)
-  {q:"¿Cuál es el diámetro de una topología Toroide con N procesadores?",
-   a:["N/2","N","2(N¹/²-1)","Log₂(N)"],c:2},
-
-  // SIMD: Nvidia Tesla (SIMD GPU), MMX (SIMD extensión), Cray Y-MP (vectorial/SIMD) → Todos
-  {q:"¿Cuál de los siguientes sistemas se puede clasificar como SIMD?",
-   a:["Nvidia Tesla","Cray Y-MP","MMX","Todos los anteriores"],c:3},
-
-  // Eficiencia: la única cierta es b) No es posible >1 (en el modelo clásico Amdahl)
-  {q:"Respecto a la eficiencia, ¿cuál de las siguientes afirmaciones es cierta?",
-   a:["Si obtenemos eficiencia 0.5 con cuatro procesadores, la aplicación secuencial tarda el doble que la paralela","No es posible obtener una eficiencia superior a 1","Con 8 procesadores se puede obtener mejor eficiencia que con 2","Todas las anteriores"],c:1},
-
-  // Gustafson: S(P) = P − α·(P−1) = 100 − 0.1·99 = 90.1
-  {q:"De acuerdo con la Ley de Gustafson, ¿qué speedup obtendría una aplicación paralela con un 10% de código secuencial ejecutándose en una máquina con 100 procesadores?",
-   a:["9,17","20,5","90,1","100"],c:2},
-
-  // Menor ratio comunicación/cómputo → Por bloques (cada bloque comparte menos frontera)
-  {q:"¿Cuál de los siguientes métodos de agregación de tareas es susceptible de generar un menor ratio de comunicaciones/cómputo?",
-   a:["Por filas","Por columnas","Por bloques","Cíclica"],c:2},
-
-  // Pool de trabajos → mejor balanceo de la carga
-  {q:"Respecto al patrón Master/Worker, ¿qué ventaja aporta la variante basada en un Pool de trabajos?",
-   a:["Reduce la congestión del Master","Permite un mejor balanceo de la carga","Permite una mejor sincronización","Permite reducir el número de comunicaciones"],c:1},
-
-  // ── BLOQUE 2 ──────────────────────────────────────────────────────────────
-  // SGE: -pe 8 reserva 8 procesadores explícitamente → más recursos
-  {q:"¿Cuál de los siguientes trabajos SGE necesita más recursos (procesadores)?",
-   a:["qsub –pe 8 ./mi_trabajo.sh","qsub –q all.q -l mem=3G -l h_rt=01:30:00 ./mi_trabajo.sh","qsub –q high.q –m abe -l h_rt=00:30:00 ./mi_trabajo.sh","qsub –t1:10 ./mi_trabajo.sh"],c:0},
-
-  // Ancho de bisección árbol binario = 1 (se corta un único enlace en la raíz)
-  {q:"¿Cuál es el ancho de bisección de un árbol con N procesadores?",
-   a:["1","N¹/²","N/2","Log₂(N)"],c:0},
-
-  // Topología indirecta: Omega (red de interconexión sin nodos conectados a todos los switches)
-  {q:"¿Cuál de las siguientes topologías de interconexión es indirecta?",
-   a:["Hipercubo","Omega","Crossbar","Toroide"],c:1},
-
-  // Transparencia de ubicación → oculta la localización de los recursos
-  {q:"La transparencia de ubicación debe ocultar:",
-   a:["La localización de los recursos","El acceso concurrente a los recursos","La representación a bajo nivel de los datos","Los fallos producidos en el sistema distribuido"],c:0},
-
-  // A veces NO interesa ocultar: la replicación (el usuario puede querer elegir réplica más cercana)
-  {q:"¿Qué característica a veces no interesa ocultar mediante la transparencia?",
-   a:["Las redes de comunicación","La replicación de nodos","La ubicación de los usuarios","Ninguna de las anteriores"],c:1},
-
-  // Mirrors/Proxies → transparencia de replicación
-  {q:"¿Las Mirrors/Proxies que tipo de transparencia soportan?",
-   a:["Transparencia de replicación","Transparencia de ubicación","Transparencia de acceso","Ninguna de las anteriores"],c:0},
-
-  // No repudio → Firma digital
-  {q:"¿Cuál de los siguientes mecanismos utiliza Internet para garantizar el no repudio?",
-   a:["Encriptación de la información (protocolo https)","Antivirus","Firma digital","Certificados digitales"],c:2},
-
-  // No permite ejecución remota de código → Sistemas de Mensajes (MOM solo pasa mensajes)
-  // RPC y Espacio de objetos SÍ ejecutan código remoto
-  {q:"¿Cuál de los siguientes paradigmas NO permite la ejecución remota de código?",
-   a:["RPC","Espacio de objetos","Sistemas de Mensajes","a y b"],c:2},
-
-  // Carga desbalanceada → Elasticidad (escala dinámicamente según demanda)
-  {q:"Un servicio con carga de peticiones muy desbalanceada a lo largo del día y sin previsión de crecimiento futuro. ¿Qué propiedad Cloud puede aprovechar?",
-   a:["Elasticidad","Pago-por-consumo","Confiabilidad","Escalabilidad"],c:0},
-
-  // Chord y Pastry implementan DHT (Tabla de Hash Distribuida)
-  {q:"¿Los sistemas Chord y Pastry qué algoritmo/método implementan de forma distribuida (P2P)?",
-   a:["Búsqueda binaria","Ordenación quicksort","Tabla de Hash","a y c"],c:2},
-
-  // ── BLOQUE 3 ──────────────────────────────────────────────────────────────
-  // No ventaja SD → Seguro y confiable (la seguridad es un reto, no una ventaja inherente)
-  {q:"¿Cuál de las siguientes características NO es una ventaja de un sistema distribuido?",
-   a:["Abierto y heterogéneo","Seguro y confiable","Escalable","Buena relación coste/prestaciones"],c:1},
-
-  // Sistema abierto → todas: portabilidad, interfaces bien definidas, independencia heterogeneidad
-  {q:"Para que un sistema distribuido sea abierto debe:",
-   a:["Soportar la portabilidad de las aplicaciones","Tener interfaces bien definidas","Ser independiente de la heterogeneidad del entorno","Todas las anteriores"],c:3},
-
-  // No usa middleware → TCP/IP (es protocolo de red, no middleware)
-  {q:"¿Cuál de los siguientes sistemas/protocolos no utiliza un middleware?",
-   a:["CORBA","TCP-IP","RMI","SOAP"],c:1},
-
-  // Mirrors/Proxies → transparencia de replicación (variante con opciones distintas)
-  {q:"¿Las Mirrors/Proxies que tipo de transparencia soportan? [variante]",
-   a:["Transparencia de acceso","Transparencia de ubicación","Transparencia de replicación","Ninguna de las anteriores"],c:2},
-
-  // Transparencia de acceso oculta representación a bajo nivel de datos (variante)
-  {q:"La transparencia de acceso debe ocultar: [variante]",
-   a:["La localización de los recursos","El acceso concurrente a los recursos","La representación a bajo nivel de los datos","Los fallos producidos en el sistema distribuido"],c:2},
-
-  // No interesa ocultar: replicación (variante con opciones reordenadas)
-  {q:"¿Qué característica a veces no interesa ocultar mediante la transparencia? [variante]",
-   a:["La ubicación de los usuarios","Las redes de comunicación","La replicación de nodos","Ninguna de las anteriores"],c:2},
-
-  // Navegadores → enmascaramiento (muestran página de error, no propagan el fallo real)
-  {q:"¿Los navegadores web qué técnica de tratamiento de fallos implementan?",
-   a:["Recuperación","Enmascaramiento","Tolerancia a fallos","Redundancia"],c:1},
-
-  // Confidencialidad → Encriptación / HTTPS
-  {q:"¿Cuál de los siguientes mecanismos utiliza Internet para garantizar la confidencialidad?",
-   a:["Encriptación de la información (protocolo https)","Certificados digitales","Antivirus","Firma digital"],c:0},
-
-  // Grid: ausencia de conocimiento total + no existencia de relaciones de confianza → a y b
-  {q:"Los sistemas Grid permiten la compartición de recursos bajo la premisa de:",
-   a:["Ausencia de un conocimiento total sobre el sistema","No existencia de relaciones de confianza","Pago por consumo","a y b"],c:3},
-
-  // Amazon EC2 = IaaS
-  {q:"El modelo de Cloud utilizado por Amazon EC-2 (Elastic Compute Cloud) es:",
-   a:["IaaS - Infrastructure as a service","PaaS - Platform as a service","SaaS - Software as a Service","PPV - Pay Per View"],c:0},
-
-  // No ejecución remota variante: "b y c" → Espacio de objetos SÍ ejecuta remoto, Mensajes NO
-  // La respuesta correcta es c) Sistemas de Mensajes únicamente
-  // Pero el enunciado original tenía opciones "a) RPC b) Espacio de objetos c) Sistemas Mensajes d) b y c"
-  // → correcta: c) Sistemas de Mensajes
-  {q:"¿Cuál de los siguientes paradigmas NO permite la ejecución remota de código? [variante]",
-   a:["RPC","Espacio de objetos","Sistemas de Mensajes","b y c"],c:2},
-
-  // MIMD (un procesador, múltiples flujos): Cray Y-MP es multiprocesador MIMD
-  {q:"¿Cuál de los siguientes sistemas se puede clasificar como MIMD?",
-   a:["Nvidia Tesla","Cray Y-MP","Intel Core 2 Duo T9900","MMX"],c:1},
-
-  // Clusters modernos top → SIMD y MIMD (nodos con CPUs MIMD + GPUs SIMD)
-  {q:"¿Los clusters más potentes de hoy en día qué tipo de sistemas de cómputo utilizan?",
-   a:["MISD","SIMD","MISD y MIMD","SIMD y MIMD"],c:3},
-
-  // Grado máximo toroide = 4 (cada nodo conectado a 4 vecinos: arriba, abajo, izq, der)
-  {q:"¿Cuál es el grado máximo de entrada y salida de una topología toroide con M nodos?",
-   a:["2","4","log₂(M)","M/2"],c:1},
-
-  // Diámetro árbol binario con M nodos = O(log₂(M))
-  {q:"¿Cuál es el diámetro para una topología en árbol (binario) con M nodos y N niveles?",
-   a:["3","O(log₂(M))","O(2ᴺ)","O(M·N)"],c:1},
-
-  // Diferencia directa/indirecta: topología directa → ratio switches/nodos = 1 (y c)
-  {q:"¿Cuál es la principal diferencia entre una topología directa y una topología indirecta?",
-   a:["Que el ratio switches/nodos es 1","Que el ratio switches/nodos es > 1","Que todo switch/conmutador está conectado a un nodo","a y c"],c:3},
-
-  // No ejecutar en front-end del cluster → ejecutar binarios directamente (./mi_trabajo)
-  {q:"¿Qué NO se debe hacer desde el front-end de un cluster HPC (ej: moore.udl.net)?",
-   a:["qsub ./mi_trabajo_paralelo.sh","./mi_trabajo_paralelo.sh","qmon &","qstat –j jobid"],c:1},
-
-  // SGE más recursos variante: -pe 8 (8 procesadores)
-  {q:"¿Cuál de los siguientes trabajos SGE necesita más recursos? [variante]",
-   a:["qsub –pe 8 ./mi_trabajo.sh","qsub –t1:10:2 ./mi_trabajo.sh","qsub –q high.q –m abe -l h_rt=00:30:00 ./mi_trabajo.sh","qsub –q all.q -l mem=3G -l h_rt=01:30:00 ./mi_trabajo.sh"],c:0},
-
-  // RoboCode mensajes: NO soporta multicast (solo broadcast a equipo o unicast)
-  {q:"¿Qué afirmación es falsa respecto al paso de mensajes en RoboCode?",
-   a:["Permite la subscripción a un tipo de mensajes específico","Los mensajes se reciben a través de eventos","Soporta comunicación multicast","Se puede pasar cualquier tipo de información en el mensaje"],c:2},
-
-  // Chord → Distribuida estructurada (DHT organiza los nodos en anillo estructurado)
-  {q:"¿Qué tipo de arquitectura tiene Chord?",
-   a:["Centralizada","Distribuida centralizada","Distribuida estructurada","Distribuida no-estructurada"],c:2},
-
-  // ── BLOQUE 4 ──────────────────────────────────────────────────────────────
-  // URLs → transparencia de ubicación (ocultan dónde está el recurso)
-  {q:"¿Las URLs que tipo de transparencia proporciona?",
-   a:["Transparencia de ubicación","Transparencia de acceso","Transparencia de replicación","Transparencia de concurrencia"],c:0},
-
-  // Firma digital → no repudio (autentica al emisor, no puede negar el envío)
-  {q:"Las firmas digitales se utilizan para garantizar:",
-   a:["La confidencialidad","La integridad","La disponibilidad","El no repudio"],c:3},
-
-  // CRC → detección de errores (no los corrige)
-  {q:"¿El CRC qué técnica de tratamiento de fallos está implementando?",
-   a:["Detección","Enmascaramiento","Tolerancia a fallos","Redundancia"],c:0},
-
-  // Principal obstáculo escalabilidad de tamaño → componentes centralizados
-  {q:"¿Cuál es el principal obstáculo para la escalabilidad de tamaño?",
-   a:["La latencia de las redes","Los componentes centralizados","El ancho de banda limitado de los switches/routers","La replicación de nodos"],c:1},
-
-  // Chord 8 sucesores → log₂(8) = 3 peers máximo antes de encontrar recurso
-  {q:"Un sistema Chord con un antecesor y 8 sucesores. ¿Cómo máximo cuántos peers se tendrán que visitar antes de encontrar un recurso?",
-   a:["3","5","8","9"],c:0},
-
-  // Paso de mensajes → similar a E/S (send/receive como escribir/leer fichero)
-  {q:"Respecto al paradigma de paso de mensajes podemos decir:",
-   a:["Soporta comunicaciones asíncronas de forma transparente","Permite realizar la comunicación entre procesos de forma similar a la E/S","Proporciona una abstracción de la comunicación mediante multicast","Permite programar una app distribuida de forma similar a las convencionales"],c:1},
-
-  // Sobremesa actuales → MIMD (múltiples núcleos con flujos independientes)
-  {q:"Los ordenadores de sobremesa actuales, ¿de qué tipo son?",
-   a:["SIMD","MISD","MIMD","A y C"],c:2},
-
-  // Mejor escalabilidad entre sistemas → Clusters (MPP es escalable pero más rígido)
-  {q:"De los siguientes tipos de sistemas de cómputo, ¿cuál ofrece la mejor escalabilidad?",
-   a:["Computadores MPP","Clusters","Sistemas UMA","Sistema NUMA"],c:1},
-
-  // Alta Productividad (HTC) → maximizar trabajos completados por unidad de tiempo (throughput)
-  {q:"¿Cuál es el objetivo principal de la Computación de Alta Productividad?",
-   a:["Mejorar el tiempo de ejecución de la aplicación","Mejorar el tiempo de respuesta de la aplicación","Mejorar el número de trabajos completados por unidad de tiempo","Ninguna de las anteriores"],c:2},
-
-  // SGE más procesadores: -pe 8 reserva 8 procesadores explícitamente
-  {q:"¿Cuál de los siguientes trabajos SGE necesita más procesadores para su ejecución?",
-   a:["qsub –t1:10:2 ./mi_trabajo.sh","qsub –pe 8 ./mi_trabajo.sh","qsub –q all.q -l mem=3G -l h_rt=01:30:00 ./mi_trabajo.sh","qsub –t1:5 -pe smp 3 ./mi_trabajo.sh"],c:1},
-
-  // ── BLOQUE 5 ──────────────────────────────────────────────────────────────
-  // Heterogeneidad → independiente de hardware, SO y lenguaje → Todas
-  {q:"Para soportar la heterogeneidad, el sistema distribuido debe ser independiente de:",
-   a:["Hardware","Sistema Operativo","Lenguaje de programación","Todas las anteriores"],c:3},
-
-  // RMI: ninguna de las anteriores es totalmente cierta
-  // (el callback permite que el servidor llame al cliente, rmic no es obligatorio con Java5+,
-  //  y sí permite objetos serializables como parámetros)
-  {q:"Respecto a RMI, ¿cuál de las siguientes afirmaciones es cierta?",
-   a:["Solo el cliente puede invocar métodos remotos","Es obligatorio crear los proxies del cliente y servidor con la herramienta rmic","No permite la utilización de objetos como parámetros o valores de retorno","Ninguna de las anteriores"],c:3},
-
-  // Sistema abierto → puede interactuar con servicios de otros sistemas (interoperabilidad)
-  {q:"¿Qué implica que un sistema distribuido sea abierto?",
-   a:["Que su código esté disponible para el público","Que pueda ser accesible en todo momento","Que pueda interactuar con servicios de otros sistemas","Que sea seguro"],c:2},
-
-  // Recolocación vs Migración → si los recursos están siendo utilizados o no en el momento
-  {q:"¿Cuál es la principal diferencia entre transparencia de recolocación y transparencia de migración?",
-   a:["Que exista replicación entre los recursos","El tipo de recursos involucrados","El volumen de recursos involucrados","Que los recursos estén siendo utilizados o no"],c:3},
-
-  // Escalabilidad geográfica → CDN (distribuye contenido cerca del usuario)
-  {q:"¿Cuál de las siguientes técnicas permite mejorar la escalabilidad geográfica?",
-   a:["Utilizar un CDN","Utilizar un servidor distribuido horizontalmente","Ampliar el ancho de banda de red del SD","Utilizar un sistema RAID"],c:0},
-
-  // Office 365 = SaaS
-  {q:"El modelo de Cloud utilizado por Office 365 es:",
-   a:["IaaS - Infrastructure as a service","SaaS - Software as a Service","PaaS - Platform as a service","Ninguna de las anteriores"],c:1},
-
-  // MOM → similar a E/S (los mensajes se depositan en una cola como en un fichero)
-  {q:"Respecto al paradigma de sistema de mensajes (MOM) podemos decir:",
-   a:["Se utilizan los mensajes para comunicar directamente dos procesos","Permite realizar la comunicación entre los procesos de forma similar a realizar E/S","Proporciona una abstracción de la comunicación mediante multicast","RPC es un ejemplo de este paradigma"],c:1},
-
-  // P2P no estructurado → no determinista en la búsqueda (flooding, no DHT)
-  {q:"¿Un sistema P2P NO estructurado se caracteriza por?",
-   a:["Implementar una DHT para localizar los recursos","No ser determinista en la búsqueda de recursos","Organizar a los peer en forma de anillo","A y C"],c:1},
-
-  // MIMD variante: IBM Blue Gene (multiprocesador masivo MIMD)
-  // Nvidia Tesla = SIMD, Earth Simulator = vectorial, MMX = SIMD
-  {q:"¿Cuál de los siguientes sistemas se puede clasificar como MIMD? [variante]",
-   a:["IBM Blue Gene","Nvidia Tesla","Earth Simulator","MMX"],c:0},
-
-  // NUMA vs UMA → la diferencia es la distancia a las distintas memorias
-  {q:"¿Cuál es la principal diferencia entre una arquitectura NUMA y una arquitectura UMA?",
-   a:["Que se mantiene la coherencia de la caché mediante hardware","Que cada procesador tiene su propia memoria local no accesible para el resto","La distancia a la que se encuentran las distintas memorias","La no existencia de un espacio global de direcciones"],c:2},
+// ────────────────────────────────────────────────────────────────
+// BANCO DE TARJETAS (105 preguntas fill-in-the-blank)
+// ────────────────────────────────────────────────────────────────
+const CARDS = [
+  {q:"Una característica común de las bases de datos NoSQL es que suelen ser ___, lo que permite una mayor flexibilidad en la evolución de los datos.",a:"schema-less",h:"Considera cómo se diferencia el diseño de datos de NoSQL del modelo relacional estricto."},
+  {q:"Las bases de datos NoSQL a menudo ___ la consistencia estricta en favor de otras propiedades útiles como la disponibilidad o la tolerancia a particiones.",a:"sacrifican",h:"Piensa en el teorema CAP y cómo las bases de datos distribuidas deben elegir entre diferentes garantías."},
+  {q:"NoSQL es un neologismo accidental, sin una definición ___ y solo una lista de características comunes.",a:"prescriptiva",h:"Considera la naturaleza de la definición de NoSQL, que no es un estándar estricto."},
+  {q:"La ___ políglota es la práctica de usar múltiples tecnologías de almacenamiento de datos, cada una elegida por su idoneidad para tipos de datos específicos.",a:"persistencia",h:"Este concepto implica no depender de una única base de datos para todas las necesidades."},
+  {q:"La normalización en RDBMS permite que los datos sean consultados de forma ___.",a:"flexible",h:"Piensa en cómo la normalización impacta la capacidad de realizar consultas complejas."},
+  {q:"Con la persistencia políglota, la 'coherencia de datos' debe ser verificada a nivel de ___.",a:"aplicación",h:"Al usar múltiples bases de datos, ¿quién se encarga de mantener la integridad entre ellas?"},
+  {q:"La persistencia políglota es consistente con la tendencia a estructurar la arquitectura alrededor de ___ independientes.",a:"servicios",h:"Piensa en las arquitecturas modernas que dividen las funcionalidades en componentes autónomos."},
+  {q:"Una de las características comunes de las bases de datos NoSQL es que están construidas para las necesidades de la arquitectura web del siglo ___.",a:"XXI",h:"Considera el período de tiempo en el que surgieron estas bases de datos."},
+  {q:"Las bases de datos NoSQL suelen ser de ___ (la mayoría), aunque con servicios mejorados alrededor de ellas.",a:"código abierto",h:"Piensa en el modelo de licenciamiento y desarrollo de muchas de estas tecnologías."},
+  {q:"NoSQL proporciona modelos que se ajustan mejor a las necesidades de la ___ de la aplicación, reduciendo el código a escribir y depurar.",a:"productividad de programación",h:"Considera cómo la flexibilidad de NoSQL puede simplificar el desarrollo y el mantenimiento."},
+  {q:"Las bases de datos de tipo ___ simplemente asocian claves con valores.",a:"clave-valor",h:"Este es el tipo más fundamental y sencillo de base de datos NoSQL."},
+  {q:"Las bases de datos de ___ asocian a una clave un documento, como un objeto JSON.",a:"documentos",h:"Este tipo de base de datos es conocido por almacenar estructuras de datos semiestructuradas."},
+  {q:"Las bases de datos de ___ (o familias de columnas) son una evolución de los documentos, principalmente para escenarios analíticos y de big data.",a:"columnas anchas",h:"Piensa en un modelo que permite gran flexibilidad en las columnas y es eficiente para consultas analíticas."},
+  {q:"Las bases de datos de ___ representan los datos como nodos conectados por aristas, ambos con propiedades.",a:"grafos",h:"Este modelo es ideal para representar relaciones complejas entre entidades."},
+  {q:"Una de las características principales de las bases de datos NoSQL es que suelen utilizar un modelo de ___.",a:"agregados",h:"Piensa en cómo se agrupan los datos relacionados en una única unidad lógica."},
+  {q:"En el mundo NoSQL, las bases de datos de ___ también son ignorantes de agregados, al igual que los RDBs.",a:"grafos",h:"Considera qué tipo de base de datos NoSQL se centra en las interconexiones."},
+  {q:"Los RDBs permiten manipular cualquier combinación de filas de cualquier tabla en una sola ___ (transacciones ACID).",a:"transacción",h:"Este es el concepto fundamental de cómo los sistemas relacionales garantizan la integridad."},
+  {q:"Las bases de datos NoSQL (en general) no soportan transacciones ACID fuera de los ___ y, por lo tanto, sacrifican la consistencia o la eficiencia.",a:"agregados",h:"Piensa en los límites de las transacciones en muchos sistemas NoSQL."},
+  {q:"En el modelo de agregados, la estructura de diamante negro representa cómo los datos se ajustan a la estructura de ___.",a:"agregación",h:"Considera el significado de este símbolo en los diagramas de composición de objetos o datos."},
+  {q:"Un ejemplo de datos en formato JSON que utiliza el modelo de agregados mostrará ___ de datos.",a:"duplicidades",h:"A diferencia de la normalización relacional, ¿qué ocurre a menudo con los datos cuando se desnormalizan?"},
+  {q:"En el modelo de agregados, no se necesita ___ en la consulta, lo que simplifica y acelera el acceso a los datos.",a:"JOIN",h:"Piensa en una operación común en RDBMS que se evita al tener todos los datos en un solo lugar."},
+  {q:"Las bases de datos ___ permiten almacenar cualquier dato bajo una clave, sin restricciones de estructura.",a:"clave-valor",h:"Este es el tipo más flexible en cuanto a la estructura de los datos que se pueden almacenar."},
+  {q:"Con un esquema flexible, se puede cambiar fácilmente la estructura de los datos a medida que se aprende más, sin necesidad de ___ datos antiguos e innecesarios.",a:"eliminar",h:"Piensa en una de las ventajas de la flexibilidad del esquema en la evolución de un sistema."},
+  {q:"La complejidad no desaparece con un esquema flexible; simplemente se ___ al código de la aplicación.",a:"mueve",h:"Si la base de datos no impone el esquema, ¿quién debe manejar las diferentes estructuras de datos?"},
+  {q:"Una forma de reducir los problemas del esquema flexible es ___ toda la interacción con la base de datos dentro de una única aplicación.",a:"encapsular",h:"Piensa en un patrón de diseño que limita el acceso directo a la base de datos a un componente específico."},
+  {q:"Cuando el volumen de datos aumenta, escalar ___ (verticalmente) no es fácil ni barato.",a:"hacia arriba",h:"Considera el tipo de escalado que implica mejorar un solo servidor."},
+  {q:"Para escalar, uno debe escalar ___ (horizontalmente), lo que significa que las bases de datos deben ejecutarse en clusters.",a:"hacia afuera",h:"Considera el tipo de escalado que implica añadir más servidores al sistema."},
+  {q:"El modelo de servidor ___ es la opción más sencilla sin distribución alguna, sirviendo como línea base para comparación.",a:"único",h:"Piensa en el modo de despliegue más básico para una base de datos."},
+  {q:"El ___ distribuye diferentes datos entre múltiples servidores, donde cada servidor actúa como la única fuente para un subconjunto de datos.",a:"sharding",h:"Este método divide el conjunto de datos completo en partes más pequeñas y las almacena en diferentes nodos."},
+  {q:"El sharding equilibra la ___ entre los servidores y puede basarse en regiones geográficas para reducir la latencia.",a:"carga",h:"Piensa en el objetivo principal de distribuir datos entre múltiples servidores."},
+  {q:"El ___ copia datos entre múltiples servidores, de modo que cada fragmento de datos se puede encontrar en múltiples lugares.",a:"replicación",h:"Este método asegura la disponibilidad de los datos al tener copias idénticas en diferentes nodos."},
+  {q:"En el modelo de replicación Primario-Secundarios, un nodo ___ es la copia autorizada que maneja las escrituras y luego las sincroniza.",a:"primario",h:"Piensa en el rol del nodo que es el principal para las operaciones de escritura."},
+  {q:"La replicación ___ permite escrituras en cualquier nodo, y los nodos se coordinan para sincronizar sus copias.",a:"peer-to-peer",h:"Este modelo no tiene un nodo maestro centralizado para las escrituras."},
+  {q:"Las bases de datos relacionales exhiben una ___ fuerte, garantizando que los datos sean consistentes después de cada operación.",a:"consistencia",h:"Este es el tipo de garantía que se espera de un sistema ACID."},
+  {q:"Con la replicación, la ___ no se actualiza en todas las réplicas al mismo tiempo, lo que lleva a una consistencia eventual.",a:"consistencia",h:"Piensa en el estado de los datos a través de múltiples copias en un sistema distribuido."},
+  {q:"El teorema CAP describe las ___ involucradas en los sistemas distribuidos.",a:"compensaciones",h:"Este teorema explica que no se pueden tener las tres propiedades (C, A, P) al mismo tiempo."},
+  {q:"En el teorema CAP, 'C' representa ___.",a:"Consistencia",h:"Esta propiedad se refiere a que todos los clientes ven los mismos datos al mismo tiempo."},
+  {q:"En el teorema CAP, 'A' representa ___.",a:"Disponibilidad",h:"Esta propiedad se refiere a que cada solicitud resulta en una respuesta."},
+  {q:"En el teorema CAP, 'P' representa ___.",a:"Tolerancia a Particiones",h:"Esta propiedad se refiere a la capacidad del sistema para seguir funcionando a pesar de fallos en la red."},
+  {q:"La interpretación popular '2 de 3' del teorema CAP es engañosa porque P es una ___ en un sistema distribuido.",a:"realidad",h:"Considera que los fallos de red son inevitables en un sistema distribuido, no una elección."},
+  {q:"La disponibilidad y la consistencia no son una decisión de 0-1; se puede relajar la consistencia a favor de la ___ sin ser completamente inconsistente.",a:"disponibilidad",h:"Piensa en el concepto de consistencia sintonizable o eventual."},
+  {q:"Cuando ocurre una partición de red, el diseñador debe elegir entre ___ y disponibilidad.",a:"consistencia",h:"El teorema CAP dicta esta elección inevitable en presencia de un fallo de red."},
+  {q:"La disponibilidad sintonizable se denomina ___ en el contexto del teorema CAP, ya que una latencia muy alta es indistinguible de la falta de disponibilidad.",a:"latencia",h:"Piensa en el tiempo que tarda el sistema en responder a una solicitud."},
+  {q:"En la consistencia fuerte, los datos se copian a todos los servidores ___ de que el cliente reciba la confirmación.",a:"antes",h:"Para asegurar la consistencia inmediata, ¿cuándo deben propagarse los cambios?"},
+  {q:"En la consistencia ___, los datos se copian en el servidor y se confirman inmediatamente, luego se replican a todos los servidores.",a:"eventual",h:"A diferencia de la consistencia fuerte, ¿qué tipo de consistencia permite un período de discrepancia?"},
+  {q:"El modelo ___ establece cómo el sistema hace la compensación entre disponibilidad y consistencia ante una partición, y entre latencia y consistencia en operación normal.",a:"PACELC",h:"Este es un refinamiento del teorema CAP que considera compensaciones tanto en presencia como ausencia de particiones."},
+  {q:"El ___ es un patrón que permite paralelizar los cómputos en un cluster.",a:"Map-reduce",h:"Piensa en un marco de procesamiento distribuido popularizado por Google para analizar grandes conjuntos de datos."},
+  {q:"La fase 'Map' lee datos de un agregado y los transforma en pares ___ relevantes.",a:"clave-valor",h:"Piensa en el formato de salida de la fase 'Map' que luego alimenta la fase 'Reduce'."},
+  {q:"La fase 'Reduce' toma muchos valores correspondientes a una sola clave y los ___ en una única salida.",a:"resume",h:"Piensa en la operación principal de la fase 'Reduce' sobre los datos agrupados."},
+  {q:"Las operaciones Map-reduce pueden ser ___ cuando la salida de un 'reduce' es la entrada del 'map' de otra operación.",a:"compuestas",h:"Piensa en la capacidad de encadenar múltiples operaciones Map-reduce."},
+  {q:"Si el resultado de un cómputo Map-reduce se usa ampliamente, se puede almacenar como una ___.",a:"vista materializada",h:"Piensa en una tabla o vista precalculada que almacena los resultados de una consulta compleja."},
+  {q:"Las bases de datos clave-valor son los almacenes de datos NoSQL más ___ de usar desde la perspectiva de la API.",a:"simples",h:"Piensa en las operaciones básicas que ofrecen estas bases de datos (get, put, delete)."},
+  {q:"El valor asociado a la clave en una base de datos clave-valor es (normalmente) un ___ que la base de datos almacena sin interpretar.",a:"blob",h:"Piensa en el formato genérico y sin estructura que la base de datos no interpreta."},
+  {q:"Las bases de datos clave-valor no permiten ___ en el valor, solo acceso por clave primaria.",a:"consultas",h:"Dado que el valor es un blob, ¿qué tipo de operación no se puede realizar sobre su contenido?"},
+  {q:"Amazon Dynamo es un almacén clave-valor altamente ___ que ha sido el origen de grandes ideas en bases de datos distribuidas modernas.",a:"disponible",h:"Piensa en una de las propiedades clave que Dynamo prioriza en su diseño."},
+  {q:"Redis es un ejemplo de base de datos clave-valor que funciona como un servidor de ___.",a:"estructuras de datos",h:"Piensa en los tipos de datos avanzados que Redis puede manejar además de simples pares clave-valor."},
+  {q:"Las bases de datos clave-valor son buenas para almacenar información de ___ o perfiles de usuario.",a:"sesión",h:"Piensa en datos temporales o específicos de un usuario que necesitan un acceso rápido por identificador."},
+  {q:"Las bases de datos clave-valor son malas para las ___ entre datos o transacciones con múltiples operaciones.",a:"relaciones",h:"Piensa en la capacidad de estas bases de datos para manejar estructuras de datos interconectadas."},
+  {q:"Las bases de datos de documentos almacenan documentos en la parte ___ de los almacenes clave-valor.",a:"valor",h:"Piensa en cómo se relaciona el modelo de documentos con el modelo subyacente de clave-valor."},
+  {q:"Los documentos son estructuras de datos ___ autodescriptivas y jerárquicas.",a:"en árbol",h:"Piensa en la forma lógica que toma un documento JSON o XML."},
+  {q:"Desde la versión 3.2, MongoDB permite la ___ del esquema, lo que añade un nivel opcional de rigor.",a:"validación",h:"Aunque generalmente son 'schema-less', ¿qué funcionalidad se ha añadido para permitir un control de esquema?"},
+  {q:"En MongoDB, una ___ es un contenedor para colecciones.",a:"base de datos",h:"Piensa en la unidad organizativa de más alto nivel en un sistema de base de datos."},
+  {q:"En MongoDB, una ___ es una agrupación de documentos, típicamente similares.",a:"colección",h:"Piensa en el equivalente de una tabla en el mundo relacional, pero para documentos."},
+  {q:"En MongoDB, los documentos se muestran como JSON, pero se almacenan como ___.",a:"BSON",h:"Piensa en el formato binario optimizado para el almacenamiento y la eficiencia de MongoDB."},
+  {q:"Cada documento en MongoDB requiere un campo ___, que actúa como clave primaria.",a:"_id",h:"Piensa en el identificador único que cada documento debe tener."},
+  {q:"El ___ de MongoDB es un entorno REPL de Node.js para interactuar con la base de datos.",a:"Mongosh",h:"Piensa en la interfaz de línea de comandos moderna para MongoDB."},
+  {q:"Para insertar varios documentos en MongoDB, se utiliza el método ___.",a:"insertMany",h:"Piensa en el comando para añadir múltiples documentos a una colección."},
+  {q:"Para encontrar documentos en MongoDB que cumplan ciertas condiciones, se utiliza el método ___.",a:"find",h:"Piensa en el comando básico para consultar documentos en una colección."},
+  {q:"En MongoDB, las operaciones de ___ procesan múltiples documentos y devuelven resultados calculados.",a:"agregación",h:"Piensa en las operaciones que resumen o transforman datos de varios documentos."},
+  {q:"Un pipeline de agregación en MongoDB consiste en una serie de ___ que procesan los documentos de forma secuencial.",a:"etapas",h:"Piensa en las diferentes partes o pasos de un proceso de agregación."},
+  {q:"Sin ___, MongoDB lee todos los documentos de la colección (collscan), lo cual es ineficiente para grandes volúmenes de datos.",a:"índices",h:"Piensa en una estructura de datos que acelera las operaciones de búsqueda."},
+  {q:"MongoDB mejora la disponibilidad ___ datos utilizando una configuración de primario/secundarios.",a:"replicando",h:"Piensa en la estrategia para tener copias de los datos en varios lugares."},
+  {q:"En una réplica de MongoDB, si el nodo primario falla, los nodos restantes ___ entre sí para elegir un nuevo primario.",a:"votan",h:"Piensa en el mecanismo de consenso que permite a los nodos secundarios tomar el rol de primario."},
+  {q:"Cuando se desea escalar para operaciones de escritura en MongoDB, se puede comenzar a ___ los datos.",a:"shardear",h:"Piensa en el método de dividir los datos y distribuirlos en diferentes nodos."},
+  {q:"Las bases de datos de documentos son buenas para sistemas de gestión de ___ (CMS) y plataformas de blogs.",a:"contenido",h:"Piensa en aplicaciones donde la flexibilidad del esquema y el almacenamiento semiestructurado son beneficiosos."},
+  {q:"Las bases de datos de documentos son malas para ___ complejas que involucran múltiples agregados.",a:"transacciones",h:"Piensa en el desafío de mantener la atomicidad y consistencia en operaciones que abarcan varios documentos."},
+  {q:"Una base de datos de ___ (o familia de columnas) almacena datos en tablas, filas y columnas, pero los nombres y formatos de las columnas pueden variar de una fila a otra.",a:"columnas anchas",h:"Piensa en un modelo que ofrece gran flexibilidad en la definición de columnas por fila."},
+  {q:"En una base de datos de columnas anchas, una familia de columnas contiene columnas de ___.",a:"datos relacionados",h:"Piensa en cómo se agrupan las columnas con un propósito común."},
+  {q:"Cada columna en una base de datos de columnas anchas es una tripleta que consiste en un nombre de columna, un valor y un ___.",a:"timestamp",h:"Este componente se utiliza a menudo para la resolución de conflictos o para el versionado de datos."},
+  {q:"En Cassandra, las 'filas ___' tienen pocas columnas con las mismas columnas utilizadas en muchas filas diferentes.",a:"delgadas",h:"Piensa en filas que se parecen más a un registro tradicional con un número limitado de campos."},
+  {q:"Una 'fila ___' en Cassandra tiene muchas columnas (quizás miles), con filas que tienen columnas muy diferentes.",a:"ancha",h:"Piensa en filas que pueden modelar listas o colecciones de elementos mediante columnas dinámicas."},
+  {q:"Dado que las bases de datos de columnas anchas no permiten ___ entre familias de columnas, las relaciones a menudo se desnormalizan.",a:"joins",h:"Piensa en una operación común en RDBMS que se evita en este tipo de bases de datos NoSQL."},
+  {q:"Las bases de datos de columnas anchas son buenas para los sistemas de gestión de contenido (CMS) y ___ web.",a:"análisis",h:"Piensa en el tipo de aplicaciones que se benefician de la flexibilidad del esquema y el rendimiento para grandes volúmenes."},
+  {q:"Las bases de datos de columnas anchas no son ideales para ___ ACID, ya que su diseño prioriza la escalabilidad y la disponibilidad.",a:"transacciones",h:"Piensa en las garantías de atomicidad, consistencia, aislamiento y durabilidad en sistemas distribuidos."},
+  {q:"Las bases de datos de grafos son una 'rareza' en el mundo NoSQL porque están motivadas por una frustración diferente: ___ complejas.",a:"interconexiones",h:"Piensa en el tipo de problema que estas bases de datos están diseñadas para resolver."},
+  {q:"Las bases de datos de grafos se especializan en capturar datos que consisten en ___ complejas, como redes sociales o sistemas de recomendación.",a:"relaciones",h:"Piensa en el elemento central que estas bases de datos modelan de manera eficiente."},
+  {q:"El modelo de datos fundamental de una base de datos de grafos es muy simple: ___ conectados por aristas (también llamadas arcos).",a:"nodos",h:"Piensa en las dos entidades básicas que componen un grafo."},
+  {q:"Las bases de datos de grafos hacen que el ___ a lo largo de las relaciones sea muy barato y eficiente.",a:"recorrido",h:"Piensa en la operación fundamental que estas bases de datos optimizan para explorar conexiones."},
+  {q:"Una gran parte de la eficiencia de las bases de datos de grafos se debe a que trasladan la mayor parte del trabajo de navegar las relaciones del tiempo de consulta al tiempo de ___.",a:"inserción",h:"Piensa en cuándo se establece la conexión física entre los datos."},
+  {q:"Neo4j comenzó como una base de datos de grafos utilizando ___.",a:"grafos de propiedades",h:"Piensa en el tipo específico de modelo de grafo que utiliza Neo4j."},
+  {q:"En Neo4j, los ___ son las entidades en el grafo.",a:"nodos",h:"Piensa en los elementos principales que representan cosas como personas, lugares o conceptos."},
+  {q:"Los nodos en Neo4j pueden ser etiquetados con ___, representando sus diferentes roles en tu dominio.",a:"etiquetas",h:"Piensa en cómo se clasifican o categorizan los nodos."},
+  {q:"Las ___ en Neo4j proporcionan conexiones dirigidas y con nombre entre dos entidades de nodo.",a:"relaciones",h:"Piensa en los vínculos que conectan los nodos en un grafo."},
+  {q:"Aunque las relaciones en Neo4j siempre están dirigidas, pueden ser ___ eficientemente en cualquier dirección.",a:"navegadas",h:"Piensa en la capacidad de explorar conexiones de ida y vuelta en un grafo."},
+  {q:"Las ___ son pares de nombre-valor que se almacenan en nodos y relaciones en Neo4j.",a:"propiedades",h:"Piensa en los atributos o metadatos asociados a las entidades y conexiones del grafo."},
+  {q:"___ es el lenguaje de consulta de Neo4j, desarrollado en el proyecto openCypher.",a:"Cypher",h:"Piensa en el lenguaje declarativo y visual utilizado para interactuar con bases de datos de grafos."},
+  {q:"Las bases de datos de grafos son buenas para sistemas de ___ o detección de fraude crediticio.",a:"recomendaciones",h:"Piensa en aplicaciones que requieren analizar patrones de conexión entre usuarios, productos o transacciones."},
+  {q:"Las bases de datos de grafos son malas para operaciones de ___ y actualizaciones, así como para datos muy grandes debido a las dificultades en el sharding.",a:"bloque",h:"Piensa en las limitaciones de estas bases de datos cuando se trata de procesar grandes cantidades de datos no relacionados."},
+  {q:"Los servidores de aplicaciones se escalan ___ en arquitecturas modernas, utilizando clusters de servidores básicos.",a:"horizontalmente",h:"Considera cómo se distribuye la carga entre múltiples máquinas en lugar de aumentar la capacidad de una sola."},
+  {q:"La fiabilidad en arquitecturas de aplicaciones modernas se logra a menudo mediante la ___ de datos entre diferentes servidores.",a:"replicación",h:"Piensa en el mecanismo que asegura que los datos estén disponibles incluso si un servidor falla."},
+  {q:"Las arquitecturas de bases de datos relacionales tradicionales se adaptaban mejor a un servidor ___ (escalable verticalmente) y actuaban como punto central de integración.",a:"único",h:"En contraste con la escalabilidad horizontal, piensa en la configuración de hardware más común para los RDBMS clásicos."},
+  {q:"Uno de los problemas de los RDBMS para las arquitecturas web modernas es la falta de escalabilidad del control de ___.",a:"concurrencia",h:"Piensa en cómo las bases de datos manejan múltiples operaciones simultáneas y por qué esto es un cuello de botella."},
+  {q:"Existe una incompatibilidad de ___ entre el modelo relacional y las estructuras de datos en memoria.",a:"impedancia",h:"Este término describe la dificultad de mapear un modelo de datos (relacional) a otro (objetos en memoria)."},
+  {q:"El término NoSQL surgió originalmente en una reunión informal el 11 de junio de ___.",a:"2009",h:"Recuerda el año específico en que se popularizó este término en el contexto de bases de datos no relacionales."},
+  {q:"Las bases de datos NoSQL suelen ejecutarse bien en ___, lo que les permite manejar grandes volúmenes de datos y tráfico.",a:"clusters",h:"Piensa en cómo se distribuyen los datos y la carga de trabajo entre múltiples servidores para lograr escalabilidad."},
 ];
 
 // ── STATE ──
 const ROUND_SIZE = 15;
-let round = [];
-let current = 0;
-let score = 0;
-let answered = false;
-let results = [];
-let bestScore = parseInt(localStorage.getItem('best_score') || '0');
+let round = [], current = 0, score = 0, skipped = 0, wrong = 0;
+let answered = false, flipped = false, results = [];
+let mode = 'flash'; // 'flash' | 'write'
+let bestScore = parseInt(localStorage.getItem('nosql_best') || '0');
 
-// ── INIT ──
-document.getElementById('total-q-count').textContent = ALL_QUESTIONS.length;
-updateBestDisplay();
-
-function updateBestDisplay() {
-  const el = document.getElementById('best-score-display');
-  el.textContent = bestScore > 0 ? bestScore + '/15' : '—';
-}
+document.getElementById('best-display').textContent = bestScore > 0 ? bestScore + '/15' : '—';
 
 function shuffle(arr) {
   const a = [...arr];
@@ -785,6 +533,12 @@ function shuffle(arr) {
   return a;
 }
 
+function setMode(m) {
+  mode = m;
+  document.getElementById('mode-flash').classList.toggle('selected', m === 'flash');
+  document.getElementById('mode-write').classList.toggle('selected', m === 'write');
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -793,13 +547,16 @@ function showScreen(id) {
 
 // ── START ──
 function startQuiz() {
-  round = shuffle(ALL_QUESTIONS).slice(0, ROUND_SIZE);
-  current = 0;
-  score = 0;
-  answered = false;
-  results = [];
+  round = shuffle(CARDS).slice(0, ROUND_SIZE);
+  current = 0; score = 0; skipped = 0; wrong = 0;
+  answered = false; flipped = false; results = [];
+
+  // show/hide mode containers
+  document.getElementById('flash-container').style.display = mode === 'flash' ? 'block' : 'none';
+  document.getElementById('write-container').style.display = mode === 'write' ? 'block' : 'none';
+
   buildDots();
-  loadQuestion();
+  loadCard();
   showScreen('screen-quiz');
 }
 
@@ -814,155 +571,175 @@ function buildDots() {
   }
 }
 
-function updateDot(idx, correct) {
+function updateDot(idx, result) { // 'correct','wrong','skip'
   const d = document.getElementById('dot-' + idx);
-  if (d) {
-    d.classList.remove('current');
-    d.classList.add(correct ? 'done-correct' : 'done-wrong');
-  }
+  if (d) { d.classList.remove('current'); d.classList.add('done-' + result); }
   const next = document.getElementById('dot-' + (idx + 1));
   if (next) next.classList.add('current');
 }
 
-// ── LOAD QUESTION ──
-function loadQuestion() {
-  answered = false;
-  const q = round[current];
-  const letters = ['A','B','C','D'];
-
-  document.getElementById('q-number').textContent = `PREGUNTA ${String(current+1).padStart(2,'0')}`;
-  document.getElementById('q-text').textContent = q.q;
-  document.getElementById('prog-label').textContent = `PREGUNTA ${current+1} / ${ROUND_SIZE}`;
+// ── LOAD CARD ──
+function loadCard() {
+  answered = false; flipped = false;
+  const c = round[current];
+  document.getElementById('prog-label').textContent = `TARJETA ${current + 1} / ${ROUND_SIZE}`;
   document.getElementById('score-badge').textContent = `✓ ${score}`;
   document.getElementById('prog-fill').style.width = (current / ROUND_SIZE * 100) + '%';
 
-  const feedback = document.getElementById('feedback');
-  feedback.className = 'feedback';
-  feedback.textContent = '';
+  if (mode === 'flash') loadFlash(c);
+  else loadWrite(c);
+}
 
-  const opts = document.getElementById('options');
-  opts.innerHTML = '';
-
-  // Shuffle answer order keeping track of correct
-  const indices = shuffle([0,1,2,3]);
-  const correctOriginal = q.c;
-  let correctShuffled = 0;
-  indices.forEach((origIdx, shuffIdx) => {
-    if (origIdx === correctOriginal) correctShuffled = shuffIdx;
-  });
-
-  indices.forEach((origIdx, shuffIdx) => {
-    const btn = document.createElement('button');
-    btn.className = 'option';
-    btn.innerHTML = `<span class="option-letter">${letters[shuffIdx]}</span><span>${q.a[origIdx]}</span>`;
-    btn.onclick = () => selectOption(btn, shuffIdx, correctShuffled, q);
-    opts.appendChild(btn);
-  });
+function loadFlash(c) {
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+  document.getElementById('fc-number').textContent = `TARJETA ${String(current + 1).padStart(2, '0')}`;
+  document.getElementById('fc-text').textContent = c.q.replace('___', '[ ??? ]');
+  document.getElementById('fc-answer').textContent = c.a;
+  document.getElementById('fc-hint-back').textContent = c.h;
+  document.getElementById('assess-row').style.display = 'none';
 
   const navBtn = document.getElementById('nav-btn');
   navBtn.disabled = true;
-  navBtn.textContent = 'Selecciona una respuesta';
-  navBtn.onclick = handleNav;
+  navBtn.textContent = 'Gira la tarjeta primero 👆';
 }
 
-// ── SELECT ──
-let selectedIdx = -1;
-let correctIdx = -1;
-
-function selectOption(el, idx, correct, q) {
+function flipCard() {
   if (answered) return;
-  selectedIdx = idx;
-  correctIdx = correct;
-  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
+  const fc = document.getElementById('flashcard');
+  fc.classList.toggle('flipped');
+  flipped = fc.classList.contains('flipped');
+  if (flipped) {
+    document.getElementById('assess-row').style.display = 'flex';
+    const navBtn = document.getElementById('nav-btn');
+    navBtn.disabled = true;
+    navBtn.textContent = 'Evalúate con los botones de abajo';
+  }
+}
+
+function assess(correct) { // true / false / null
+  answered = true;
+  let dotClass, label;
+  if (correct === true)  { score++;   dotClass = 'correct'; label = '✓ Lo sabías'; }
+  else if (correct === null) { skipped++;  dotClass = 'skip';    label = '→ Saltada'; }
+  else                   { wrong++;   dotClass = 'wrong';   label = '✗ No sabías'; }
+
+  results.push({ c: round[current], result: correct });
+  updateDot(current, dotClass);
+  document.getElementById('score-badge').textContent = `✓ ${score}`;
+
+  setTimeout(() => { advance(); }, 300);
+}
+
+function loadWrite(c) {
+  document.getElementById('wr-number').textContent = `TARJETA ${String(current + 1).padStart(2, '0')}`;
+  document.getElementById('wr-text').textContent = c.q.replace('___', '_______________');
+  document.getElementById('wr-hint').textContent = c.h;
+  document.getElementById('wr-hint').classList.remove('show');
+  document.getElementById('hint-btn').textContent = '💡 Ver pista';
+
+  const input = document.getElementById('answer-input');
+  input.value = '';
+  input.className = 'answer-input';
+  input.disabled = false;
+  input.focus();
+
+  const fb = document.getElementById('write-feedback');
+  fb.className = 'write-feedback';
+  fb.textContent = '';
 
   const navBtn = document.getElementById('nav-btn');
   navBtn.disabled = false;
-  navBtn.textContent = current < ROUND_SIZE - 1 ? 'Confirmar respuesta' : 'Ver resultados';
+  navBtn.textContent = 'Comprobar respuesta';
 }
 
-// ── CONFIRM ──
+function handleKey(e) {
+  if (e.key === 'Enter') handleNav();
+}
+
+function toggleHint() {
+  const box = document.getElementById('wr-hint');
+  const btn = document.getElementById('hint-btn');
+  const showing = box.classList.contains('show');
+  box.classList.toggle('show', !showing);
+  btn.textContent = showing ? '💡 Ver pista' : '🙈 Ocultar pista';
+}
+
+// ── WRITE NAV ──
 function handleNav() {
-  if (!answered && selectedIdx === -1) return;
+  if (mode === 'flash') { advance(); return; }
 
   if (!answered) {
+    const input = document.getElementById('answer-input');
+    const userVal = input.value.trim().toLowerCase();
+    const correct = round[current].a.toLowerCase();
+    const isCorrect = userVal === correct ||
+      levenshtein(userVal, correct) <= Math.max(1, Math.floor(correct.length * 0.2));
+
     answered = true;
-    const opts = document.querySelectorAll('.option');
-    const isCorrect = selectedIdx === correctIdx;
+    input.disabled = true;
 
-    opts.forEach((o, i) => {
-      o.classList.add('disabled');
-      o.classList.remove('selected');
-      if (i === correctIdx) o.classList.add('correct');
-      else if (i === selectedIdx && !isCorrect) o.classList.add('wrong');
-    });
-
-    if (isCorrect) score++;
-
-    const feedback = document.getElementById('feedback');
+    const fb = document.getElementById('write-feedback');
     if (isCorrect) {
-      feedback.className = 'feedback ok show';
-      feedback.textContent = '✓ ¡Correcto!';
+      score++;
+      input.className = 'answer-input correct-input';
+      fb.className = 'write-feedback ok show';
+      fb.textContent = `✓ ¡Correcto! La respuesta es: ${round[current].a}`;
+      results.push({ c: round[current], result: true });
+      updateDot(current, 'correct');
     } else {
-      feedback.className = 'feedback nope show';
-      feedback.textContent = '✗ Incorrecto — la respuesta correcta está marcada en verde.';
+      wrong++;
+      input.className = 'answer-input wrong-input';
+      fb.className = 'write-feedback nope show';
+      fb.textContent = `✗ Respuesta correcta: ${round[current].a}`;
+      results.push({ c: round[current], result: false });
+      updateDot(current, 'wrong');
     }
-
-    results.push({ q: round[current], correct: isCorrect, chosen: selectedIdx, right: correctIdx });
-    updateDot(current, isCorrect);
+    document.getElementById('score-badge').textContent = `✓ ${score}`;
 
     const navBtn = document.getElementById('nav-btn');
-    if (current < ROUND_SIZE - 1) {
-      navBtn.textContent = 'Siguiente pregunta →';
-    } else {
-      navBtn.textContent = 'Ver resultados 🏁';
-    }
-    selectedIdx = -1;
-    document.getElementById('score-badge').textContent = `✓ ${score}`;
-  } else {
-    current++;
-    answered = false;
-    selectedIdx = -1;
+    navBtn.textContent = current < ROUND_SIZE - 1 ? 'Siguiente →' : 'Ver resultados 🏁';
 
-    if (current < ROUND_SIZE) {
-      loadQuestion();
-    } else {
-      showResults();
-    }
+  } else {
+    advance();
   }
+}
+
+function advance() {
+  current++;
+  answered = false; flipped = false;
+  if (current < ROUND_SIZE) loadCard();
+  else showResults();
+}
+
+// Levenshtein para tolerancia de typos
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m + 1}, (_, i) => Array.from({length: n + 1}, (_, j) => i === 0 ? j : j === 0 ? i : 0));
+  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+    dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+  return dp[m][n];
 }
 
 // ── RESULTS ──
 function showResults() {
   const pct = Math.round(score / ROUND_SIZE * 100);
   const emojis = ['😬','😕','🤔','😐','🙂','😊','😎','🔥','⚡','🏆'];
-  const ei = Math.floor(pct / 10);
-
-  document.getElementById('result-emoji').textContent = emojis[Math.min(ei, 9)];
+  document.getElementById('result-emoji').textContent = emojis[Math.min(Math.floor(pct/10), 9)];
   document.getElementById('result-score').textContent = score;
-  document.getElementById('result-fraction').textContent = `de ${ROUND_SIZE} correctas`;
+  document.getElementById('result-fraction').textContent = `de ${ROUND_SIZE} ${mode === 'flash' ? 'sabidas' : 'correctas'}`;
   document.getElementById('result-pct').textContent = pct + '% de acierto';
   document.getElementById('bk-correct').textContent = score;
-  document.getElementById('bk-wrong').textContent = ROUND_SIZE - score;
+  document.getElementById('bk-skip').textContent = mode === 'flash' ? skipped : '—';
+  document.getElementById('bk-wrong').textContent = wrong + (mode === 'flash' ? 0 : 0);
 
-  const msgs = {
-    0: '¡Sigue estudiando, lo conseguirás!',
-    1: '¡Sigue estudiando, lo conseguirás!',
-    2: 'Hay margen de mejora 💪',
-    3: 'Hay margen de mejora 💪',
-    4: 'Vas por buen camino 👍',
-    5: 'No está mal, ¡a por más!',
-    6: '¡Buen resultado! 🙌',
-    7: '¡Muy bien! Casi perfecto.',
-    8: '¡Excelente! Dominas el tema 🔥',
-    9: '¡Perfecto! Eres un crack ⚡',
-  };
-  document.getElementById('result-message').textContent = msgs[Math.floor(pct/10)] || '¡Perfecto!';
+  const msgs = ['¡Sigue estudiando!','¡Sigue estudiando!','Hay margen de mejora 💪','Hay margen de mejora 💪','Vas por buen camino 👍','No está mal, ¡a por más!','¡Buen resultado! 🙌','¡Muy bien! Casi perfecto.','¡Excelente! 🔥','¡Perfecto! Eres un crack ⚡'];
+  document.getElementById('result-message').textContent = msgs[Math.min(Math.floor(pct/10), 9)];
 
   if (score > bestScore) {
     bestScore = score;
-    localStorage.setItem('best_score', bestScore);
-    updateBestDisplay();
+    localStorage.setItem('nosql_best', bestScore);
+    document.getElementById('best-display').textContent = bestScore + '/15';
   }
 
   document.getElementById('prog-fill').style.width = '100%';
@@ -973,23 +750,16 @@ function showResults() {
 function showReview() {
   const list = document.getElementById('review-list');
   list.innerHTML = '<div class="review-title">Revisión de respuestas</div>';
-  const letters = ['A','B','C','D'];
 
-  results.forEach((r, i) => {
+  results.forEach(r => {
     const div = document.createElement('div');
-    div.className = 'review-item ' + (r.correct ? 'r-correct' : 'r-wrong');
+    const cls = r.result === true ? 'r-correct' : r.result === null ? 'r-skip' : 'r-wrong';
+    div.className = 'review-item ' + cls;
 
-    const icon = r.correct ? '✓' : '✗';
-    // Find original answer texts from shuffled positions
-    // We stored chosen & right as shuffled indices, need display text
-    const optsCopy = [...r.q.a];
-    const shuffled = shuffle([0,1,2,3]);
-    // Re-build same shuffle: we can't perfectly reconstruct, so show correct answer text
-    const correctText = r.q.a[r.q.c];
-
+    const icon = r.result === true ? '✓' : r.result === null ? '→' : '✗';
     div.innerHTML = `
-      <div class="review-q">${icon} ${r.q.q}</div>
-      <div class="review-ans r-right-ans">Respuesta correcta: ${correctText}</div>
+      <div class="review-q">${icon} ${r.c.q}</div>
+      <div class="review-ans correct-ans">Respuesta: ${r.c.a}</div>
     `;
     list.appendChild(div);
   });
