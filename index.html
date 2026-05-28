@@ -1,885 +1,722 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ca">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aplicaciones para Dispositivos Móviles – Práctica de Exámenes</title>
+<title>Cheatsheet Xarxes</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap');
-
-  :root {
-    --bg: #0f1117;
-    --surface: #181c27;
-    --surface2: #1f2435;
-    --border: #2a3050;
-    --accent-t: #64d0ff;
-    --accent-f: #a78bfa;
-    --accent-c: #34d399;
-    --accent-tc: #fbbf24;
-    --text: #e2e8f0;
-    --text-dim: #8892a4;
-    --green: #34d399;
-    --red: #f87171;
-    --radius: 12px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Fraunces', Georgia, serif;
-    min-height: 100vh;
-    line-height: 1.65;
-  }
-
-  /* ── Header ── */
-  header {
-    background: linear-gradient(135deg, #0f1117 0%, #181c27 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 28px 32px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  header .logo {
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    color: var(--accent-t);
-    line-height: 1;
-  }
-
-  header .subtitle {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    font-family: 'IBM Plex Mono', monospace;
-    margin-top: 3px;
-  }
-
-  /* ── Layout ── */
-  .container {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    min-height: calc(100vh - 90px);
-  }
-
-  /* ── Sidebar ── */
-  aside {
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 28px 20px;
-    position: sticky;
-    top: 90px;
-    height: calc(100vh - 90px);
-    overflow-y: auto;
-  }
-
-  aside h3 {
-    font-size: 0.65rem;
-    font-family: 'IBM Plex Mono', monospace;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text-dim);
-    margin-bottom: 14px;
-    padding-left: 4px;
-  }
-
-  .type-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 14px;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: var(--radius);
-    color: var(--text-dim);
-    cursor: pointer;
-    text-align: left;
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    margin-bottom: 6px;
-  }
-
-  .type-btn:hover { background: var(--surface2); color: var(--text); }
-
-  .type-btn.active {
-    border-color: var(--border);
-    color: var(--text);
-    background: var(--surface2);
-  }
-
-  .type-btn .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .type-btn .count {
-    margin-left: auto;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    background: var(--surface);
-    padding: 2px 7px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-  }
-
-  .dot-t  { background: var(--accent-t); }
-  .dot-f  { background: var(--accent-f); }
-  .dot-c  { background: var(--accent-c); }
-  .dot-tc { background: var(--accent-tc); }
-
-  .type-btn[data-type="teoria"].active { border-color: var(--accent-t); box-shadow: 0 0 0 1px var(--accent-t)22; }
-  .type-btn[data-type="fill_in_blanks"].active { border-color: var(--accent-f); box-shadow: 0 0 0 1px var(--accent-f)22; }
-  .type-btn[data-type="hacer_codigo"].active { border-color: var(--accent-c); box-shadow: 0 0 0 1px var(--accent-c)22; }
-  .type-btn[data-type="teoria_codigo"].active { border-color: var(--accent-tc); box-shadow: 0 0 0 1px var(--accent-tc)22; }
-
-  /* Stats strip in sidebar */
-  .stats-box {
-    margin-top: 28px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 4px;
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  .stat-row span:last-child { color: var(--text); }
-
-  .progress-bar-wrap {
-    height: 4px;
-    background: var(--surface2);
-    border-radius: 2px;
-    margin-top: 8px;
-    overflow: hidden;
-  }
-
-  .progress-bar-fill {
-    height: 100%;
-    background: var(--accent-t);
-    border-radius: 2px;
-    transition: width 0.4s;
-  }
-
-  /* ── Main content ── */
-  main {
-    padding: 36px 40px;
-    max-width: 860px;
-  }
-
-  /* ── Type header ── */
-  .type-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .type-badge {
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-weight: 600;
-  }
-
-  .type-badge-t  { background: var(--accent-t)22; color: var(--accent-t); border: 1px solid var(--accent-t)55; }
-  .type-badge-f  { background: var(--accent-f)22; color: var(--accent-f); border: 1px solid var(--accent-f)55; }
-  .type-badge-c  { background: var(--accent-c)22; color: var(--accent-c); border: 1px solid var(--accent-c)55; }
-  .type-badge-tc { background: var(--accent-tc)22; color: var(--accent-tc); border: 1px solid var(--accent-tc)55; }
-
-  .type-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-
-  .type-desc {
-    font-size: 0.82rem;
-    color: var(--text-dim);
-    font-family: 'IBM Plex Mono', monospace;
-    margin-left: auto;
-  }
-
-  /* ── Question navigator ── */
-  .q-nav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 22px;
-    flex-wrap: wrap;
-  }
-
-  .q-nav-btn {
-    width: 34px; height: 34px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .q-nav-btn:hover { background: var(--surface2); color: var(--text); }
-  .q-nav-btn.current { background: var(--accent-t)22; border-color: var(--accent-t); color: var(--accent-t); }
-  .q-nav-btn.done { background: var(--green)15; border-color: var(--green)55; color: var(--green); }
-
-  /* ── Question card ── */
-  .q-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
-    margin-bottom: 20px;
-    animation: fadeSlide 0.25s ease;
-  }
-
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .q-meta {
-    font-size: 0.72rem;
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--text-dim);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .q-meta .q-id {
-    padding: 2px 8px;
-    border-radius: 4px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    font-weight: 600;
-  }
-
-  .q-body {
-    font-size: 0.97rem;
-    line-height: 1.75;
-    margin-bottom: 24px;
-  }
-
-  .q-body strong { color: var(--text); }
-
-  .q-body pre, .q-body code {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 18px;
-    overflow-x: auto;
-    line-height: 1.6;
-    color: #a5d6ff;
-    margin: 10px 0;
-    display: block;
-    white-space: pre-wrap;
-  }
-
-  .q-body code:not(pre code) {
-    display: inline;
-    padding: 1px 6px;
-    margin: 0;
-    border-radius: 4px;
-  }
-
-  /* ── Reveal button ── */
-  .reveal-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 22px;
-    background: transparent;
-    border: 1px solid var(--accent-t);
-    color: var(--accent-t);
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
-    margin-bottom: 0;
-  }
-
-  .reveal-btn:hover {
-    background: var(--accent-t)15;
-  }
-
-  /* ── Answer ── */
-  .answer-box {
-    margin-top: 20px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent-t);
-    border-radius: 12px;
-    padding: 24px 28px;
-    animation: fadeSlide 0.2s ease;
-    font-size: 0.95rem;
-    line-height: 1.8;
-  }
-
-  .answer-box pre, .answer-box code {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 18px;
-    overflow-x: auto;
-    line-height: 1.6;
-    color: #a5d6ff;
-    margin: 10px 0;
-    display: block;
-    white-space: pre-wrap;
-  }
-
-  .answer-box code:not(pre code) {
-    display: inline;
-    padding: 2px 6px;
-    margin: 0;
-    border-radius: 4px;
-    background: var(--surface2);
-    color: #86efac;
-    font-size: 0.83em;
-  }
-
-  .answer-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--accent-t);
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-
-  /* ── Self eval buttons ── */
-  .eval-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 18px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-    align-items: center;
-  }
-
-  .eval-label {
-    font-size: 0.7rem;
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--text-dim);
-    margin-right: 4px;
-  }
-
-  .eval-btn {
-    padding: 7px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: transparent;
-    cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    font-weight: 600;
-    transition: all 0.2s;
-    color: var(--text-dim);
-  }
-
-  .eval-btn:hover { color: var(--text); background: var(--surface2); }
-  .eval-btn.got-it { border-color: var(--green); color: var(--green); background: var(--green)12; }
-  .eval-btn.missed { border-color: var(--red); color: var(--red); background: var(--red)12; }
-
-  /* ── Navigation buttons ── */
-  .nav-row {
-    display: flex;
-    gap: 12px;
-    margin-top: 8px;
-    align-items: center;
-  }
-
-  .nav-btn {
-    padding: 10px 22px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 600;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .nav-btn:hover { background: var(--surface2); color: var(--text); }
-  .nav-btn:disabled { opacity: 0.35; cursor: default; }
-
-  .nav-btn.primary {
-    background: var(--accent-t)15;
-    border-color: var(--accent-t)55;
-    color: var(--accent-t);
-  }
-
-  .nav-btn.primary:hover { background: var(--accent-t)30; }
-
-  .q-counter {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    margin-left: auto;
-  }
-
-  /* ── Welcome screen ── */
-  .welcome {
-    padding: 60px 20px;
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .welcome h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 14px;
-    color: var(--text);
-  }
-
-  .welcome p {
-    font-size: 1rem;
-    color: var(--text-dim);
-    margin-bottom: 40px;
-    line-height: 1.7;
-  }
-
-  .categories-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    text-align: left;
-  }
-
-  .cat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 20px;
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-
-  .cat-card:hover { border-color: var(--text-dim); transform: translateY(-2px); box-shadow: 0 8px 24px #00000033; }
-
-  .cat-card .cat-icon {
-    font-size: 1.6rem;
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .cat-card .cat-name {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .cat-card .cat-info {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  .cat-card[data-type="teoria"] { border-top: 3px solid var(--accent-t); }
-  .cat-card[data-type="fill_in_blanks"] { border-top: 3px solid var(--accent-f); }
-  .cat-card[data-type="hacer_codigo"] { border-top: 3px solid var(--accent-c); }
-  .cat-card[data-type="teoria_codigo"] { border-top: 3px solid var(--accent-tc); }
-
-  /* ── Completion card ── */
-  .done-card {
-    text-align: center;
-    padding: 50px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-  }
-
-  .done-card h3 { font-size: 1.6rem; margin-bottom: 10px; }
-  .done-card p { color: var(--text-dim); margin-bottom: 24px; }
-
-  .score-display {
-    font-size: 3.5rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 600;
-    color: var(--accent-t);
-    margin: 20px 0;
-  }
-
-  /* ── Scrollbar ── */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-  /* ── Hidden ── */
-  .hidden { display: none !important; }
+:root {
+  --bg: #0a0e1a;
+  --bg2: #111827;
+  --bg3: #1a2235;
+  --accent: #00d4ff;
+  --accent2: #7c3aed;
+  --accent3: #10b981;
+  --accent4: #f59e0b;
+  --accent5: #ef4444;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --border: rgba(255,255,255,0.08);
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Syne', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans); min-height:100vh; }
+
+header {
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content:'';
+  position:absolute; top:-60px; left:-60px;
+  width:300px; height:300px;
+  background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%);
+  pointer-events:none;
+}
+header::after {
+  content:'';
+  position:absolute; top:-40px; right:10%;
+  width:200px; height:200px;
+  background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
+  pointer-events:none;
+}
+h1 { font-size: 2.8rem; font-weight:800; letter-spacing:-1px; }
+h1 span { color: var(--accent); }
+.subtitle { color:var(--text2); font-size:0.95rem; margin-top:0.5rem; font-family:var(--mono); }
+
+nav {
+  display:flex; gap:0.5rem; flex-wrap:wrap;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+  position:sticky; top:0; z-index:100;
+  background: rgba(10,14,26,0.95);
+  backdrop-filter: blur(10px);
+}
+.nav-btn {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2); padding: 0.4rem 1rem;
+  border-radius: 6px; cursor:pointer;
+  font-family:var(--mono); font-size:0.8rem;
+  transition: all 0.2s;
+}
+.nav-btn:hover, .nav-btn.active {
+  background: var(--accent); color: var(--bg);
+  border-color: var(--accent); font-weight:700;
+}
+
+main { padding: 2rem; max-width: 1400px; margin: 0 auto; }
+
+.section { display:none; }
+.section.active { display:block; }
+
+.section-title {
+  font-size:1.8rem; font-weight:800;
+  margin-bottom: 1.5rem;
+  display:flex; align-items:center; gap:0.75rem;
+}
+.tag {
+  font-size:0.7rem; font-family:var(--mono);
+  padding:0.2rem 0.6rem; border-radius:4px;
+  font-weight:700; letter-spacing:1px;
+}
+.tag-blue { background:rgba(0,212,255,0.15); color:var(--accent); border:1px solid rgba(0,212,255,0.3); }
+.tag-purple { background:rgba(124,58,237,0.15); color:#a78bfa; border:1px solid rgba(124,58,237,0.3); }
+.tag-green { background:rgba(16,185,129,0.15); color:var(--accent3); border:1px solid rgba(16,185,129,0.3); }
+.tag-amber { background:rgba(245,158,11,0.15); color:var(--accent4); border:1px solid rgba(245,158,11,0.3); }
+.tag-red { background:rgba(239,68,68,0.15); color:var(--accent5); border:1px solid rgba(239,68,68,0.3); }
+
+.grid { display:grid; gap:1.25rem; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+.card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:12px; padding:1.25rem;
+  position:relative; overflow:hidden;
+}
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+}
+.card-blue::before { background: linear-gradient(90deg, var(--accent), transparent); }
+.card-purple::before { background: linear-gradient(90deg, #7c3aed, transparent); }
+.card-green::before { background: linear-gradient(90deg, var(--accent3), transparent); }
+.card-amber::before { background: linear-gradient(90deg, var(--accent4), transparent); }
+.card-red::before { background: linear-gradient(90deg, var(--accent5), transparent); }
+
+.card h3 {
+  font-size:1rem; font-weight:700; margin-bottom:1rem;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.dot-blue { background:var(--accent); }
+.dot-purple { background:#7c3aed; }
+.dot-green { background:var(--accent3); }
+.dot-amber { background:var(--accent4); }
+.dot-red { background:var(--accent5); }
+
+pre, code {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+pre {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+.kw { color: #7c3aed; }
+.cm { color: #475569; font-style:italic; }
+.val { color: var(--accent3); }
+.ip { color: var(--accent4); }
+.cmd { color: var(--accent); }
+
+.formula-box {
+  background: var(--bg3);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 8px; padding:1rem;
+  font-family:var(--mono); font-size:0.82rem;
+  margin:0.75rem 0;
+}
+.formula-box .f-label { color:var(--text2); font-size:0.72rem; margin-bottom:0.3rem; }
+.formula-box .f-val { color:var(--accent); font-size:1rem; font-weight:700; }
+
+.info-row { display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0; border-bottom:1px solid var(--border); font-size:0.85rem; }
+.info-row:last-child { border-bottom:none; }
+.info-row .label { color:var(--text2); font-family:var(--mono); font-size:0.78rem; }
+.info-row .value { color:var(--text); font-weight:700; }
+
+.alert {
+  border-radius:8px; padding:0.75rem 1rem;
+  font-size:0.83rem; margin:0.75rem 0;
+  display:flex; gap:0.5rem; align-items:flex-start;
+}
+.alert-blue { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); color:#7dd3fc; }
+.alert-amber { background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); color:#fcd34d; }
+.alert-red { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); color:#fca5a5; }
+.alert-green { background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); color:#6ee7b7; }
+
+table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+th { background:var(--bg3); color:var(--text2); font-family:var(--mono); font-weight:700; padding:0.6rem 0.75rem; text-align:left; border:1px solid var(--border); font-size:0.75rem; }
+td { padding:0.55rem 0.75rem; border:1px solid var(--border); }
+tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+
+.badge { display:inline-block; padding:0.15rem 0.5rem; border-radius:4px; font-size:0.72rem; font-family:var(--mono); font-weight:700; }
+.badge-blue { background:rgba(0,212,255,0.15); color:var(--accent); }
+.badge-green { background:rgba(16,185,129,0.15); color:var(--accent3); }
+.badge-red { background:rgba(239,68,68,0.15); color:var(--accent5); }
+.badge-amber { background:rgba(245,158,11,0.15); color:var(--accent4); }
+
+p.desc { color:var(--text2); font-size:0.85rem; line-height:1.6; margin:0.5rem 0; }
+
+.sep { height:1px; background:var(--border); margin:1rem 0; }
 </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <div class="logo">📱 MDW Exam Practice</div>
-    <div class="subtitle">Aplicaciones para Dispositivos Móviles · UdL · 2020–2025</div>
-  </div>
+  <h1>Cheatsheet <span>Xarxes</span></h1>
+  <p class="subtitle">// GLBP · VRRP · SLB · NAT · OSPF · RIP — configuracions per a l'examen</p>
 </header>
 
-<div class="container">
-  <!-- Sidebar -->
-  <aside>
-    <h3>Tipo de Pregunta</h3>
+<nav>
+  <button class="nav-btn active" onclick="show('glbp')">GLBP</button>
+  <button class="nav-btn" onclick="show('vrrp')">VRRP</button>
+  <button class="nav-btn" onclick="show('slb')">SLB</button>
+  <button class="nav-btn" onclick="show('nat')">NAT</button>
+  <button class="nav-btn" onclick="show('routing')">Routing</button>
+  <button class="nav-btn" onclick="show('calc')">Calculadora GLBP</button>
+</nav>
 
-    <button class="type-btn active" data-type="home">
-      <span class="dot" style="background:#64748b"></span>
-      Inicio
-    </button>
+<main>
 
-    <button class="type-btn" data-type="teoria">
-      <span class="dot dot-t"></span>
-      Teoría
-      <span class="count" id="cnt-teoria">0</span>
-    </button>
+<!-- ═══════════════════════════════════════════════════ GLBP -->
+<div class="section active" id="glbp">
+  <div class="section-title">GLBP <span class="tag tag-blue">Gateway Load Balancing Protocol</span></div>
 
-    <button class="type-btn" data-type="fill_in_blanks">
-      <span class="dot dot-f"></span>
-      Fill in the Blanks
-      <span class="count" id="cnt-fill_in_blanks">0</span>
-    </button>
-
-    <button class="type-btn" data-type="hacer_codigo">
-      <span class="dot dot-c"></span>
-      Hacer Código
-      <span class="count" id="cnt-hacer_codigo">0</span>
-    </button>
-
-    <button class="type-btn" data-type="teoria_codigo">
-      <span class="dot dot-tc"></span>
-      Teoría de Código
-      <span class="count" id="cnt-teoria_codigo">0</span>
-    </button>
-
-    <div class="stats-box">
-      <h3>Mi Progreso</h3>
-      <div class="stat-row"><span>Respondidas</span><span id="stat-done">0</span></div>
-      <div class="stat-row"><span>Acertadas</span><span id="stat-got">0</span></div>
-      <div class="stat-row"><span>Total</span><span id="stat-total">0</span></div>
-      <div class="progress-bar-wrap" style="margin-top:12px">
-        <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
-      </div>
-      <div style="text-align:right;margin-top:5px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--text-dim)" id="pct-label">0%</div>
-      <button onclick="resetProgress()" style="width:100%;margin-top:14px;padding:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;border-radius:7px;font-size:0.72rem;font-family:'IBM Plex Mono',monospace;transition:all 0.2s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'">
-        ↺ Reiniciar progreso
-      </button>
-    </div>
-  </aside>
-
-  <!-- Main content -->
-  <main id="main-content">
-    <!-- Welcome screen (default) -->
-    <div id="welcome-view">
-      <div class="welcome">
-        <h2>Elige un tipo de pregunta</h2>
-        <p>Practica con preguntas reales de los exámenes de recuperación del 1er Parcial (2020–2025) de la asignatura Aplicaciones para Dispositivos Móviles de la UdL.</p>
-
-        <div class="categories-grid">
-          <div class="cat-card" data-type="teoria" onclick="showType('teoria')">
-            <span class="cat-icon">📚</span>
-            <div class="cat-name" style="color:var(--accent-t)">Teoría</div>
-            <div class="cat-info" id="wcat-teoria">Cargando...</div>
-          </div>
-          <div class="cat-card" data-type="fill_in_blanks" onclick="showType('fill_in_blanks')">
-            <span class="cat-icon">✏️</span>
-            <div class="cat-name" style="color:var(--accent-f)">Fill in the Blanks</div>
-            <div class="cat-info" id="wcat-fill_in_blanks">Cargando...</div>
-          </div>
-          <div class="cat-card" data-type="hacer_codigo" onclick="showType('hacer_codigo')">
-            <span class="cat-icon">💻</span>
-            <div class="cat-name" style="color:var(--accent-c)">Hacer Código</div>
-            <div class="cat-info" id="wcat-hacer_codigo">Cargando...</div>
-          </div>
-          <div class="cat-card" data-type="teoria_codigo" onclick="showType('teoria_codigo')">
-            <span class="cat-icon">🔍</span>
-            <div class="cat-name" style="color:var(--accent-tc)">Teoría de Código</div>
-            <div class="cat-info" id="wcat-teoria_codigo">Cargando...</div>
-          </div>
-        </div>
-      </div>
+  <div class="grid">
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>Conceptes clau</h3>
+      <div class="info-row"><span class="label">AVG</span><span class="value">Active Virtual Gateway — assigna MACs als clients</span></div>
+      <div class="info-row"><span class="label">AVF</span><span class="value">Active Virtual Forwarder — encamina el tràfic real</span></div>
+      <div class="info-row"><span class="label">VIP</span><span class="value">IP virtual compartida per tots els routers del grup</span></div>
+      <div class="info-row"><span class="label">Weighting</span><span class="value">Pes de cada AVF per al load balancing</span></div>
+      <div class="info-row"><span class="label">Preempt</span><span class="value">Permet recuperar el rol d'AVG automàticament</span></div>
+      <div class="alert alert-blue">⚡ El preempt de GLBP és per defecte <strong>desactivat</strong> (diferent de VRRP)</div>
     </div>
 
-    <!-- Question view -->
-    <div id="question-view" class="hidden">
-      <!-- Type header -->
-      <div class="type-header">
-        <span class="type-badge" id="type-badge"></span>
-        <span class="type-title" id="type-title"></span>
-        <span class="type-desc" id="type-desc"></span>
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>Lògica d'histèresi AVF</h3>
+      <div class="formula-box">
+        <div class="f-label">Pes inicial</div>
+        <div class="f-val">weighting &lt;base&gt; lower &lt;L&gt; upper &lt;U&gt;</div>
       </div>
-
-      <!-- Question navigator -->
-      <div class="q-nav" id="q-nav"></div>
-
-      <!-- Question card -->
-      <div class="q-card" id="q-card">
-        <div class="q-meta">
-          <span class="q-id" id="q-id"></span>
-          <span id="q-exam"></span>
-        </div>
-        <div class="q-body" id="q-body"></div>
-        <button class="reveal-btn" onclick="revealAnswer()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          Ver respuesta
-        </button>
-        <div id="answer-container" class="hidden">
-          <div class="answer-box">
-            <div class="answer-label">◆ Respuesta modelo</div>
-            <div id="answer-body"></div>
-            <div class="eval-row">
-              <span class="eval-label">¿Lo sabías?</span>
-              <button class="eval-btn got-it" onclick="markGotIt()">✓ Sí, lo sabía</button>
-              <button class="eval-btn missed" onclick="markMissed()">✗ Necesito repasar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Nav row -->
-      <div class="nav-row">
-        <button class="nav-btn" onclick="prevQ()" id="btn-prev">← Anterior</button>
-        <button class="nav-btn primary" onclick="nextQ()" id="btn-next">Siguiente →</button>
-        <span class="q-counter" id="q-counter"></span>
-      </div>
+      <div class="info-row"><span class="label">AVF es desactiva si</span><span class="value badge badge-red">pes &lt; lower</span></div>
+      <div class="info-row"><span class="label">AVF es reactiva si</span><span class="value badge badge-green">pes &gt; upper</span></div>
+      <div class="info-row"><span class="label">Track decrement</span><span class="value">pes -= decrement si ruta/i·f cau</span></div>
+      <div class="alert alert-amber">⚠ Si lower == upper, qualsevol fallada que faci baixar el pes per sota activa/desactiva immediatament</div>
     </div>
-  </main>
+
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>Load balancing weighted</h3>
+      <div class="formula-box">
+        <div class="f-label">% tràfic router X</div>
+        <div class="f-val">pes_X / (pes_R1 + pes_R2) × 100</div>
+      </div>
+      <p class="desc">Si un AVF es desactiva, el 100% va a l'altre. Si tots dos estan desactivats, no hi ha servei.</p>
+      <div class="sep"></div>
+      <div class="info-row"><span class="label">Round Robin</span><span class="value">alternança simple, sense pesos</span></div>
+      <div class="info-row"><span class="label">Weighted</span><span class="value">proporció segons weighting</span></div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+  <h3 style="margin-bottom:1rem; font-size:1.1rem;">Configuració completa GLBP</h3>
+  <div class="grid">
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>Router 1 (AVG principal)</h3>
+<pre><span class="cm">! Interfície cap als clients</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">glbp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>       <span class="cm">! VIP</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> priority <span class="val">110</span>         <span class="cm">! AVG si és el més alt</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> preempt              <span class="cm">! reclamar AVG si es recupera</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> load-balancing weighted
+ <span class="cmd">glbp</span> <span class="val">1</span> weighting <span class="val">20</span> lower <span class="val">7</span> upper <span class="val">8</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> weighting track <span class="val">1</span> decrement <span class="val">10</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> weighting track <span class="val">2</span> decrement <span class="val">10</span>
+
+<span class="cm">! Tracks (miren si la ruta existeix)</span>
+<span class="kw">track</span> <span class="val">1</span> ip route <span class="ip">35.0.0.0</span> <span class="ip">255.0.0.0</span> metric threshold
+ threshold metric up <span class="val">34</span> down <span class="val">35</span>
+<span class="kw">track</span> <span class="val">2</span> ip route <span class="ip">56.0.0.0</span> <span class="ip">255.0.0.0</span> metric threshold
+ threshold metric up <span class="val">34</span> down <span class="val">35</span></pre>
+    </div>
+
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>Verificació GLBP</h3>
+<pre><span class="cmd">show</span> glbp
+<span class="cmd">show</span> glbp brief
+<span class="cmd">show</span> glbp detail
+<span class="cm">! Veure estat AVG/AVF i pesos</span>
+
+<span class="cmd">debug</span> glbp events
+<span class="cmd">debug</span> ip slb real
+<span class="cm">! Monitorar canvis d'estat</span></pre>
+      <div class="sep"></div>
+      <h3><span class="dot dot-purple"></span>Tracks per interfície</h3>
+<pre><span class="kw">track</span> <span class="val">1</span> interface FastEthernet0/1 line-protocol
+<span class="cm">! Es desactiva si la i/f cau físicament</span>
+
+<span class="kw">track</span> <span class="val">2</span> ip route <span class="ip">10.0.0.0</span> <span class="ip">255.0.0.0</span> reachability
+<span class="cm">! Es desactiva si la ruta desapareix</span></pre>
+    </div>
+
+    <div class="card card-amber">
+      <h3><span class="dot dot-amber"></span>Taula de càlcul de pesos</h3>
+      <table>
+        <thead><tr><th>Situació</th><th>Pes</th><th>Estat AVF</th></tr></thead>
+        <tbody>
+          <tr><td>Tot OK</td><td>base (ex: 20)</td><td><span class="badge badge-green">ACTIU</span></td></tr>
+          <tr><td>1 track cau (−10)</td><td>20−10=10</td><td><span class="badge badge-green">ACTIU</span> si 10 &gt; lower</td></tr>
+          <tr><td>2 tracks cauen</td><td>20−20=0</td><td><span class="badge badge-red">INACTIU</span></td></tr>
+          <tr><td>Track torna</td><td>+10</td><td><span class="badge badge-green">ACTIU</span> si pes &gt; upper</td></tr>
+        </tbody>
+      </table>
+      <div class="alert alert-amber" style="margin-top:0.75rem">⚠ L'estat AVF persisteix entre temps — l'histèresi és acumulativa</div>
+    </div>
+  </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════ VRRP -->
+<div class="section" id="vrrp">
+  <div class="section-title">VRRP <span class="tag tag-purple">Virtual Router Redundancy Protocol</span></div>
+
+  <div class="grid">
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>Conceptes clau</h3>
+      <div class="info-row"><span class="label">Master</span><span class="value">router amb prioritat més alta (defecte 100)</span></div>
+      <div class="info-row"><span class="label">Backup</span><span class="value">router en espera</span></div>
+      <div class="info-row"><span class="label">VIP</span><span class="value">IP virtual que reben els clients com a gateway</span></div>
+      <div class="info-row"><span class="label">Preempt</span><span class="value"><span class="badge badge-green">ACTIVAT per defecte</span> (diferent de HSRP)</span></div>
+      <div class="info-row"><span class="label">Advertisement</span><span class="value">1 segon per defecte</span></div>
+      <div class="info-row"><span class="label">Master Down</span><span class="value">~3 segons (3 × adv + skew)</span></div>
+    </div>
+
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>Configuració bàsica</h3>
+<pre><span class="cm">! Master (R1)</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">vrrp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> priority <span class="val">110</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> preempt         <span class="cm">! opcional, ja és default</span>
+
+<span class="cm">! Backup (R2)</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">vrrp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> priority <span class="val">90</span></pre>
+    </div>
+
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>VRRP amb Tracking</h3>
+<pre><span class="cm">! Definir track</span>
+<span class="kw">track</span> <span class="val">1</span> interface FastEthernet0/1 line-protocol
+<span class="kw">track</span> <span class="val">2</span> interface FastEthernet1/0 line-protocol
+
+<span class="cm">! Aplicar a VRRP</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">vrrp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> priority <span class="val">110</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> preempt
+ <span class="cmd">vrrp</span> <span class="val">1</span> track <span class="val">1</span> decrement <span class="val">21</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> track <span class="val">2</span> decrement <span class="val">21</span></pre>
+      <div class="alert alert-amber">⚠ Decrement &gt; diferència de prioritats per garantir canvi a la 1a fallada. Ex: 110−21=89 &lt; 90 ✅</div>
+    </div>
+
+    <div class="card card-amber">
+      <h3><span class="dot dot-amber"></span>Doble grup VRRP (load balancing manual)</h3>
+<pre><span class="cm">! R1: Master grup 10, Backup grup 20</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">vrrp</span> <span class="val">10</span> ip <span class="ip">10.0.0.10</span>
+ <span class="cm">! sense priority → usa 100 (default)</span>
+ <span class="cmd">vrrp</span> <span class="val">10</span> track <span class="val">1</span> decrement <span class="val">20</span>
+ <span class="cmd">vrrp</span> <span class="val">20</span> ip <span class="ip">10.0.0.20</span>
+ <span class="cmd">vrrp</span> <span class="val">20</span> priority <span class="val">90</span>   <span class="cm">! Backup grup 20</span>
+ <span class="cmd">vrrp</span> <span class="val">20</span> track <span class="val">1</span> decrement <span class="val">20</span>
+
+<span class="cm">! R2: Master grup 20, Backup grup 10</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">vrrp</span> <span class="val">10</span> ip <span class="ip">10.0.0.10</span>
+ <span class="cmd">vrrp</span> <span class="val">10</span> priority <span class="val">90</span>
+ <span class="cmd">vrrp</span> <span class="val">20</span> ip <span class="ip">10.0.0.20</span>
+ <span class="cm">! sense priority → usa 100 (default)</span></pre>
+      <div class="alert alert-blue">c1 → gateway 10.0.0.10 &nbsp;|&nbsp; c2 → gateway 10.0.0.20</div>
+    </div>
+
+    <div class="card card-red">
+      <h3><span class="dot dot-red"></span>Verificació VRRP</h3>
+<pre><span class="cmd">show</span> vrrp brief
+<span class="cmd">show</span> vrrp interface FastEthernet0/0
+<span class="cm">! Veure Master addr, prioritat, estat</span>
+
+<span class="cm">! Wireshark: filtre per veure failover</span>
+vrrp or icmp or arp
+ip.dst == <span class="ip">224.0.0.18</span>   <span class="cm">! multicast VRRP</span></pre>
+      <div class="info-row"><span class="label">MAC virtual</span><span class="value">0000.5e00.01XX (XX = grup)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ SLB -->
+<div class="section" id="slb">
+  <div class="section-title">SLB <span class="tag tag-green">Server Load Balancing</span></div>
+
+  <div class="grid">
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>Modes d'operació</h3>
+      <table>
+        <thead><tr><th>Mode</th><th>Descripció</th><th>Cal als servidors</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-blue">NAT</span></td><td>SLB tradueix IP i port</td><td>gateway → SLB</td></tr>
+          <tr><td><span class="badge badge-amber">Forwarding</span></td><td>SLB reencamina sense NAT</td><td>gateway → SLB + VIP a loopback</td></tr>
+        </tbody>
+      </table>
+      <div class="alert alert-amber" style="margin-top:0.75rem">⚠ Mode Forwarding: els servidors reben paquets amb IP destí = VIP. Cal que la tinguin configurada o l'acceptin.</div>
+    </div>
+
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>Farm mode NAT (port 80)</h3>
+<pre><span class="kw">ip slb serverfarm</span> FARM1
+ <span class="cmd">nat server</span>                <span class="cm">! mode NAT</span>
+ <span class="cmd">predictor roundrobin</span>
+ <span class="cmd">real</span> <span class="ip">10.0.0.1</span> <span class="val">80</span>
+  weight <span class="val">2</span>
+  inservice
+ exit
+ <span class="cmd">real</span> <span class="ip">10.0.0.2</span> <span class="val">80</span>
+  weight <span class="val">4</span>
+  inservice
+ exit
+exit</pre>
+    </div>
+
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>Farm mode Forwarding (port 8080)</h3>
+<pre><span class="kw">ip slb serverfarm</span> FARM2
+ <span class="cm">! sense "nat server"</span>
+ <span class="cmd">predictor roundrobin</span>
+ <span class="cmd">real</span> <span class="ip">10.0.0.3</span>     <span class="cm">! sense port en Forwarding</span>
+  weight <span class="val">3</span>
+  inservice
+ exit
+ <span class="cmd">real</span> <span class="ip">10.0.0.4</span>
+  weight <span class="val">9</span>
+  inservice
+ exit
+exit</pre>
+      <div class="alert alert-red">❌ No posar port en mode Forwarding → error "Must configure nat server"</div>
+    </div>
+
+    <div class="card card-amber">
+      <h3><span class="dot dot-amber"></span>Virtual Server (VIP)</h3>
+<pre><span class="kw">ip slb vserver</span> VSERVER1
+ <span class="cmd">virtual</span> <span class="ip">10.0.0.20</span> tcp <span class="val">80</span>
+ <span class="cmd">serverfarm</span> FARM1
+ <span class="cmd">inservice</span>
+exit
+
+<span class="kw">ip slb vserver</span> VSERVER2
+ <span class="cmd">virtual</span> <span class="ip">10.0.0.20</span> tcp <span class="val">8080</span>
+ <span class="cmd">serverfarm</span> FARM2
+ <span class="cmd">inservice</span>
+exit</pre>
+      <div class="alert alert-blue">💡 La comanda "client" és opcional — sense ella accepta de tothom</div>
+    </div>
+
+    <div class="card card-red">
+      <h3><span class="dot dot-red"></span>Routing necessari</h3>
+      <p class="desc" style="margin-bottom:0.75rem">Els servidors han de saber retornar les respostes al client:</p>
+<pre><span class="cm">! Als servidors R1, R2, R3, R4</span>
+<span class="kw">ip route</span> <span class="ip">0.0.0.0</span> <span class="ip">0.0.0.0</span> <span class="ip">10.0.0.10</span>
+<span class="cm">! gateway = IP del SLB</span>
+
+<span class="cm">! Al PC Linux</span>
+sudo ip addr add <span class="ip">11.0.0.100/8</span> dev tap0
+sudo ip link set tap0 up
+sudo ip route add <span class="ip">10.0.0.0/8</span> via <span class="ip">11.0.0.10</span> dev tap0</pre>
+    </div>
+
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>Verificació SLB</h3>
+<pre><span class="cmd">show</span> ip slb reals
+<span class="cmd">show</span> ip slb vservers
+<span class="cmd">show</span> ip slb serverfarms
+<span class="cmd">show</span> ip slb stats
+<span class="cmd">show</span> ip slb conns
+<span class="cmd">debug</span> ip slb real
+
+<span class="cm">! Test des del PC</span>
+curl -u user:user http://<span class="ip">10.0.0.20</span>:80
+curl -u user:user http://<span class="ip">10.0.0.20</span>:8080
+
+<span class="cm">! HTTP als servidors Cisco</span>
+<span class="kw">ip http server</span>
+<span class="kw">ip http port</span> <span class="val">8080</span>
+<span class="kw">username</span> user privilege <span class="val">15</span> secret user
+<span class="kw">ip http authentication local</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ NAT -->
+<div class="section" id="nat">
+  <div class="section-title">NAT <span class="tag tag-amber">Network Address Translation</span></div>
+
+  <div class="grid">
+    <div class="card card-amber">
+      <h3><span class="dot dot-amber"></span>NAT PAT (Overload) — el més comú</h3>
+<pre><span class="cm">! Definir zona inside i outside</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">ip nat outside</span>     <span class="cm">! cap a Internet</span>
+
+<span class="kw">interface</span> FastEthernet1/0
+ <span class="cmd">ip nat inside</span>      <span class="cm">! cap als clients</span>
+
+<span class="cm">! ACL: qui pot fer NAT</span>
+<span class="kw">access-list</span> <span class="val">1</span> permit <span class="ip">10.0.0.0</span> <span class="ip">0.0.0.255</span>
+
+<span class="cm">! Regla NAT: surt per f0/0 amb overload (PAT)</span>
+<span class="kw">ip nat inside source list</span> <span class="val">1</span>
+  interface FastEthernet0/0 overload</pre>
+      <div class="alert alert-blue">💡 La wildcard mask és l'invers: /24 → 0.0.0.255 | /8 → 0.255.255.255</div>
+    </div>
+
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>Explicació de la comanda NAT</h3>
+      <table>
+        <thead><tr><th>Part</th><th>Significat</th></tr></thead>
+        <tbody>
+          <tr><td><code>inside source</code></td><td>Tradueix IPs origen des de zona inside</td></tr>
+          <tr><td><code>list 1</code></td><td>Aplica l'ACL 1 per filtrar qui es tradu·eix</td></tr>
+          <tr><td><code>interface f0/0</code></td><td>Tradueix a la IP d'aquesta interfície</td></tr>
+          <tr><td><code>overload</code></td><td>PAT: múltiples clients, mateixa IP, ports diferents</td></tr>
+        </tbody>
+      </table>
+      <div class="sep"></div>
+      <h3><span class="dot dot-blue"></span>Verificació NAT</h3>
+<pre><span class="cmd">show</span> ip nat translations
+<span class="cmd">show</span> ip nat statistics
+<span class="cmd">debug</span> ip nat</pre>
+    </div>
+
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>Flux NAT complet</h3>
+<pre>Client <span class="ip">10.0.0.1</span>:1234 → Server <span class="ip">8.8.8.8</span>:80
+         ↓ Router (NAT)
+<span class="ip">11.0.0.1</span>:5000 → Server <span class="ip">8.8.8.8</span>:80
+         ↓ Resposta
+<span class="ip">8.8.8.8</span>:80 → <span class="ip">11.0.0.1</span>:5000
+         ↓ Router (deNAT)
+<span class="ip">8.8.8.8</span>:80 → Client <span class="ip">10.0.0.1</span>:1234</pre>
+      <div class="alert alert-green">✅ Transparent pel client — ell sempre veu la seva IP privada</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ ROUTING -->
+<div class="section" id="routing">
+  <div class="section-title">Routing <span class="tag tag-red">RIP · OSPF · Estàtiques</span></div>
+
+  <div class="grid">
+    <div class="card card-red">
+      <h3><span class="dot dot-red"></span>RIP v2</h3>
+<pre><span class="kw">router rip</span>
+ version <span class="val">2</span>
+ network <span class="ip">192.168.1.0</span>
+ network <span class="ip">10.0.0.0</span>
+ no auto-summary       <span class="cm">! important per subnetting</span>
+
+<span class="cm">! Redistribuir rutes estàtiques a RIP</span>
+ redistribute static</pre>
+      <div class="info-row"><span class="label">Timers</span><span class="value">timers basic 3 10 20 20</span></div>
+      <div class="info-row"><span class="label">Mètrica</span><span class="value">hop count (max 15)</span></div>
+    </div>
+
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>OSPF</h3>
+<pre><span class="kw">router ospf</span> <span class="val">1</span>
+ network <span class="ip">192.168.1.0</span> <span class="ip">0.0.0.255</span> area <span class="val">0</span>
+ network <span class="ip">11.0.0.0</span> <span class="ip">0.0.0.255</span> area <span class="val">0</span>
+
+<span class="cm">! Eliminar OSPF</span>
+<span class="kw">no router ospf</span> <span class="val">1</span></pre>
+      <div class="info-row"><span class="label">Mètrica</span><span class="value">cost (inversament proporcional a BW)</span></div>
+      <div class="info-row"><span class="label">Hello/Dead</span><span class="value">10s / 40s (per defecte)</span></div>
+    </div>
+
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>Rutes estàtiques</h3>
+<pre><span class="cm">! Ruta cap a una xarxa</span>
+<span class="kw">ip route</span> <span class="ip">12.0.0.0</span> <span class="ip">255.255.255.0</span> <span class="ip">11.0.0.3</span>
+
+<span class="cm">! Ruta per defecte</span>
+<span class="kw">ip route</span> <span class="ip">0.0.0.0</span> <span class="ip">0.0.0.0</span> <span class="ip">11.0.0.1</span>
+
+<span class="cm">! Floating static (backup, metric alta)</span>
+<span class="kw">ip route</span> <span class="ip">192.168.1.0</span> <span class="ip">255.255.255.0</span> <span class="ip">11.0.0.2</span> <span class="val">10</span>
+
+<span class="cm">! Al PC Linux</span>
+sudo ip route add <span class="ip">10.0.0.0/8</span> via <span class="ip">11.0.0.254</span> dev tap0
+sudo ip route del <span class="ip">10.0.0.0/8</span></pre>
+    </div>
+
+    <div class="card card-amber">
+      <h3><span class="dot dot-amber"></span>Verificació routing</h3>
+<pre><span class="cmd">show</span> ip route
+<span class="cmd">show</span> ip route ospf
+<span class="cmd">show</span> ip route rip
+<span class="cmd">show</span> ip ospf neighbor
+<span class="cmd">show</span> ip rip database
+
+<span class="cm">! Al PC Linux</span>
+ip route show
+traceroute <span class="ip">12.0.0.10</span>
+ping <span class="ip">10.0.0.20</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ CALC -->
+<div class="section" id="calc">
+  <div class="section-title">Calculadora GLBP <span class="tag tag-blue">simulació de pesos i estats</span></div>
+
+  <div class="grid">
+    <div class="card card-blue" style="grid-column: span 2;">
+      <h3><span class="dot dot-blue"></span>Paràmetres dels routers</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:0.5rem;">
+        <div>
+          <p style="color:var(--accent); font-family:var(--mono); font-size:0.8rem; margin-bottom:0.75rem;">— Router 1</p>
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            <label style="font-size:0.8rem; color:var(--text2);">Pes base <input id="r1base" type="number" value="20" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+            <label style="font-size:0.8rem; color:var(--text2);">Lower <input id="r1lower" type="number" value="7" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+            <label style="font-size:0.8rem; color:var(--text2);">Upper <input id="r1upper" type="number" value="8" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+            <label style="font-size:0.8rem; color:var(--text2);">Decrement track <input id="r1dec" type="number" value="10" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+          </div>
+        </div>
+        <div>
+          <p style="color:#a78bfa; font-family:var(--mono); font-size:0.8rem; margin-bottom:0.75rem;">— Router 2</p>
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            <label style="font-size:0.8rem; color:var(--text2);">Pes base <input id="r2base" type="number" value="20" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+            <label style="font-size:0.8rem; color:var(--text2);">Lower <input id="r2lower" type="number" value="5" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+            <label style="font-size:0.8rem; color:var(--text2);">Upper <input id="r2upper" type="number" value="8" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+            <label style="font-size:0.8rem; color:var(--text2);">Decrement track <input id="r2dec" type="number" value="10" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+      <p style="color:var(--text2); font-size:0.8rem; margin-bottom:0.75rem; font-family:var(--mono);">— Seqüència de temps (0=i/f caiguda, 1=activa) — format: t1_r1t1,r1t2,r2t1,r2t2 | t2_...</p>
+      <div id="rows-container" style="display:flex; flex-direction:column; gap:0.5rem;"></div>
+      <button onclick="addRow()" style="margin-top:0.75rem; background:var(--bg3); border:1px solid var(--border); color:var(--accent); padding:0.4rem 1rem; border-radius:6px; cursor:pointer; font-family:var(--mono); font-size:0.8rem;">+ Afegir temps</button>
+      <button onclick="calcular()" style="margin-top:0.75rem; margin-left:0.5rem; background:var(--accent); border:none; color:var(--bg); padding:0.4rem 1rem; border-radius:6px; cursor:pointer; font-family:var(--mono); font-size:0.8rem; font-weight:700;">Calcular ▶</button>
+    </div>
+  </div>
+
+  <div id="result-table" style="margin-top:1.5rem;"></div>
+</div>
+
+</main>
+
 <script>
-// ─── Inline questions data (generated from data file) ───
-const QUESTIONS_DATA_INLINE = null; // will use external
-</script>
-<script src="questions_data.js"></script>
-<script>
-// ─── State ───
-let currentType = null;
-let currentIdx = 0;
-let progress = JSON.parse(localStorage.getItem('mdw_progress') || '{}');
-
-// Maps
-const TYPE_META = {
-  teoria:        { label: 'Teoría',           badge: 'type-badge-t',  title: 'Preguntas de Teoría',      desc: 'Responde sin ver la solución', accent: '#64d0ff' },
-  fill_in_blanks:{ label: 'Fill in Blanks',   badge: 'type-badge-f',  title: 'Completa el Código',       desc: 'Completa los espacios en blanco', accent: '#a78bfa' },
-  hacer_codigo:  { label: 'Hacer Código',     badge: 'type-badge-c',  title: 'Escribe el Código',        desc: 'Implementa la solución completa', accent: '#34d399' },
-  teoria_codigo: { label: 'Teoría de Código', badge: 'type-badge-tc', title: 'Analiza el Código',        desc: 'Interpreta y explica el código dado', accent: '#fbbf24' }
-};
-
-// ─── Init ───
-function init() {
-  const cats = ['teoria','fill_in_blanks','hacer_codigo','teoria_codigo'];
-  let total = 0;
-  cats.forEach(t => {
-    const n = QUESTIONS_DATA[t].length;
-    document.getElementById('cnt-' + t).textContent = n;
-    document.getElementById('wcat-' + t).textContent = `${n} preguntas de exámenes reales`;
-    total += n;
-  });
-  updateStats(total);
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
 }
 
-function updateStats(total) {
-  const cats = ['teoria','fill_in_blanks','hacer_codigo','teoria_codigo'];
-  if (total === undefined) {
-    total = 0;
-    cats.forEach(t => { total += QUESTIONS_DATA[t].length; });
+let rowCount = 0;
+function addRow() {
+  rowCount++;
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;';
+  div.innerHTML = `
+    <span style="font-family:var(--mono); font-size:0.75rem; color:var(--text2); min-width:55px;">Temps ${rowCount}</span>
+    <label style="font-size:0.75rem; color:var(--accent);">R1-T1 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
+    <label style="font-size:0.75rem; color:var(--accent);">R1-T2 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
+    <label style="font-size:0.75rem; color:#a78bfa;">R2-T1 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
+    <label style="font-size:0.75rem; color:#a78bfa;">R2-T2 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
+    <button onclick="this.parentElement.remove(); rowCount--;" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#fca5a5; padding:2px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button>
+  `;
+  document.getElementById('rows-container').appendChild(div);
+}
+
+for(let i=0;i<4;i++) addRow();
+
+function calcular() {
+  const r1base = +document.getElementById('r1base').value;
+  const r1lower = +document.getElementById('r1lower').value;
+  const r1upper = +document.getElementById('r1upper').value;
+  const r1dec = +document.getElementById('r1dec').value;
+  const r2base = +document.getElementById('r2base').value;
+  const r2lower = +document.getElementById('r2lower').value;
+  const r2upper = +document.getElementById('r2upper').value;
+  const r2dec = +document.getElementById('r2dec').value;
+
+  const rowDivs = document.getElementById('rows-container').children;
+  const data = [];
+  for(const row of rowDivs) {
+    const inputs = row.querySelectorAll('input');
+    data.push([+inputs[0].value, +inputs[1].value, +inputs[2].value, +inputs[3].value]);
   }
-  let done = 0, got = 0;
-  Object.values(progress).forEach(v => {
-    if (v !== null) { done++; if (v === 'got') got++; }
+
+  let avf1 = true, avf2 = true;
+  let html = `<table>
+    <thead><tr>
+      <th>Temps</th><th>R1-T1</th><th>R1-T2</th><th>R2-T1</th><th>R2-T2</th>
+      <th>Pes R1</th><th>Pes R2</th><th>AVF R1</th><th>AVF R2</th><th>Share R1</th><th>Share R2</th>
+    </tr></thead><tbody>`;
+
+  data.forEach(([r1t1,r1t2,r2t1,r2t2], i) => {
+    let w1 = r1base;
+    if(!r1t1) w1 -= r1dec;
+    if(!r1t2) w1 -= r1dec;
+    w1 = Math.max(w1,0);
+
+    let w2 = r2base;
+    if(!r2t1) w2 -= r2dec;
+    if(!r2t2) w2 -= r2dec;
+    w2 = Math.max(w2,0);
+
+    if(avf1 && w1 < r1lower) avf1 = false;
+    else if(!avf1 && w1 > r1upper) avf1 = true;
+    if(avf2 && w2 < r2lower) avf2 = false;
+    else if(!avf2 && w2 > r2upper) avf2 = true;
+
+    let s1=0, s2=0;
+    if(avf1 && avf2) { const t=w1+w2; s1=t?Math.round(w1/t*100):0; s2=100-s1; }
+    else if(avf1) { s1=100; s2=0; }
+    else if(avf2) { s1=0; s2=100; }
+
+    const st = (v,a) => a ? `<span style="color:#10b981">${v} ✓</span>` : `<span style="color:#ef4444">${v} ✗</span>`;
+    const ci = (v) => v==1 ? `<span style="color:#10b981">1</span>` : `<span style="color:#ef4444">0</span>`;
+    html += `<tr>
+      <td><strong>${i+1}</strong></td>
+      <td>${ci(r1t1)}</td><td>${ci(r1t2)}</td><td>${ci(r2t1)}</td><td>${ci(r2t2)}</td>
+      <td>${st(w1,avf1)}</td><td>${st(w2,avf2)}</td>
+      <td>${avf1?'<span class="badge badge-green">ACTIU</span>':'<span class="badge badge-red">INACTIU</span>'}</td>
+      <td>${avf2?'<span class="badge badge-green">ACTIU</span>':'<span class="badge badge-red">INACTIU</span>'}</td>
+      <td><strong>${s1}%</strong></td><td><strong>${s2}%</strong></td>
+    </tr>`;
   });
-  document.getElementById('stat-done').textContent = done;
-  document.getElementById('stat-got').textContent = got;
-  document.getElementById('stat-total').textContent = total;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-  document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('pct-label').textContent = pct + '%';
+
+  html += '</tbody></table>';
+  document.getElementById('result-table').innerHTML = `<div class="card card-green">${html}</div>`;
 }
-
-function resetProgress() {
-  if (confirm('¿Seguro que quieres reiniciar todo el progreso?')) {
-    progress = {};
-    localStorage.removeItem('mdw_progress');
-    updateStats();
-    if (currentType) renderQuestion();
-  }
-}
-
-// ─── Navigation ───
-function showType(type) {
-  currentType = type;
-  currentIdx = 0;
-
-  // Sidebar btns
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.type-btn[data-type="${type}"]`).classList.add('active');
-
-  // Views
-  document.getElementById('welcome-view').classList.add('hidden');
-  document.getElementById('question-view').classList.remove('hidden');
-
-  // Meta
-  const meta = TYPE_META[type];
-  const badge = document.getElementById('type-badge');
-  badge.textContent = meta.label;
-  badge.className = 'type-badge ' + meta.badge;
-  document.getElementById('type-title').textContent = meta.title;
-  document.getElementById('type-desc').textContent = meta.desc;
-
-  renderNavDots();
-  renderQuestion();
-}
-
-document.querySelector('.type-btn[data-type="home"]').addEventListener('click', () => {
-  currentType = null;
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.type-btn[data-type="home"]').classList.add('active');
-  document.getElementById('welcome-view').classList.remove('hidden');
-  document.getElementById('question-view').classList.add('hidden');
-});
-
-document.querySelectorAll('.type-btn[data-type]').forEach(btn => {
-  const t = btn.dataset.type;
-  if (t !== 'home') {
-    btn.addEventListener('click', () => showType(t));
-  }
-});
-
-function renderNavDots() {
-  const qs = QUESTIONS_DATA[currentType];
-  const nav = document.getElementById('q-nav');
-  nav.innerHTML = '';
-  qs.forEach((q, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'q-nav-btn';
-    btn.textContent = i + 1;
-    if (i === currentIdx) btn.classList.add('current');
-    if (progress[q.id]) btn.classList.add('done');
-    btn.onclick = () => { currentIdx = i; renderQuestion(); };
-    nav.appendChild(btn);
-  });
-}
-
-function renderQuestion() {
-  const qs = QUESTIONS_DATA[currentType];
-  const q = qs[currentIdx];
-
-  document.getElementById('q-id').textContent = q.id;
-  document.getElementById('q-exam').textContent = q.exam;
-  document.getElementById('q-body').innerHTML = q.pregunta;
-  document.getElementById('answer-container').classList.add('hidden');
-  document.getElementById('answer-body').innerHTML = '';
-
-  // Reset card animation
-  const card = document.getElementById('q-card');
-  card.style.animation = 'none';
-  card.offsetHeight; // reflow
-  card.style.animation = '';
-
-  document.getElementById('q-counter').textContent = `${currentIdx + 1} / ${qs.length}`;
-  document.getElementById('btn-prev').disabled = currentIdx === 0;
-  document.getElementById('btn-next').disabled = currentIdx === qs.length - 1;
-
-  renderNavDots();
-  // Scroll to top of main
-  document.getElementById('main-content').scrollTop = 0;
-  window.scrollTo({ top: 90, behavior: 'smooth' });
-}
-
-function revealAnswer() {
-  const q = QUESTIONS_DATA[currentType][currentIdx];
-  document.getElementById('answer-body').innerHTML = q.respuesta;
-  document.getElementById('answer-container').classList.remove('hidden');
-
-  // Animate code blocks
-  document.querySelectorAll('#answer-body pre, #answer-body code').forEach(el => {
-    el.style.opacity = '0';
-    setTimeout(() => { el.style.transition = 'opacity 0.3s'; el.style.opacity = '1'; }, 50);
-  });
-}
-
-function markGotIt() {
-  const q = QUESTIONS_DATA[currentType][currentIdx];
-  progress[q.id] = 'got';
-  saveAndRefresh();
-  // Auto-advance
-  setTimeout(() => { if (currentIdx < QUESTIONS_DATA[currentType].length - 1) nextQ(); }, 600);
-}
-
-function markMissed() {
-  const q = QUESTIONS_DATA[currentType][currentIdx];
-  progress[q.id] = 'missed';
-  saveAndRefresh();
-}
-
-function saveAndRefresh() {
-  localStorage.setItem('mdw_progress', JSON.stringify(progress));
-  updateStats();
-  renderNavDots();
-}
-
-function prevQ() {
-  if (currentIdx > 0) { currentIdx--; renderQuestion(); }
-}
-
-function nextQ() {
-  const qs = QUESTIONS_DATA[currentType];
-  if (currentIdx < qs.length - 1) { currentIdx++; renderQuestion(); }
-}
-
-// ─── Keyboard nav ───
-document.addEventListener('keydown', e => {
-  if (!currentType) return;
-  if (e.key === 'ArrowRight' && !document.getElementById('btn-next').disabled) nextQ();
-  if (e.key === 'ArrowLeft' && !document.getElementById('btn-prev').disabled) prevQ();
-  if (e.key === ' ' && document.getElementById('answer-container').classList.contains('hidden')) {
-    e.preventDefault();
-    revealAnswer();
-  }
-});
-
-init();
 </script>
 </body>
 </html>
