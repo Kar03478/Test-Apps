@@ -7,391 +7,255 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0e1a;
-  --bg2: #111827;
-  --bg3: #1a2235;
-  --accent: #00d4ff;
-  --accent2: #7c3aed;
-  --accent3: #10b981;
-  --accent4: #f59e0b;
-  --accent5: #ef4444;
-  --text: #e2e8f0;
-  --text2: #94a3b8;
-  --border: rgba(255,255,255,0.08);
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'Syne', sans-serif;
+  --bg:#0a0e1a; --bg2:#111827; --bg3:#1a2235;
+  --accent:#00d4ff; --accent2:#7c3aed; --accent3:#10b981; --accent4:#f59e0b; --accent5:#ef4444;
+  --text:#e2e8f0; --text2:#94a3b8; --border:rgba(255,255,255,0.08);
+  --mono:'JetBrains Mono',monospace; --sans:'Syne',sans-serif;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--sans); min-height:100vh; }
-
-header {
-  padding: 3rem 2rem 2rem;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-}
-header::before {
-  content:'';
-  position:absolute; top:-60px; left:-60px;
-  width:300px; height:300px;
-  background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%);
-  pointer-events:none;
-}
-header::after {
-  content:'';
-  position:absolute; top:-40px; right:10%;
-  width:200px; height:200px;
-  background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
-  pointer-events:none;
-}
-h1 { font-size: 2.8rem; font-weight:800; letter-spacing:-1px; }
-h1 span { color: var(--accent); }
-.subtitle { color:var(--text2); font-size:0.95rem; margin-top:0.5rem; font-family:var(--mono); }
-
-nav {
-  display:flex; gap:0.5rem; flex-wrap:wrap;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border);
-  position:sticky; top:0; z-index:100;
-  background: rgba(10,14,26,0.95);
-  backdrop-filter: blur(10px);
-}
-.nav-btn {
-  background: var(--bg3); border: 1px solid var(--border);
-  color: var(--text2); padding: 0.4rem 1rem;
-  border-radius: 6px; cursor:pointer;
-  font-family:var(--mono); font-size:0.8rem;
-  transition: all 0.2s;
-}
-.nav-btn:hover, .nav-btn.active {
-  background: var(--accent); color: var(--bg);
-  border-color: var(--accent); font-weight:700;
-}
-
-main { padding: 2rem; max-width: 1400px; margin: 0 auto; }
-
-.section { display:none; }
-.section.active { display:block; }
-
-.section-title {
-  font-size:1.8rem; font-weight:800;
-  margin-bottom: 1.5rem;
-  display:flex; align-items:center; gap:0.75rem;
-}
-.tag {
-  font-size:0.7rem; font-family:var(--mono);
-  padding:0.2rem 0.6rem; border-radius:4px;
-  font-weight:700; letter-spacing:1px;
-}
-.tag-blue { background:rgba(0,212,255,0.15); color:var(--accent); border:1px solid rgba(0,212,255,0.3); }
-.tag-purple { background:rgba(124,58,237,0.15); color:#a78bfa; border:1px solid rgba(124,58,237,0.3); }
-.tag-green { background:rgba(16,185,129,0.15); color:var(--accent3); border:1px solid rgba(16,185,129,0.3); }
-.tag-amber { background:rgba(245,158,11,0.15); color:var(--accent4); border:1px solid rgba(245,158,11,0.3); }
-.tag-red { background:rgba(239,68,68,0.15); color:var(--accent5); border:1px solid rgba(239,68,68,0.3); }
-
-.grid { display:grid; gap:1.25rem; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
-.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-
-.card {
-  background:var(--bg2); border:1px solid var(--border);
-  border-radius:12px; padding:1.25rem;
-  position:relative; overflow:hidden;
-}
-.card::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:2px;
-}
-.card-blue::before { background: linear-gradient(90deg, var(--accent), transparent); }
-.card-purple::before { background: linear-gradient(90deg, #7c3aed, transparent); }
-.card-green::before { background: linear-gradient(90deg, var(--accent3), transparent); }
-.card-amber::before { background: linear-gradient(90deg, var(--accent4), transparent); }
-.card-red::before { background: linear-gradient(90deg, var(--accent5), transparent); }
-
-.card h3 {
-  font-size:1rem; font-weight:700; margin-bottom:1rem;
-  display:flex; align-items:center; gap:0.5rem;
-}
-.dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.dot-blue { background:var(--accent); }
-.dot-purple { background:#7c3aed; }
-.dot-green { background:var(--accent3); }
-.dot-amber { background:var(--accent4); }
-.dot-red { background:var(--accent5); }
-
-pre, code {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  line-height: 1.7;
-}
-pre {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
-  overflow-x: auto;
-  margin: 0.75rem 0;
-}
-.kw { color: #7c3aed; }
-.cm { color: #475569; font-style:italic; }
-.val { color: var(--accent3); }
-.ip { color: var(--accent4); }
-.cmd { color: var(--accent); }
-
-.formula-box {
-  background: var(--bg3);
-  border: 1px solid rgba(0,212,255,0.2);
-  border-radius: 8px; padding:1rem;
-  font-family:var(--mono); font-size:0.82rem;
-  margin:0.75rem 0;
-}
-.formula-box .f-label { color:var(--text2); font-size:0.72rem; margin-bottom:0.3rem; }
-.formula-box .f-val { color:var(--accent); font-size:1rem; font-weight:700; }
-
-.info-row { display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0; border-bottom:1px solid var(--border); font-size:0.85rem; }
-.info-row:last-child { border-bottom:none; }
-.info-row .label { color:var(--text2); font-family:var(--mono); font-size:0.78rem; }
-.info-row .value { color:var(--text); font-weight:700; }
-
-.alert {
-  border-radius:8px; padding:0.75rem 1rem;
-  font-size:0.83rem; margin:0.75rem 0;
-  display:flex; gap:0.5rem; align-items:flex-start;
-}
-.alert-blue { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); color:#7dd3fc; }
-.alert-amber { background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); color:#fcd34d; }
-.alert-red { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); color:#fca5a5; }
-.alert-green { background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); color:#6ee7b7; }
-
-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
-th { background:var(--bg3); color:var(--text2); font-family:var(--mono); font-weight:700; padding:0.6rem 0.75rem; text-align:left; border:1px solid var(--border); font-size:0.75rem; }
-td { padding:0.55rem 0.75rem; border:1px solid var(--border); }
-tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
-
-.badge { display:inline-block; padding:0.15rem 0.5rem; border-radius:4px; font-size:0.72rem; font-family:var(--mono); font-weight:700; }
-.badge-blue { background:rgba(0,212,255,0.15); color:var(--accent); }
-.badge-green { background:rgba(16,185,129,0.15); color:var(--accent3); }
-.badge-red { background:rgba(239,68,68,0.15); color:var(--accent5); }
-.badge-amber { background:rgba(245,158,11,0.15); color:var(--accent4); }
-
-p.desc { color:var(--text2); font-size:0.85rem; line-height:1.6; margin:0.5rem 0; }
-
-.sep { height:1px; background:var(--border); margin:1rem 0; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
+header{padding:2.5rem 2rem 1.5rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;left:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(0,212,255,.15) 0%,transparent 70%);pointer-events:none;}
+header::after{content:'';position:absolute;top:-40px;right:10%;width:200px;height:200px;background:radial-gradient(circle,rgba(124,58,237,.2) 0%,transparent 70%);pointer-events:none;}
+h1{font-size:2.5rem;font-weight:800;letter-spacing:-1px;}
+h1 span{color:var(--accent);}
+.subtitle{color:var(--text2);font-size:.9rem;margin-top:.4rem;font-family:var(--mono);}
+nav{display:flex;gap:.4rem;flex-wrap:wrap;padding:.75rem 2rem;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);}
+.nav-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:.35rem .85rem;border-radius:6px;cursor:pointer;font-family:var(--mono);font-size:.75rem;transition:all .2s;}
+.nav-btn:hover,.nav-btn.active{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:700;}
+main{padding:1.5rem 2rem;max-width:1400px;margin:0 auto;}
+.section{display:none;}.section.active{display:block;}
+.section-title{font-size:1.6rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem;}
+.tag{font-size:.7rem;font-family:var(--mono);padding:.2rem .6rem;border-radius:4px;font-weight:700;letter-spacing:1px;}
+.tag-blue{background:rgba(0,212,255,.15);color:var(--accent);border:1px solid rgba(0,212,255,.3);}
+.tag-purple{background:rgba(124,58,237,.15);color:#a78bfa;border:1px solid rgba(124,58,237,.3);}
+.tag-green{background:rgba(16,185,129,.15);color:var(--accent3);border:1px solid rgba(16,185,129,.3);}
+.tag-amber{background:rgba(245,158,11,.15);color:var(--accent4);border:1px solid rgba(245,158,11,.3);}
+.tag-red{background:rgba(239,68,68,.15);color:var(--accent5);border:1px solid rgba(239,68,68,.3);}
+.grid{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.1rem;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.card-blue::before{background:linear-gradient(90deg,var(--accent),transparent);}
+.card-purple::before{background:linear-gradient(90deg,#7c3aed,transparent);}
+.card-green::before{background:linear-gradient(90deg,var(--accent3),transparent);}
+.card-amber::before{background:linear-gradient(90deg,var(--accent4),transparent);}
+.card-red::before{background:linear-gradient(90deg,var(--accent5),transparent);}
+.card h3{font-size:.95rem;font-weight:700;margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot-blue{background:var(--accent);}.dot-purple{background:#7c3aed;}.dot-green{background:var(--accent3);}.dot-amber{background:var(--accent4);}.dot-red{background:var(--accent5);}
+pre,code{font-family:var(--mono);font-size:.76rem;line-height:1.7;}
+pre{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.9rem;overflow-x:auto;margin:.65rem 0;}
+.kw{color:#7c3aed;}.cm{color:#475569;font-style:italic;}.val{color:var(--accent3);}.ip{color:var(--accent4);}.cmd{color:var(--accent);}
+.formula-box{background:var(--bg3);border:1px solid rgba(0,212,255,.2);border-radius:8px;padding:.9rem;font-family:var(--mono);font-size:.8rem;margin:.65rem 0;}
+.formula-box .f-label{color:var(--text2);font-size:.7rem;margin-bottom:.3rem;}
+.formula-box .f-val{color:var(--accent);font-size:.95rem;font-weight:700;}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid var(--border);font-size:.82rem;}
+.info-row:last-child{border-bottom:none;}
+.info-row .label{color:var(--text2);font-family:var(--mono);font-size:.75rem;}
+.info-row .value{color:var(--text);font-weight:700;}
+.alert{border-radius:8px;padding:.65rem .9rem;font-size:.8rem;margin:.65rem 0;display:flex;gap:.5rem;align-items:flex-start;}
+.alert-blue{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);color:#7dd3fc;}
+.alert-amber{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fcd34d;}
+.alert-red{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#fca5a5;}
+.alert-green{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7;}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+th{background:var(--bg3);color:var(--text2);font-family:var(--mono);font-weight:700;padding:.55rem .7rem;text-align:left;border:1px solid var(--border);font-size:.72rem;}
+td{padding:.5rem .7rem;border:1px solid var(--border);}
+tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+.badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-family:var(--mono);font-weight:700;}
+.badge-blue{background:rgba(0,212,255,.15);color:var(--accent);}
+.badge-green{background:rgba(16,185,129,.15);color:var(--accent3);}
+.badge-red{background:rgba(239,68,68,.15);color:var(--accent5);}
+.badge-amber{background:rgba(245,158,11,.15);color:var(--accent4);}
+p.desc{color:var(--text2);font-size:.83rem;line-height:1.6;margin:.4rem 0;}
+.sep{height:1px;background:var(--border);margin:.9rem 0;}
+input[type=number]{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:3px 6px;border-radius:4px;font-family:var(--mono);}
 </style>
 </head>
 <body>
-
 <header>
   <h1>Cheatsheet <span>Xarxes</span></h1>
-  <p class="subtitle">// GLBP · VRRP · SLB · NAT · OSPF · RIP — configuracions per a l'examen</p>
+  <p class="subtitle">// GLBP · VRRP · SLB · NAT · OSPF · RIP · Alta Disponibilitat — examen</p>
 </header>
-
 <nav>
   <button class="nav-btn active" onclick="show('glbp')">GLBP</button>
   <button class="nav-btn" onclick="show('vrrp')">VRRP</button>
   <button class="nav-btn" onclick="show('slb')">SLB</button>
   <button class="nav-btn" onclick="show('nat')">NAT</button>
+  <button class="nav-btn" onclick="show('natping')">NAT Ping Taules</button>
   <button class="nav-btn" onclick="show('routing')">Routing</button>
+  <button class="nav-btn" onclick="show('arquitectura')">Alta Disponibilitat</button>
+  <button class="nav-btn" onclick="show('tap')">tap0 / Linux</button>
   <button class="nav-btn" onclick="show('calc')">Calculadora GLBP</button>
 </nav>
-
 <main>
 
-<!-- ═══════════════════════════════════════════════════ GLBP -->
+<!-- GLBP -->
 <div class="section active" id="glbp">
   <div class="section-title">GLBP <span class="tag tag-blue">Gateway Load Balancing Protocol</span></div>
-
   <div class="grid">
     <div class="card card-blue">
       <h3><span class="dot dot-blue"></span>Conceptes clau</h3>
       <div class="info-row"><span class="label">AVG</span><span class="value">Active Virtual Gateway — assigna MACs als clients</span></div>
       <div class="info-row"><span class="label">AVF</span><span class="value">Active Virtual Forwarder — encamina el tràfic real</span></div>
-      <div class="info-row"><span class="label">VIP</span><span class="value">IP virtual compartida per tots els routers del grup</span></div>
-      <div class="info-row"><span class="label">Weighting</span><span class="value">Pes de cada AVF per al load balancing</span></div>
-      <div class="info-row"><span class="label">Preempt</span><span class="value">Permet recuperar el rol d'AVG automàticament</span></div>
-      <div class="alert alert-blue">⚡ El preempt de GLBP és per defecte <strong>desactivat</strong> (diferent de VRRP)</div>
+      <div class="info-row"><span class="label">VIP</span><span class="value">IP virtual compartida per tots els routers</span></div>
+      <div class="info-row"><span class="label">Preempt</span><span class="value"><span class="badge badge-red">DESACTIVAT per defecte</span> (diferent de VRRP)</span></div>
+      <div class="alert alert-amber">⚠ El preempt de GLBP cal posar-lo explícitament</div>
     </div>
-
     <div class="card card-purple">
-      <h3><span class="dot dot-purple"></span>Lògica d'histèresi AVF</h3>
+      <h3><span class="dot dot-purple"></span>Lògica histèresi AVF</h3>
       <div class="formula-box">
-        <div class="f-label">Pes inicial</div>
+        <div class="f-label">Configuració</div>
         <div class="f-val">weighting &lt;base&gt; lower &lt;L&gt; upper &lt;U&gt;</div>
       </div>
-      <div class="info-row"><span class="label">AVF es desactiva si</span><span class="value badge badge-red">pes &lt; lower</span></div>
-      <div class="info-row"><span class="label">AVF es reactiva si</span><span class="value badge badge-green">pes &gt; upper</span></div>
-      <div class="info-row"><span class="label">Track decrement</span><span class="value">pes -= decrement si ruta/i·f cau</span></div>
-      <div class="alert alert-amber">⚠ Si lower == upper, qualsevol fallada que faci baixar el pes per sota activa/desactiva immediatament</div>
+      <div class="info-row"><span class="label">AVF desactiva si</span><span class="value badge badge-red">pes &lt; lower</span></div>
+      <div class="info-row"><span class="label">AVF reactiva si</span><span class="value badge badge-green">pes &gt; upper</span></div>
+      <div class="info-row"><span class="label">Track decrement</span><span class="value">pes -= decrement quan ruta/i·f cau</span></div>
+      <div class="alert alert-amber">⚠ L'estat AVF és persistent — histèresi acumulativa entre temps</div>
     </div>
-
     <div class="card card-green">
-      <h3><span class="dot dot-green"></span>Load balancing weighted</h3>
+      <h3><span class="dot dot-green"></span>Fórmula load balancing weighted</h3>
       <div class="formula-box">
         <div class="f-label">% tràfic router X</div>
         <div class="f-val">pes_X / (pes_R1 + pes_R2) × 100</div>
       </div>
-      <p class="desc">Si un AVF es desactiva, el 100% va a l'altre. Si tots dos estan desactivats, no hi ha servei.</p>
-      <div class="sep"></div>
-      <div class="info-row"><span class="label">Round Robin</span><span class="value">alternança simple, sense pesos</span></div>
+      <div class="info-row"><span class="label">Round Robin</span><span class="value">alternança simple sense pesos</span></div>
       <div class="info-row"><span class="label">Weighted</span><span class="value">proporció segons weighting</span></div>
+      <div class="info-row"><span class="label">Least Conn</span><span class="value">va al servidor amb menys connexions</span></div>
     </div>
-  </div>
-
-  <div class="sep"></div>
-  <h3 style="margin-bottom:1rem; font-size:1.1rem;">Configuració completa GLBP</h3>
-  <div class="grid">
     <div class="card card-blue">
-      <h3><span class="dot dot-blue"></span>Router 1 (AVG principal)</h3>
-<pre><span class="cm">! Interfície cap als clients</span>
-<span class="kw">interface</span> FastEthernet0/0
- <span class="cmd">glbp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>       <span class="cm">! VIP</span>
- <span class="cmd">glbp</span> <span class="val">1</span> priority <span class="val">110</span>         <span class="cm">! AVG si és el més alt</span>
- <span class="cmd">glbp</span> <span class="val">1</span> preempt              <span class="cm">! reclamar AVG si es recupera</span>
+      <h3><span class="dot dot-blue"></span>Configuració completa</h3>
+<pre><span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">glbp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> priority <span class="val">110</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> preempt
  <span class="cmd">glbp</span> <span class="val">1</span> load-balancing weighted
  <span class="cmd">glbp</span> <span class="val">1</span> weighting <span class="val">20</span> lower <span class="val">7</span> upper <span class="val">8</span>
  <span class="cmd">glbp</span> <span class="val">1</span> weighting track <span class="val">1</span> decrement <span class="val">10</span>
  <span class="cmd">glbp</span> <span class="val">1</span> weighting track <span class="val">2</span> decrement <span class="val">10</span>
 
-<span class="cm">! Tracks (miren si la ruta existeix)</span>
 <span class="kw">track</span> <span class="val">1</span> ip route <span class="ip">35.0.0.0</span> <span class="ip">255.0.0.0</span> metric threshold
  threshold metric up <span class="val">34</span> down <span class="val">35</span>
-<span class="kw">track</span> <span class="val">2</span> ip route <span class="ip">56.0.0.0</span> <span class="ip">255.0.0.0</span> metric threshold
- threshold metric up <span class="val">34</span> down <span class="val">35</span></pre>
+<span class="kw">track</span> <span class="val">2</span> interface FastEthernet0/1 line-protocol</pre>
     </div>
-
-    <div class="card card-purple">
-      <h3><span class="dot dot-purple"></span>Verificació GLBP</h3>
-<pre><span class="cmd">show</span> glbp
-<span class="cmd">show</span> glbp brief
-<span class="cmd">show</span> glbp detail
-<span class="cm">! Veure estat AVG/AVF i pesos</span>
-
-<span class="cmd">debug</span> glbp events
-<span class="cmd">debug</span> ip slb real
-<span class="cm">! Monitorar canvis d'estat</span></pre>
-      <div class="sep"></div>
-      <h3><span class="dot dot-purple"></span>Tracks per interfície</h3>
-<pre><span class="kw">track</span> <span class="val">1</span> interface FastEthernet0/1 line-protocol
-<span class="cm">! Es desactiva si la i/f cau físicament</span>
-
-<span class="kw">track</span> <span class="val">2</span> ip route <span class="ip">10.0.0.0</span> <span class="ip">255.0.0.0</span> reachability
-<span class="cm">! Es desactiva si la ruta desapareix</span></pre>
-    </div>
-
     <div class="card card-amber">
-      <h3><span class="dot dot-amber"></span>Taula de càlcul de pesos</h3>
-      <table>
-        <thead><tr><th>Situació</th><th>Pes</th><th>Estat AVF</th></tr></thead>
-        <tbody>
-          <tr><td>Tot OK</td><td>base (ex: 20)</td><td><span class="badge badge-green">ACTIU</span></td></tr>
-          <tr><td>1 track cau (−10)</td><td>20−10=10</td><td><span class="badge badge-green">ACTIU</span> si 10 &gt; lower</td></tr>
-          <tr><td>2 tracks cauen</td><td>20−20=0</td><td><span class="badge badge-red">INACTIU</span></td></tr>
-          <tr><td>Track torna</td><td>+10</td><td><span class="badge badge-green">ACTIU</span> si pes &gt; upper</td></tr>
-        </tbody>
-      </table>
-      <div class="alert alert-amber" style="margin-top:0.75rem">⚠ L'estat AVF persisteix entre temps — l'histèresi és acumulativa</div>
+      <h3><span class="dot dot-amber"></span>Verificació</h3>
+<pre><span class="cmd">show</span> glbp brief
+<span class="cmd">show</span> glbp detail
+<span class="cmd">debug</span> ip slb real</pre>
+      <div class="sep"></div>
+      <h3><span class="dot dot-amber"></span>Preempt i AVG</h3>
+      <p class="desc">Si R1 té preempt i cau R1-F0/0 → R2 passa a AVG. Quan F0/0 es recupera → <strong>R1 torna a ser AVG</strong> gràcies al preempt. El preempt de R2 no juga cap paper aquí.</p>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ VRRP -->
+<!-- VRRP -->
 <div class="section" id="vrrp">
   <div class="section-title">VRRP <span class="tag tag-purple">Virtual Router Redundancy Protocol</span></div>
-
   <div class="grid">
     <div class="card card-purple">
       <h3><span class="dot dot-purple"></span>Conceptes clau</h3>
-      <div class="info-row"><span class="label">Master</span><span class="value">router amb prioritat més alta (defecte 100)</span></div>
-      <div class="info-row"><span class="label">Backup</span><span class="value">router en espera</span></div>
-      <div class="info-row"><span class="label">VIP</span><span class="value">IP virtual que reben els clients com a gateway</span></div>
-      <div class="info-row"><span class="label">Preempt</span><span class="value"><span class="badge badge-green">ACTIVAT per defecte</span> (diferent de HSRP)</span></div>
+      <div class="info-row"><span class="label">Preempt</span><span class="value"><span class="badge badge-green">ACTIVAT per defecte</span> (diferent de HSRP/GLBP)</span></div>
+      <div class="info-row"><span class="label">Priority defecte</span><span class="value">100 — sense posar priority</span></div>
       <div class="info-row"><span class="label">Advertisement</span><span class="value">1 segon per defecte</span></div>
-      <div class="info-row"><span class="label">Master Down</span><span class="value">~3 segons (3 × adv + skew)</span></div>
+      <div class="info-row"><span class="label">Master Down</span><span class="value">~3 segons (3×adv + skew)</span></div>
+      <div class="info-row"><span class="label">MAC virtual</span><span class="value">0000.5e00.01XX (XX=grup)</span></div>
+      <div class="info-row"><span class="label">Multicast</span><span class="value">224.0.0.18</span></div>
     </div>
-
     <div class="card card-blue">
       <h3><span class="dot dot-blue"></span>Configuració bàsica</h3>
-<pre><span class="cm">! Master (R1)</span>
+<pre><span class="cm">! Master (R1) — priority > 100</span>
 <span class="kw">interface</span> FastEthernet0/0
  <span class="cmd">vrrp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>
  <span class="cmd">vrrp</span> <span class="val">1</span> priority <span class="val">110</span>
- <span class="cmd">vrrp</span> <span class="val">1</span> preempt         <span class="cm">! opcional, ja és default</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> preempt    <span class="cm">! opcional, ja és default</span>
 
 <span class="cm">! Backup (R2)</span>
 <span class="kw">interface</span> FastEthernet0/0
  <span class="cmd">vrrp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>
  <span class="cmd">vrrp</span> <span class="val">1</span> priority <span class="val">90</span></pre>
     </div>
-
     <div class="card card-green">
-      <h3><span class="dot dot-green"></span>VRRP amb Tracking</h3>
-<pre><span class="cm">! Definir track</span>
-<span class="kw">track</span> <span class="val">1</span> interface FastEthernet0/1 line-protocol
+      <h3><span class="dot dot-green"></span>VRRP + Tracking</h3>
+<pre><span class="kw">track</span> <span class="val">1</span> interface FastEthernet0/1 line-protocol
 <span class="kw">track</span> <span class="val">2</span> interface FastEthernet1/0 line-protocol
 
-<span class="cm">! Aplicar a VRRP</span>
 <span class="kw">interface</span> FastEthernet0/0
  <span class="cmd">vrrp</span> <span class="val">1</span> ip <span class="ip">192.168.1.3</span>
  <span class="cmd">vrrp</span> <span class="val">1</span> priority <span class="val">110</span>
  <span class="cmd">vrrp</span> <span class="val">1</span> preempt
  <span class="cmd">vrrp</span> <span class="val">1</span> track <span class="val">1</span> decrement <span class="val">21</span>
  <span class="cmd">vrrp</span> <span class="val">1</span> track <span class="val">2</span> decrement <span class="val">21</span></pre>
-      <div class="alert alert-amber">⚠ Decrement &gt; diferència de prioritats per garantir canvi a la 1a fallada. Ex: 110−21=89 &lt; 90 ✅</div>
+      <div class="alert alert-amber">⚠ Decrement > diferència de prioritats. Ex: 110−21=89 &lt; 90 → canvi a la 1a fallada ✅</div>
     </div>
-
     <div class="card card-amber">
       <h3><span class="dot dot-amber"></span>Doble grup VRRP (load balancing manual)</h3>
 <pre><span class="cm">! R1: Master grup 10, Backup grup 20</span>
 <span class="kw">interface</span> FastEthernet0/0
  <span class="cmd">vrrp</span> <span class="val">10</span> ip <span class="ip">10.0.0.10</span>
- <span class="cm">! sense priority → usa 100 (default)</span>
+ <span class="cm">! sense priority → 100 default → Master</span>
  <span class="cmd">vrrp</span> <span class="val">10</span> track <span class="val">1</span> decrement <span class="val">20</span>
  <span class="cmd">vrrp</span> <span class="val">20</span> ip <span class="ip">10.0.0.20</span>
- <span class="cmd">vrrp</span> <span class="val">20</span> priority <span class="val">90</span>   <span class="cm">! Backup grup 20</span>
- <span class="cmd">vrrp</span> <span class="val">20</span> track <span class="val">1</span> decrement <span class="val">20</span>
+ <span class="cmd">vrrp</span> <span class="val">20</span> priority <span class="val">90</span>
 
 <span class="cm">! R2: Master grup 20, Backup grup 10</span>
 <span class="kw">interface</span> FastEthernet0/0
  <span class="cmd">vrrp</span> <span class="val">10</span> ip <span class="ip">10.0.0.10</span>
  <span class="cmd">vrrp</span> <span class="val">10</span> priority <span class="val">90</span>
  <span class="cmd">vrrp</span> <span class="val">20</span> ip <span class="ip">10.0.0.20</span>
- <span class="cm">! sense priority → usa 100 (default)</span></pre>
+ <span class="cm">! sense priority → 100 default → Master</span></pre>
       <div class="alert alert-blue">c1 → gateway 10.0.0.10 &nbsp;|&nbsp; c2 → gateway 10.0.0.20</div>
     </div>
-
     <div class="card card-red">
-      <h3><span class="dot dot-red"></span>Verificació VRRP</h3>
+      <h3><span class="dot dot-red"></span>Verificació + Wireshark</h3>
 <pre><span class="cmd">show</span> vrrp brief
 <span class="cmd">show</span> vrrp interface FastEthernet0/0
-<span class="cm">! Veure Master addr, prioritat, estat</span>
 
-<span class="cm">! Wireshark: filtre per veure failover</span>
+<span class="cm">! Wireshark — veure failover</span>
 vrrp or icmp or arp
-ip.dst == <span class="ip">224.0.0.18</span>   <span class="cm">! multicast VRRP</span></pre>
-      <div class="info-row"><span class="label">MAC virtual</span><span class="value">0000.5e00.01XX (XX = grup)</span></div>
+ip.dst == <span class="ip">224.0.0.18</span></pre>
+      <p class="desc" style="margin-top:.5rem">Seqüència failover: anuncis VRRP paren → 3s silenci → ARP gratuït de la nova MAC → anuncis del nou Master.</p>
+    </div>
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>VRRP per SLBs (2 circuits)</h3>
+<pre><span class="cm">! Circuit 1 — xarxa clients (outside)</span>
+<span class="kw">interface</span> FastEthernet0/1
+ <span class="cmd">vrrp</span> <span class="val">1</span> ip <span class="ip">11.0.0.254</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> priority <span class="val">110</span>  <span class="cm">! SLB1</span>
+ <span class="cmd">vrrp</span> <span class="val">1</span> preempt
+ <span class="cmd">vrrp</span> <span class="val">1</span> track <span class="val">1</span> decrement <span class="val">30</span>
+
+<span class="cm">! Circuit 2 — xarxa servidors (inside)</span>
+<span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">vrrp</span> <span class="val">2</span> ip <span class="ip">10.0.0.254</span>
+ <span class="cmd">vrrp</span> <span class="val">2</span> priority <span class="val">110</span>
+ <span class="cmd">vrrp</span> <span class="val">2</span> preempt
+ <span class="cmd">vrrp</span> <span class="val">2</span> track <span class="val">2</span> decrement <span class="val">30</span></pre>
+      <div class="alert alert-blue">💡 PC usa 11.0.0.254 com a gateway. Servidors usen 10.0.0.254. Ambdós apunten a la VIP VRRP, no a la IP directa del SLB.</div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ SLB -->
+<!-- SLB -->
 <div class="section" id="slb">
   <div class="section-title">SLB <span class="tag tag-green">Server Load Balancing</span></div>
-
   <div class="grid">
     <div class="card card-green">
       <h3><span class="dot dot-green"></span>Modes d'operació</h3>
       <table>
         <thead><tr><th>Mode</th><th>Descripció</th><th>Cal als servidors</th></tr></thead>
         <tbody>
-          <tr><td><span class="badge badge-blue">NAT</span></td><td>SLB tradueix IP i port</td><td>gateway → SLB</td></tr>
-          <tr><td><span class="badge badge-amber">Forwarding</span></td><td>SLB reencamina sense NAT</td><td>gateway → SLB + VIP a loopback</td></tr>
+          <tr><td><span class="badge badge-blue">NAT</span></td><td>SLB tradueix IP i port</td><td>gateway → SLB + ip nat inside/outside</td></tr>
+          <tr><td><span class="badge badge-amber">Forwarding</span></td><td>Reencamina sense NAT. Destí = VIP</td><td>ruta de tornada cap al client</td></tr>
         </tbody>
       </table>
-      <div class="alert alert-amber" style="margin-top:0.75rem">⚠ Mode Forwarding: els servidors reben paquets amb IP destí = VIP. Cal que la tinguin configurada o l'acceptin.</div>
+      <div class="alert alert-red" style="margin-top:.75rem">❌ Forwarding: NO posar port a "real". Error: "Must configure nat server"</div>
     </div>
-
     <div class="card card-blue">
-      <h3><span class="dot dot-blue"></span>Farm mode NAT (port 80)</h3>
+      <h3><span class="dot dot-blue"></span>Farm NAT (port 80)</h3>
 <pre><span class="kw">ip slb serverfarm</span> FARM1
- <span class="cmd">nat server</span>                <span class="cm">! mode NAT</span>
+ <span class="cmd">nat server</span>
  <span class="cmd">predictor roundrobin</span>
  <span class="cmd">real</span> <span class="ip">10.0.0.1</span> <span class="val">80</span>
   weight <span class="val">2</span>
@@ -403,13 +267,12 @@ ip.dst == <span class="ip">224.0.0.18</span>   <span class="cm">! multicast VRRP
  exit
 exit</pre>
     </div>
-
     <div class="card card-purple">
-      <h3><span class="dot dot-purple"></span>Farm mode Forwarding (port 8080)</h3>
+      <h3><span class="dot dot-purple"></span>Farm Forwarding (port 8080)</h3>
 <pre><span class="kw">ip slb serverfarm</span> FARM2
- <span class="cm">! sense "nat server"</span>
  <span class="cmd">predictor roundrobin</span>
- <span class="cmd">real</span> <span class="ip">10.0.0.3</span>     <span class="cm">! sense port en Forwarding</span>
+ <span class="cm">! sense "nat server"</span>
+ <span class="cmd">real</span> <span class="ip">10.0.0.3</span>  <span class="cm">! sense port!</span>
   weight <span class="val">3</span>
   inservice
  exit
@@ -418,11 +281,9 @@ exit</pre>
   inservice
  exit
 exit</pre>
-      <div class="alert alert-red">❌ No posar port en mode Forwarding → error "Must configure nat server"</div>
     </div>
-
     <div class="card card-amber">
-      <h3><span class="dot dot-amber"></span>Virtual Server (VIP)</h3>
+      <h3><span class="dot dot-amber"></span>Virtual Servers (VIP)</h3>
 <pre><span class="kw">ip slb vserver</span> VSERVER1
  <span class="cmd">virtual</span> <span class="ip">10.0.0.20</span> tcp <span class="val">80</span>
  <span class="cmd">serverfarm</span> FARM1
@@ -434,103 +295,178 @@ exit
  <span class="cmd">serverfarm</span> FARM2
  <span class="cmd">inservice</span>
 exit</pre>
-      <div class="alert alert-blue">💡 La comanda "client" és opcional — sense ella accepta de tothom</div>
+      <div class="alert alert-blue">💡 "client" és opcional — sense ella accepta de tothom</div>
     </div>
-
     <div class="card card-red">
-      <h3><span class="dot dot-red"></span>Routing necessari</h3>
-      <p class="desc" style="margin-bottom:0.75rem">Els servidors han de saber retornar les respostes al client:</p>
-<pre><span class="cm">! Als servidors R1, R2, R3, R4</span>
-<span class="kw">ip route</span> <span class="ip">0.0.0.0</span> <span class="ip">0.0.0.0</span> <span class="ip">10.0.0.10</span>
-<span class="cm">! gateway = IP del SLB</span>
-
-<span class="cm">! Al PC Linux</span>
-sudo ip addr add <span class="ip">11.0.0.100/8</span> dev tap0
-sudo ip link set tap0 up
-sudo ip route add <span class="ip">10.0.0.0/8</span> via <span class="ip">11.0.0.10</span> dev tap0</pre>
-    </div>
-
-    <div class="card card-green">
-      <h3><span class="dot dot-green"></span>Verificació SLB</h3>
+      <h3><span class="dot dot-red"></span>HTTP als servidors Cisco</h3>
+<pre><span class="kw">ip http server</span>
+<span class="kw">ip http port</span> <span class="val">8080</span>   <span class="cm">! si no és el 80</span>
+<span class="kw">username</span> user privilege <span class="val">15</span> secret user
+<span class="kw">ip http authentication local</span></pre>
+      <div class="sep"></div>
+      <h3><span class="dot dot-red"></span>Verificació SLB</h3>
 <pre><span class="cmd">show</span> ip slb reals
 <span class="cmd">show</span> ip slb vservers
-<span class="cmd">show</span> ip slb serverfarms
 <span class="cmd">show</span> ip slb stats
 <span class="cmd">show</span> ip slb conns
-<span class="cmd">debug</span> ip slb real
+<span class="cmd">debug</span> ip slb real</pre>
+    </div>
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>Routing necessari</h3>
+<pre><span class="cm">! Als servidors (R1-R4)</span>
+<span class="kw">ip route</span> <span class="ip">0.0.0.0</span> <span class="ip">0.0.0.0</span> <span class="ip">10.0.0.10</span>
+<span class="cm">! gateway = IP del SLB (o VIP VRRP)</span>
+
+<span class="cm">! Mode Forwarding: servidors necessiten</span>
+<span class="cm">! ruta cap a la xarxa del client</span>
+<span class="kw">ip route</span> <span class="ip">11.0.0.0</span> <span class="ip">255.0.0.0</span> <span class="ip">10.0.0.10</span></pre>
+      <div class="alert alert-amber">⚠ Demostrar pesos: captura Wireshark per MAC destí (Dest MAC @) a la columna eth.dst</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAT -->
+<div class="section" id="nat">
+  <div class="section-title">NAT <span class="tag tag-amber">Network Address Translation</span></div>
+  <div class="grid">
+    <div class="card card-amber">
+      <h3><span class="dot dot-amber"></span>NAT PAT (Overload) — el més comú</h3>
+<pre><span class="kw">interface</span> FastEthernet0/0
+ <span class="cmd">ip nat outside</span>
+
+<span class="kw">interface</span> FastEthernet1/0
+ <span class="cmd">ip nat inside</span>
+
+<span class="kw">access-list</span> <span class="val">1</span> permit <span class="ip">10.0.0.0</span> <span class="ip">0.0.0.255</span>
+<span class="kw">ip nat inside source list</span> <span class="val">1</span>
+  interface FastEthernet0/0 overload</pre>
+      <div class="alert alert-blue">💡 Wildcard = invers de màscara: /24→0.0.0.255 | /8→0.255.255.255</div>
+    </div>
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>3 maneres de restringir a un sol client</h3>
+      <p class="desc" style="margin-bottom:.5rem"><strong>1. ACL estàndard</strong></p>
+<pre><span class="kw">access-list</span> <span class="val">1</span> permit <span class="ip">192.168.1.10</span>
+<span class="cm">! wildcard 0.0.0.0 implícita = exactament aquesta IP</span>
+<span class="kw">ip nat inside source list</span> <span class="val">1</span> interface Fa0/0 overload</pre>
+      <p class="desc" style="margin-bottom:.5rem"><strong>2. NAT estàtic</strong></p>
+<pre><span class="kw">ip nat inside source static</span> <span class="ip">192.168.1.10</span> <span class="ip">11.0.0.3</span>
+<span class="cm">! IP fixa, no PAT, bidireccional</span></pre>
+      <p class="desc" style="margin-bottom:.5rem"><strong>3. Route-map</strong></p>
+<pre><span class="kw">route-map</span> F10 permit <span class="val">10</span>
+ match ip address <span class="val">1</span>
+<span class="kw">ip nat inside source route-map</span> F10 interface Fa1/0 overload</pre>
+    </div>
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>inside source vs outside source</h3>
+      <table>
+        <thead><tr><th></th><th>inside source</th><th>outside source</th></tr></thead>
+        <tbody>
+          <tr><td>Tradueix</td><td>IP origen des de inside</td><td>IP origen des de outside</td></tr>
+          <tr><td>Zones típiques</td><td>F0/0=inside, F0/1=outside</td><td>F0/0=outside, F0/1=inside</td></tr>
+          <tr><td>Ping R1→R3</td><td><span class="badge badge-green">✅ funciona</span></td><td><span class="badge badge-red">❌ no funciona</span></td></tr>
+          <tr><td>Cas d'ús</td><td>clients interns → Internet</td><td>hosts externs amb IP privada</td></tr>
+        </tbody>
+      </table>
+      <div class="alert alert-amber" style="margin-top:.75rem">⚠ outside source: el paquet entra per outside amb src=X, es tradueix a Y quan va cap a inside. El ping des de R1 falla perquè R2 no sap encaminar el paquet cap a inside.</div>
+    </div>
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>NAT pool (no solapat)</h3>
+<pre><span class="cm">! SLB1</span>
+<span class="kw">ip nat pool</span> SLB1_POOL <span class="ip">11.0.0.100</span> <span class="ip">11.0.0.110</span>
+ prefix-length <span class="val">24</span>
+<span class="kw">ip nat inside source list</span> <span class="val">1</span> pool SLB1_POOL overload
+
+<span class="cm">! SLB2 — rang diferent!</span>
+<span class="kw">ip nat pool</span> SLB2_POOL <span class="ip">11.0.0.120</span> <span class="ip">11.0.0.130</span>
+ prefix-length <span class="val">24</span>
+<span class="kw">ip nat inside source list</span> <span class="val">1</span> pool SLB2_POOL overload</pre>
+      <div class="alert alert-red">❌ Si els pools solapessin, dos clients de SLBs diferents podrien tenir la mateixa IP traduïda → col·lisió</div>
+    </div>
+    <div class="card card-red">
+      <h3><span class="dot dot-red"></span>Verificació NAT</h3>
+<pre><span class="cmd">show</span> ip nat translations
+<span class="cmd">show</span> ip nat statistics
+<span class="cmd">debug</span> ip nat
 
 <span class="cm">! Test des del PC</span>
 curl -u user:user http://<span class="ip">10.0.0.20</span>:80
 curl -u user:user http://<span class="ip">10.0.0.20</span>:8080
-
-<span class="cm">! HTTP als servidors Cisco</span>
-<span class="kw">ip http server</span>
-<span class="kw">ip http port</span> <span class="val">8080</span>
-<span class="kw">username</span> user privilege <span class="val">15</span> secret user
-<span class="kw">ip http authentication local</span></pre>
+curl -u user:user https://<span class="ip">11.0.0.10</span> -k</pre>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ NAT -->
-<div class="section" id="nat">
-  <div class="section-title">NAT <span class="tag tag-amber">Network Address Translation</span></div>
-
+<!-- NAT PING TAULES -->
+<div class="section" id="natping">
+  <div class="section-title">NAT Ping Taules <span class="tag tag-red">Anàlisi IP origen/destí per interfície</span></div>
   <div class="grid">
-    <div class="card card-amber">
-      <h3><span class="dot dot-amber"></span>NAT PAT (Overload) — el més comú</h3>
-<pre><span class="cm">! Definir zona inside i outside</span>
-<span class="kw">interface</span> FastEthernet0/0
- <span class="cmd">ip nat outside</span>     <span class="cm">! cap a Internet</span>
-
-<span class="kw">interface</span> FastEthernet1/0
- <span class="cmd">ip nat inside</span>      <span class="cm">! cap als clients</span>
-
-<span class="cm">! ACL: qui pot fer NAT</span>
-<span class="kw">access-list</span> <span class="val">1</span> permit <span class="ip">10.0.0.0</span> <span class="ip">0.0.0.255</span>
-
-<span class="cm">! Regla NAT: surt per f0/0 amb overload (PAT)</span>
-<span class="kw">ip nat inside source list</span> <span class="val">1</span>
-  interface FastEthernet0/0 overload</pre>
-      <div class="alert alert-blue">💡 La wildcard mask és l'invers: /24 → 0.0.0.255 | /8 → 0.255.255.255</div>
-    </div>
-
-    <div class="card card-blue">
-      <h3><span class="dot dot-blue"></span>Explicació de la comanda NAT</h3>
+    <div class="card card-red" style="grid-column:span 2">
+      <h3><span class="dot dot-red"></span>Topologia de referència</h3>
+      <pre>R1(10.0.0.2) —F0/0— 10.0.0.1(R2 F0/0) —F0/1— 11.0.0.1(R2) —— 11.0.0.2(R3)</pre>
+      <div class="sep"></div>
       <table>
-        <thead><tr><th>Part</th><th>Significat</th></tr></thead>
+        <thead>
+          <tr>
+            <th rowspan="2">Config</th>
+            <th rowspan="2">Comanda</th>
+            <th colspan="2">F0/0 (primera i/f R2)</th>
+            <th colspan="2">F0/1 (segona i/f R2)</th>
+            <th rowspan="2">Resultat</th>
+          </tr>
+          <tr><th>Request src→dst</th><th>Reply src→dst</th><th>Request src→dst</th><th>Reply src→dst</th></tr>
+        </thead>
         <tbody>
-          <tr><td><code>inside source</code></td><td>Tradueix IPs origen des de zona inside</td></tr>
-          <tr><td><code>list 1</code></td><td>Aplica l'ACL 1 per filtrar qui es tradu·eix</td></tr>
-          <tr><td><code>interface f0/0</code></td><td>Tradueix a la IP d'aquesta interfície</td></tr>
-          <tr><td><code>overload</code></td><td>PAT: múltiples clients, mateixa IP, ports diferents</td></tr>
+          <tr>
+            <td><span class="badge badge-blue">Config 1</span><br><small>inside src static<br>F0/0=inside F0/1=outside</small></td>
+            <td>Ping 11.0.0.2 des de R1</td>
+            <td>10.0.0.2 → 11.0.0.2</td>
+            <td>11.0.0.2 → 10.0.0.2</td>
+            <td><strong>11.0.0.3</strong> → 11.0.0.2</td>
+            <td>11.0.0.2 → <strong>11.0.0.3</strong></td>
+            <td><span class="badge badge-green">✅ OK</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-amber">Config 2</span><br><small>inside src static<br>F0/0=inside F0/1=outside</small></td>
+            <td>Ping 11.0.0.2 des de R1</td>
+            <td colspan="4" style="text-align:center; color:#ef4444">❌ R1 no té ruta cap a 11.0.0.0/8 — paquet descartat a R1</td>
+            <td><span class="badge badge-red">❌ Falla</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-amber">Config 2</span></td>
+            <td>Ping 10.0.0.2 des de R3</td>
+            <td>11.0.0.2 → 10.0.0.2</td>
+            <td style="color:#ef4444">❌ R1 no té ruta tornada</td>
+            <td>11.0.0.2 → 10.0.0.2</td>
+            <td style="color:#ef4444">❌ —</td>
+            <td><span class="badge badge-red">❌ Falla reply</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-purple">Config 3</span><br><small>outside src static<br>F0/0=outside F0/1=inside</small></td>
+            <td>Ping 11.0.0.2 des de R1</td>
+            <td>10.0.0.2 → 11.0.0.2</td>
+            <td>— (buit)</td>
+            <td><strong>11.0.0.3</strong> → 11.0.0.2</td>
+            <td>11.0.0.2 → <strong>11.0.0.3</strong></td>
+            <td><span class="badge badge-green">✅ OK</span></td>
+          </tr>
         </tbody>
       </table>
-      <div class="sep"></div>
-      <h3><span class="dot dot-blue"></span>Verificació NAT</h3>
-<pre><span class="cmd">show</span> ip nat translations
-<span class="cmd">show</span> ip nat statistics
-<span class="cmd">debug</span> ip nat</pre>
+      <div class="alert alert-amber" style="margin-top:.75rem">⚠ Config 3 F0/0 Reply és buit perquè "outside source" només tradueix quan el paquet <strong>entra</strong> per outside (F0/0→F0/1). La resposta ja porta dst=10.0.0.2 directament.</div>
     </div>
-
-    <div class="card card-green">
-      <h3><span class="dot dot-green"></span>Flux NAT complet</h3>
-<pre>Client <span class="ip">10.0.0.1</span>:1234 → Server <span class="ip">8.8.8.8</span>:80
-         ↓ Router (NAT)
-<span class="ip">11.0.0.1</span>:5000 → Server <span class="ip">8.8.8.8</span>:80
-         ↓ Resposta
-<span class="ip">8.8.8.8</span>:80 → <span class="ip">11.0.0.1</span>:5000
-         ↓ Router (deNAT)
-<span class="ip">8.8.8.8</span>:80 → Client <span class="ip">10.0.0.1</span>:1234</pre>
-      <div class="alert alert-green">✅ Transparent pel client — ell sempre veu la seva IP privada</div>
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>Regla per omplir la taula</h3>
+      <div class="info-row"><span class="label">inside source</span><span class="value">tradueix src quan surt de inside→outside</span></div>
+      <div class="info-row"><span class="label">outside source</span><span class="value">tradueix src quan entra de outside→inside</span></div>
+      <div class="info-row"><span class="label">static</span><span class="value">bidireccional: X↔Y sempre</span></div>
+      <div class="info-row"><span class="label">F0/0 inside</span><span class="value">el paquet NO ha passat pel NAT encara</span></div>
+      <div class="info-row"><span class="label">F0/1 outside</span><span class="value">el paquet JA ha passat pel NAT</span></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ ROUTING -->
+<!-- ROUTING -->
 <div class="section" id="routing">
   <div class="section-title">Routing <span class="tag tag-red">RIP · OSPF · Estàtiques</span></div>
-
   <div class="grid">
     <div class="card card-red">
       <h3><span class="dot dot-red"></span>RIP v2</h3>
@@ -538,14 +474,11 @@ curl -u user:user http://<span class="ip">10.0.0.20</span>:8080
  version <span class="val">2</span>
  network <span class="ip">192.168.1.0</span>
  network <span class="ip">10.0.0.0</span>
- no auto-summary       <span class="cm">! important per subnetting</span>
-
-<span class="cm">! Redistribuir rutes estàtiques a RIP</span>
+ no auto-summary
  redistribute static</pre>
-      <div class="info-row"><span class="label">Timers</span><span class="value">timers basic 3 10 20 20</span></div>
       <div class="info-row"><span class="label">Mètrica</span><span class="value">hop count (max 15)</span></div>
+      <div class="info-row"><span class="label">Timers</span><span class="value">timers basic 3 10 20 20</span></div>
     </div>
-
     <div class="card card-blue">
       <h3><span class="dot dot-blue"></span>OSPF</h3>
 <pre><span class="kw">router ospf</span> <span class="val">1</span>
@@ -554,168 +487,272 @@ curl -u user:user http://<span class="ip">10.0.0.20</span>:8080
 
 <span class="cm">! Eliminar OSPF</span>
 <span class="kw">no router ospf</span> <span class="val">1</span></pre>
-      <div class="info-row"><span class="label">Mètrica</span><span class="value">cost (inversament proporcional a BW)</span></div>
-      <div class="info-row"><span class="label">Hello/Dead</span><span class="value">10s / 40s (per defecte)</span></div>
+      <div class="info-row"><span class="label">Cost</span><span class="value">inversament proporcional a BW</span></div>
+      <div class="info-row"><span class="label">ECMP</span><span class="value">si dos camins igual cost → load balancing automàtic</span></div>
+      <div class="info-row"><span class="label">Camí asimètric</span><span class="value">anada i tornada per camins diferents</span></div>
     </div>
-
     <div class="card card-green">
       <h3><span class="dot dot-green"></span>Rutes estàtiques</h3>
-<pre><span class="cm">! Ruta cap a una xarxa</span>
-<span class="kw">ip route</span> <span class="ip">12.0.0.0</span> <span class="ip">255.255.255.0</span> <span class="ip">11.0.0.3</span>
-
-<span class="cm">! Ruta per defecte</span>
+<pre><span class="kw">ip route</span> <span class="ip">12.0.0.0</span> <span class="ip">255.255.255.0</span> <span class="ip">11.0.0.3</span>
 <span class="kw">ip route</span> <span class="ip">0.0.0.0</span> <span class="ip">0.0.0.0</span> <span class="ip">11.0.0.1</span>
 
-<span class="cm">! Floating static (backup, metric alta)</span>
-<span class="kw">ip route</span> <span class="ip">192.168.1.0</span> <span class="ip">255.255.255.0</span> <span class="ip">11.0.0.2</span> <span class="val">10</span>
-
-<span class="cm">! Al PC Linux</span>
-sudo ip route add <span class="ip">10.0.0.0/8</span> via <span class="ip">11.0.0.254</span> dev tap0
-sudo ip route del <span class="ip">10.0.0.0/8</span></pre>
+<span class="cm">! Floating static (backup)</span>
+<span class="kw">ip route</span> <span class="ip">192.168.1.0</span> <span class="ip">255.255.255.0</span> <span class="ip">11.0.0.2</span> <span class="val">10</span></pre>
     </div>
-
     <div class="card card-amber">
-      <h3><span class="dot dot-amber"></span>Verificació routing</h3>
+      <h3><span class="dot dot-amber"></span>Wireshark — camí OSPF</h3>
+      <p class="desc">Per veure per quin router passa el tràfic:</p>
+      <div class="info-row"><span class="label">Filtre</span><span class="value">icmp</span></div>
+      <div class="info-row"><span class="label">Captura</span><span class="value">Botó dret sobre l'enllaç a GNS3 → Start capture</span></div>
+      <div class="info-row"><span class="label">Camí asimètric</span><span class="value">reply apareix per un enllaç diferent al request</span></div>
+      <div class="sep"></div>
 <pre><span class="cmd">show</span> ip route
-<span class="cmd">show</span> ip route ospf
-<span class="cmd">show</span> ip route rip
 <span class="cmd">show</span> ip ospf neighbor
-<span class="cmd">show</span> ip rip database
-
-<span class="cm">! Al PC Linux</span>
-ip route show
-traceroute <span class="ip">12.0.0.10</span>
-ping <span class="ip">10.0.0.20</span></pre>
+traceroute <span class="ip">12.0.0.10</span></pre>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ CALC -->
+<!-- ALTA DISPONIBILITAT -->
+<div class="section" id="arquitectura">
+  <div class="section-title">Alta Disponibilitat <span class="tag tag-green">GLBP + SLB + VRRP</span></div>
+  <div class="grid">
+    <div class="card card-green" style="grid-column:span 2">
+      <h3><span class="dot dot-green"></span>Arquitectura 3 capes</h3>
+      <pre>Client → GLBP (round-robin) → SLB1 o SLB2 → (least-conn) → Servidor real
+                ↕ VRRP redundància SLBs</pre>
+      <div class="sep"></div>
+      <table>
+        <thead><tr><th>Capa</th><th>Protocol</th><th>Funció</th><th>Política</th></tr></thead>
+        <tbody>
+          <tr><td>Accés clients</td><td>GLBP</td><td>Distribueix entre SLBs</td><td>Round-robin + preempt</td></tr>
+          <tr><td>Load Balancer</td><td>SLB</td><td>Distribueix entre servidors</td><td>Least connections</td></tr>
+          <tr><td>Redundància SLB</td><td>VRRP</td><td>Failover automàtic</td><td>2 circuits (inside+outside)</td></tr>
+          <tr><td>Servidors</td><td>HTTP/HTTPS</td><td>Servei real</td><td>Certificat únic compartit</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>SLB1 — configuració completa</h3>
+<pre><span class="cm">! Interfícies</span>
+<span class="kw">interface</span> FastEthernet0/0
+ ip address <span class="ip">12.0.0.1</span> <span class="ip">255.255.255.0</span>
+ <span class="cmd">ip nat inside</span>
+<span class="kw">interface</span> FastEthernet0/1
+ ip address <span class="ip">11.0.0.1</span> <span class="ip">255.255.255.0</span>
+ <span class="cmd">ip nat outside</span>
+ <span class="cm">! GLBP aquí</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> ip <span class="ip">11.0.0.10</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> priority <span class="val">110</span>
+ <span class="cmd">glbp</span> <span class="val">1</span> preempt
+ <span class="cmd">glbp</span> <span class="val">1</span> load-balancing round-robin
+
+<span class="cm">! Farm</span>
+<span class="kw">ip slb serverfarm</span> FARM
+ <span class="cmd">nat server</span>
+ <span class="cmd">predictor leastconns</span>
+ <span class="cmd">real</span> <span class="ip">12.0.0.10</span> <span class="val">80</span>
+  inservice
+ exit
+ <span class="cmd">real</span> <span class="ip">12.0.0.10</span> <span class="val">443</span>
+  inservice
+ exit
+ <span class="cmd">real</span> <span class="ip">12.0.0.11</span> <span class="val">80</span>
+  inservice
+ exit
+ <span class="cmd">real</span> <span class="ip">12.0.0.11</span> <span class="val">443</span>
+  inservice
+ exit
+exit
+
+<span class="cm">! Virtual servers</span>
+<span class="kw">ip slb vserver</span> VSERVER_HTTP
+ <span class="cmd">virtual</span> <span class="ip">11.0.0.10</span> tcp <span class="val">80</span>
+ <span class="cmd">serverfarm</span> FARM
+ <span class="cmd">inservice</span>
+exit
+<span class="kw">ip slb vserver</span> VSERVER_HTTPS
+ <span class="cmd">virtual</span> <span class="ip">11.0.0.10</span> tcp <span class="val">443</span>
+ <span class="cmd">serverfarm</span> FARM
+ <span class="cmd">inservice</span>
+exit
+
+<span class="cm">! NAT pool no solapat amb SLB2</span>
+<span class="kw">ip nat pool</span> SLB1_POOL <span class="ip">11.0.0.100</span> <span class="ip">11.0.0.110</span>
+ prefix-length <span class="val">24</span>
+<span class="kw">access-list</span> <span class="val">1</span> permit <span class="ip">12.0.0.0</span> <span class="ip">0.0.0.255</span>
+<span class="kw">ip nat inside source list</span> <span class="val">1</span> pool SLB1_POOL overload</pre>
+    </div>
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>SLB2 — diferències respecte SLB1</h3>
+<pre><span class="cm">! IPs diferents</span>
+ip address <span class="ip">12.0.0.2</span> <span class="ip">255.255.255.0</span>  <span class="cm">! f0/0</span>
+ip address <span class="ip">11.0.0.2</span> <span class="ip">255.255.255.0</span>  <span class="cm">! f0/1</span>
+
+<span class="cm">! GLBP — prioritat menor</span>
+<span class="cmd">glbp</span> <span class="val">1</span> priority <span class="val">90</span>
+<span class="cmd">glbp</span> <span class="val">1</span> preempt
+
+<span class="cm">! NAT pool diferent (no solapa!)</span>
+<span class="kw">ip nat pool</span> SLB2_POOL <span class="ip">11.0.0.120</span> <span class="ip">11.0.0.130</span>
+ prefix-length <span class="val">24</span>
+<span class="kw">ip nat inside source list</span> <span class="val">1</span> pool SLB2_POOL overload
+
+<span class="cm">! La resta (farm, vservers) = igual que SLB1</span></pre>
+      <div class="alert alert-green">✅ Els servidors no necessiten ruta per defecte externa — el NAT el fan els SLBs</div>
+    </div>
+  </div>
+</div>
+
+<!-- TAP0 / LINUX -->
+<div class="section" id="tap">
+  <div class="section-title">tap0 / Linux <span class="tag tag-blue">Connexió PC real ↔ GNS3</span></div>
+  <div class="grid">
+    <div class="card card-blue">
+      <h3><span class="dot dot-blue"></span>Crear i configurar tap0</h3>
+<pre><span class="cm"># Instal·lar uml-utilities (si cal)</span>
+sudo apt install uml-utilities
+<span class="cm"># o Fedora:</span>
+sudo dnf install uml-utilities
+
+<span class="cm"># Crear interfície TAP (com a root)</span>
+sudo tunctl -t tap0 -u <span class="val">kaar</span>   <span class="cm"># usuari = whoami</span>
+
+<span class="cm"># Activar</span>
+sudo ip link set tap0 up
+
+<span class="cm"># Assignar IP</span>
+sudo ip addr add <span class="ip">11.0.0.2/8</span> dev tap0</pre>
+      <div class="alert alert-blue">💡 Per saber el teu username: <code>whoami</code> o <code>echo $USER</code></div>
+    </div>
+    <div class="card card-green">
+      <h3><span class="dot dot-green"></span>Rutes Linux habituals</h3>
+<pre><span class="cm"># Afegir ruta cap a VIP/xarxa GNS3</span>
+sudo ip route add <span class="ip">10.0.0.0/8</span> via <span class="ip">11.0.0.254</span> dev tap0
+
+<span class="cm"># Eliminar ruta</span>
+sudo ip route del <span class="ip">10.0.0.0/8</span>
+
+<span class="cm"># Veure totes les rutes</span>
+ip route show
+
+<span class="cm"># Veure IP de tap0</span>
+ip addr show tap0</pre>
+      <div class="alert alert-amber">⚠ Usar sempre la <strong>VIP VRRP</strong> com a gateway (ex: 11.0.0.254), no la IP directa del router (11.0.0.1). Així funciona el failover.</div>
+    </div>
+    <div class="card card-amber">
+      <h3><span class="dot dot-amber"></span>Captura amb tcpdump/Wireshark</h3>
+<pre><span class="cm"># Wireshark per tap0</span>
+sudo wireshark -i tap0 -k
+
+<span class="cm"># tcpdump — veure MACs (opció -e)</span>
+sudo tcpdump -i tap0 -n -e port 80
+
+<span class="cm"># Filtres útils Wireshark</span>
+icmp
+http
+vrrp or icmp or arp
+ip.dst == <span class="ip">224.0.0.18</span>     <span class="cm"># multicast VRRP</span>
+ip.src == <span class="ip">11.0.0.1</span> &amp;&amp; http</pre>
+      <div class="info-row"><span class="label">Demostrar pesos SLB</span><span class="value">columna eth.dst → MAC diferent per cada servidor</span></div>
+      <div class="info-row"><span class="label">Failover VRRP</span><span class="value">anuncis VRRP paren → ARP gratuït → nou Master</span></div>
+    </div>
+    <div class="card card-purple">
+      <h3><span class="dot dot-purple"></span>Per què TAP i no TUN?</h3>
+      <div class="info-row"><span class="label">TAP</span><span class="value">capa 2 (Ethernet) — GNS3 necessita frames Ethernet</span></div>
+      <div class="info-row"><span class="label">TUN</span><span class="value">capa 3 (IP) — no serveix per GNS3</span></div>
+      <div class="sep"></div>
+      <p class="desc">GNS3 connecta el teu PC real al Switch virtual mitjançant tap0. Sense tap0 activa i amb IP, el PC no pot enviar ni rebre paquets cap als routers simulats.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULADORA GLBP -->
 <div class="section" id="calc">
   <div class="section-title">Calculadora GLBP <span class="tag tag-blue">simulació de pesos i estats</span></div>
-
   <div class="grid">
-    <div class="card card-blue" style="grid-column: span 2;">
+    <div class="card card-blue" style="grid-column:span 2;">
       <h3><span class="dot dot-blue"></span>Paràmetres dels routers</h3>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:0.5rem;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:.5rem;">
         <div>
-          <p style="color:var(--accent); font-family:var(--mono); font-size:0.8rem; margin-bottom:0.75rem;">— Router 1</p>
-          <div style="display:flex; flex-direction:column; gap:0.5rem;">
-            <label style="font-size:0.8rem; color:var(--text2);">Pes base <input id="r1base" type="number" value="20" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
-            <label style="font-size:0.8rem; color:var(--text2);">Lower <input id="r1lower" type="number" value="7" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
-            <label style="font-size:0.8rem; color:var(--text2);">Upper <input id="r1upper" type="number" value="8" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
-            <label style="font-size:0.8rem; color:var(--text2);">Decrement track <input id="r1dec" type="number" value="10" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+          <p style="color:var(--accent);font-family:var(--mono);font-size:.8rem;margin-bottom:.75rem;">— Router 1</p>
+          <div style="display:flex;flex-direction:column;gap:.5rem;">
+            <label style="font-size:.8rem;color:var(--text2);">Pes base <input id="r1base" type="number" value="20" style="width:70px;margin-left:8px;"></label>
+            <label style="font-size:.8rem;color:var(--text2);">Lower <input id="r1lower" type="number" value="7" style="width:70px;margin-left:8px;"></label>
+            <label style="font-size:.8rem;color:var(--text2);">Upper <input id="r1upper" type="number" value="8" style="width:70px;margin-left:8px;"></label>
+            <label style="font-size:.8rem;color:var(--text2);">Decrement <input id="r1dec" type="number" value="10" style="width:70px;margin-left:8px;"></label>
           </div>
         </div>
         <div>
-          <p style="color:#a78bfa; font-family:var(--mono); font-size:0.8rem; margin-bottom:0.75rem;">— Router 2</p>
-          <div style="display:flex; flex-direction:column; gap:0.5rem;">
-            <label style="font-size:0.8rem; color:var(--text2);">Pes base <input id="r2base" type="number" value="20" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
-            <label style="font-size:0.8rem; color:var(--text2);">Lower <input id="r2lower" type="number" value="5" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
-            <label style="font-size:0.8rem; color:var(--text2);">Upper <input id="r2upper" type="number" value="8" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
-            <label style="font-size:0.8rem; color:var(--text2);">Decrement track <input id="r2dec" type="number" value="10" style="width:70px; margin-left:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:3px 6px; border-radius:4px; font-family:var(--mono);"></label>
+          <p style="color:#a78bfa;font-family:var(--mono);font-size:.8rem;margin-bottom:.75rem;">— Router 2</p>
+          <div style="display:flex;flex-direction:column;gap:.5rem;">
+            <label style="font-size:.8rem;color:var(--text2);">Pes base <input id="r2base" type="number" value="20" style="width:70px;margin-left:8px;"></label>
+            <label style="font-size:.8rem;color:var(--text2);">Lower <input id="r2lower" type="number" value="5" style="width:70px;margin-left:8px;"></label>
+            <label style="font-size:.8rem;color:var(--text2);">Upper <input id="r2upper" type="number" value="8" style="width:70px;margin-left:8px;"></label>
+            <label style="font-size:.8rem;color:var(--text2);">Decrement <input id="r2dec" type="number" value="10" style="width:70px;margin-left:8px;"></label>
           </div>
         </div>
       </div>
-
       <div class="sep"></div>
-      <p style="color:var(--text2); font-size:0.8rem; margin-bottom:0.75rem; font-family:var(--mono);">— Seqüència de temps (0=i/f caiguda, 1=activa) — format: t1_r1t1,r1t2,r2t1,r2t2 | t2_...</p>
-      <div id="rows-container" style="display:flex; flex-direction:column; gap:0.5rem;"></div>
-      <button onclick="addRow()" style="margin-top:0.75rem; background:var(--bg3); border:1px solid var(--border); color:var(--accent); padding:0.4rem 1rem; border-radius:6px; cursor:pointer; font-family:var(--mono); font-size:0.8rem;">+ Afegir temps</button>
-      <button onclick="calcular()" style="margin-top:0.75rem; margin-left:0.5rem; background:var(--accent); border:none; color:var(--bg); padding:0.4rem 1rem; border-radius:6px; cursor:pointer; font-family:var(--mono); font-size:0.8rem; font-weight:700;">Calcular ▶</button>
+      <p style="color:var(--text2);font-size:.8rem;margin-bottom:.75rem;font-family:var(--mono);">— Seqüència de temps (0=i/f caiguda, 1=activa)</p>
+      <div id="rows-container" style="display:flex;flex-direction:column;gap:.5rem;"></div>
+      <button onclick="addRow()" style="margin-top:.75rem;background:var(--bg3);border:1px solid var(--border);color:var(--accent);padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-family:var(--mono);font-size:.8rem;">+ Afegir temps</button>
+      <button onclick="calcular()" style="margin-top:.75rem;margin-left:.5rem;background:var(--accent);border:none;color:var(--bg);padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-family:var(--mono);font-size:.8rem;font-weight:700;">Calcular ▶</button>
     </div>
   </div>
-
-  <div id="result-table" style="margin-top:1.5rem;"></div>
+  <div id="result-table" style="margin-top:1.25rem;"></div>
 </div>
 
 </main>
-
 <script>
 function show(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   event.target.classList.add('active');
 }
-
-let rowCount = 0;
-function addRow() {
+let rowCount=0;
+function addRow(){
   rowCount++;
-  const div = document.createElement('div');
-  div.style.cssText = 'display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;';
-  div.innerHTML = `
-    <span style="font-family:var(--mono); font-size:0.75rem; color:var(--text2); min-width:55px;">Temps ${rowCount}</span>
-    <label style="font-size:0.75rem; color:var(--accent);">R1-T1 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
-    <label style="font-size:0.75rem; color:var(--accent);">R1-T2 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
-    <label style="font-size:0.75rem; color:#a78bfa;">R2-T1 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
-    <label style="font-size:0.75rem; color:#a78bfa;">R2-T2 <input type="number" min="0" max="1" value="1" style="width:45px; background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:2px 5px; border-radius:4px; font-family:var(--mono);"></label>
-    <button onclick="this.parentElement.remove(); rowCount--;" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#fca5a5; padding:2px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button>
-  `;
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;';
+  div.innerHTML=`<span style="font-family:var(--mono);font-size:.75rem;color:var(--text2);min-width:55px;">Temps ${rowCount}</span>
+    <label style="font-size:.75rem;color:var(--accent);">R1-T1 <input type="number" min="0" max="1" value="1" style="width:45px;"></label>
+    <label style="font-size:.75rem;color:var(--accent);">R1-T2 <input type="number" min="0" max="1" value="1" style="width:45px;"></label>
+    <label style="font-size:.75rem;color:#a78bfa;">R2-T1 <input type="number" min="0" max="1" value="1" style="width:45px;"></label>
+    <label style="font-size:.75rem;color:#a78bfa;">R2-T2 <input type="number" min="0" max="1" value="1" style="width:45px;"></label>
+    <button onclick="this.parentElement.remove();" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:.75rem;">✕</button>`;
   document.getElementById('rows-container').appendChild(div);
 }
-
 for(let i=0;i<4;i++) addRow();
-
-function calcular() {
-  const r1base = +document.getElementById('r1base').value;
-  const r1lower = +document.getElementById('r1lower').value;
-  const r1upper = +document.getElementById('r1upper').value;
-  const r1dec = +document.getElementById('r1dec').value;
-  const r2base = +document.getElementById('r2base').value;
-  const r2lower = +document.getElementById('r2lower').value;
-  const r2upper = +document.getElementById('r2upper').value;
-  const r2dec = +document.getElementById('r2dec').value;
-
-  const rowDivs = document.getElementById('rows-container').children;
-  const data = [];
-  for(const row of rowDivs) {
-    const inputs = row.querySelectorAll('input');
-    data.push([+inputs[0].value, +inputs[1].value, +inputs[2].value, +inputs[3].value]);
-  }
-
-  let avf1 = true, avf2 = true;
-  let html = `<table>
-    <thead><tr>
-      <th>Temps</th><th>R1-T1</th><th>R1-T2</th><th>R2-T1</th><th>R2-T2</th>
-      <th>Pes R1</th><th>Pes R2</th><th>AVF R1</th><th>AVF R2</th><th>Share R1</th><th>Share R2</th>
-    </tr></thead><tbody>`;
-
-  data.forEach(([r1t1,r1t2,r2t1,r2t2], i) => {
-    let w1 = r1base;
-    if(!r1t1) w1 -= r1dec;
-    if(!r1t2) w1 -= r1dec;
-    w1 = Math.max(w1,0);
-
-    let w2 = r2base;
-    if(!r2t1) w2 -= r2dec;
-    if(!r2t2) w2 -= r2dec;
-    w2 = Math.max(w2,0);
-
-    if(avf1 && w1 < r1lower) avf1 = false;
-    else if(!avf1 && w1 > r1upper) avf1 = true;
-    if(avf2 && w2 < r2lower) avf2 = false;
-    else if(!avf2 && w2 > r2upper) avf2 = true;
-
-    let s1=0, s2=0;
-    if(avf1 && avf2) { const t=w1+w2; s1=t?Math.round(w1/t*100):0; s2=100-s1; }
-    else if(avf1) { s1=100; s2=0; }
-    else if(avf2) { s1=0; s2=100; }
-
-    const st = (v,a) => a ? `<span style="color:#10b981">${v} ✓</span>` : `<span style="color:#ef4444">${v} ✗</span>`;
-    const ci = (v) => v==1 ? `<span style="color:#10b981">1</span>` : `<span style="color:#ef4444">0</span>`;
-    html += `<tr>
-      <td><strong>${i+1}</strong></td>
-      <td>${ci(r1t1)}</td><td>${ci(r1t2)}</td><td>${ci(r2t1)}</td><td>${ci(r2t2)}</td>
-      <td>${st(w1,avf1)}</td><td>${st(w2,avf2)}</td>
-      <td>${avf1?'<span class="badge badge-green">ACTIU</span>':'<span class="badge badge-red">INACTIU</span>'}</td>
-      <td>${avf2?'<span class="badge badge-green">ACTIU</span>':'<span class="badge badge-red">INACTIU</span>'}</td>
-      <td><strong>${s1}%</strong></td><td><strong>${s2}%</strong></td>
-    </tr>`;
+function calcular(){
+  const r1base=+document.getElementById('r1base').value;
+  const r1lower=+document.getElementById('r1lower').value;
+  const r1upper=+document.getElementById('r1upper').value;
+  const r1dec=+document.getElementById('r1dec').value;
+  const r2base=+document.getElementById('r2base').value;
+  const r2lower=+document.getElementById('r2lower').value;
+  const r2upper=+document.getElementById('r2upper').value;
+  const r2dec=+document.getElementById('r2dec').value;
+  const rowDivs=document.getElementById('rows-container').children;
+  const data=[];
+  for(const row of rowDivs){const inputs=row.querySelectorAll('input');data.push([+inputs[0].value,+inputs[1].value,+inputs[2].value,+inputs[3].value]);}
+  let avf1=true,avf2=true;
+  let html=`<table><thead><tr><th>Temps</th><th>R1-T1</th><th>R1-T2</th><th>R2-T1</th><th>R2-T2</th><th>Pes R1</th><th>Pes R2</th><th>AVF R1</th><th>AVF R2</th><th>Share R1</th><th>Share R2</th></tr></thead><tbody>`;
+  data.forEach(([r1t1,r1t2,r2t1,r2t2],i)=>{
+    let w1=r1base; if(!r1t1)w1-=r1dec; if(!r1t2)w1-=r1dec; w1=Math.max(w1,0);
+    let w2=r2base; if(!r2t1)w2-=r2dec; if(!r2t2)w2-=r2dec; w2=Math.max(w2,0);
+    if(avf1&&w1<r1lower)avf1=false; else if(!avf1&&w1>r1upper)avf1=true;
+    if(avf2&&w2<r2lower)avf2=false; else if(!avf2&&w2>r2upper)avf2=true;
+    let s1=0,s2=0;
+    if(avf1&&avf2){const t=w1+w2;s1=t?Math.round(w1/t*100):0;s2=100-s1;}
+    else if(avf1){s1=100;s2=0;} else if(avf2){s1=0;s2=100;}
+    const st=(v,a)=>a?`<span style="color:#10b981">${v} ✓</span>`:`<span style="color:#ef4444">${v} ✗</span>`;
+    const ci=(v)=>v==1?`<span style="color:#10b981">1</span>`:`<span style="color:#ef4444">0</span>`;
+    html+=`<tr><td><strong>${i+1}</strong></td><td>${ci(r1t1)}</td><td>${ci(r1t2)}</td><td>${ci(r2t1)}</td><td>${ci(r2t2)}</td><td>${st(w1,avf1)}</td><td>${st(w2,avf2)}</td><td>${avf1?'<span class="badge badge-green">ACTIU</span>':'<span class="badge badge-red">INACTIU</span>'}</td><td>${avf2?'<span class="badge badge-green">ACTIU</span>':'<span class="badge badge-red">INACTIU</span>'}</td><td><strong>${s1}%</strong></td><td><strong>${s2}%</strong></td></tr>`;
   });
-
-  html += '</tbody></table>';
-  document.getElementById('result-table').innerHTML = `<div class="card card-green">${html}</div>`;
+  html+='</tbody></table>';
+  document.getElementById('result-table').innerHTML=`<div class="card card-green">${html}</div>`;
 }
 </script>
 </body>
